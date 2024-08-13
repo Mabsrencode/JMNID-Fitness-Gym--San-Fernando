@@ -37,12 +37,12 @@ const Home = () => {
                         </h3>
                     </div>
                 </div>
-                <div className="flex mt-12 items-center">
-                    <div className="w-[50%]">
+                <div className="md:flex mt-12 items-center">
+                    <div className="md:w-[50%]">
                         <img className="rounded-xl" src={images.program1} alt="program" />
                     </div>
-                    <div className="w-[50%] p-4">
-                        <h3 className="text-xl md:text-2xl lg:text-5xl font-teko">Tailored workout plans</h3>
+                    <div className="md:md:w-[50%] mt-4 md:mt-0 md:p-4">
+                        <h3 className="text-2xl lg:text-5xl font-teko">Tailored workout plans</h3>
                         <p>
                             Our expert trainers craft personalized workout routines to help
                             you reach your fitness goals effectively and efficiently.
@@ -52,12 +52,12 @@ const Home = () => {
             </section>
             {/* 2 */}
             <section className="text-white-light px-4">
-                <div className="flex flex-row-reverse mt-12 items-center">
-                    <div className="w-[50%]">
+                <div className="md:flex flex-row-reverse mt-12 items-center">
+                    <div className="md:w-[50%]">
                         <img className="rounded-xl" src={images.program1} alt="program" />
                     </div>
-                    <div className="w-[50%] p-4">
-                        <h3 className="text-xl md:text-2xl lg:text-5xl font-teko">Customized meal plans</h3>
+                    <div className="md:w-[50%] mt-4 md:mt-0 md:p-4">
+                        <h3 className="text-2xl lg:text-5xl font-teko">Customized meal plans</h3>
                         <p>
                             Nutritionists design meal plans that cater to your dietary needs and fitness objectives, ensuring you stay on track with your health goals.
                         </p>
@@ -65,22 +65,29 @@ const Home = () => {
                 </div>
             </section>
             <section className="text-white-light px-4">
-                <div className="flex mt-12 items-center">
-                    <div className="w-[50%]">
+                <div className="md:flex mt-12 items-center">
+                    <div className="md:w-[50%]">
                         <img className="rounded-xl" src={images.program1} alt="program" />
                     </div>
-                    <div className="w-[50%] p-4">
-                        <h3 className="text-xl md:text-2xl lg:text-5xl font-teko">Track your progress</h3>
+                    <div className="md:w-[50%] mt-4 md:mt-0 md:p-4">
+                        <h3 className="text-2xl lg:text-5xl font-teko">Track your progress</h3>
                         <p>
                             Monitor your fitness journey with progress tracking tools, allowing you to see the results of your hard work and dedication.
                         </p>
                     </div>
                 </div>
             </section>
-            <section className="bg-primary-dark">
-                <div>
-                    <h4>"I feel healthier and more energized since starting with FitFuel."</h4>
-                    <img src="" alt="" /><span>Olivia Baker</span>
+            <section className="bg-primary-dark mt-24 py-24 text-white-light">
+                <div className="px-4 md:px-24">
+                    <h4 className="text-center text-xl sm:text-2xl md:text-4xl font-semibold"><i>"I feel healthier and more energized since starting with JMNID FITNESS GYM."</i></h4>
+                    <span className="text-center underline block">Philip Alvarez</span>
+                </div>
+            </section>
+            <section className="text-white-light h-screen flex justify-center items-center">
+                <div className="relative bg-gray p-12 max-w-[900px] mx-4 md:mx-auto rounded-xl">
+                    <h2 className="font-teko font-semibold text-2xl md:text-4xl lg:text-6xl text-center">Start Your Fitness Journey.</h2>
+                    <p className="text-center font-poppins">“JMNID FITNESS GYM has been a game-changer for me. The personalized meal plans and workouts have made a significant impact on my fitness journey. I highly recommend JMNID FITNESS GYM to anyone looking to improve their health and well-being.” - Ava Thomas</p>
+                    <Link className="px-6 py-3 bg-primary text-white block mt-12 text-center rounded-full font-semibold">Start Meal</Link>
                 </div>
             </section>
         </>
