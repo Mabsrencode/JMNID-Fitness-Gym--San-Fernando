@@ -1,6 +1,7 @@
 import React from 'react'
 import Logo from "../../assets/images/logo.png"
 import { Link } from 'react-router-dom'
+import { FaceBookIcon, InstagramIcon, LinkedInIcon, TwitterIcon } from '../../constants/icons'
 const Footer = () => {
     const date = new Date().getFullYear()
     return (
@@ -13,23 +14,22 @@ const Footer = () => {
                             <Link>
                                 <img className="w-auto h-[80px] sm:h-[100px]" src={Logo} alt="" />
                             </Link>
-                            <p className="max-w-sm mt-2 text-secondary-white max-w-[300px]">Segen Consulting: Your Trusted Alliance in Healthcare Excellence! </p>
                             <div className="flex mt-6 gap-10">
-                                <Link><i className="fa-brands fa-facebook text-[20px] text-secondary-white"></i></Link>
-                                <Link><i className="fa-brands fa-x-twitter text-[20px] text-secondary-white"></i></Link>
-                                <Link><i className="fa-brands fa-linkedin text-[20px] text-secondary-white"></i></Link>
-                                <Link><i className="fa-brands fa-instagram text-[20px] text-secondary-white"></i></Link>
+                                <Link><FaceBookIcon className={"text-[20px] text-white"} /></Link>
+                                <Link><TwitterIcon className={"text-[20px] text-white"} /></Link>
+                                <Link><LinkedInIcon className={"text-[20px] text-white"} /></Link>
+                                <Link><InstagramIcon className={"text-[20px] text-white"} /></Link>
                             </div>
                         </div>
                     </div>
 
-                    <div className="mt-6 lg:mt-0 grid grid-cols-1 md:flex md:justify-end w-full text-secondary-white gap-4">
+                    <div className="mt-6 lg:mt-0 grid grid-cols-1 md:flex md:justify-end w-full text-white gap-4">
                         <div>
                             <Link to={"/"} className='hover:underline'>Home</Link>
                         </div>
 
                         <div>
-                            <Link to={"/careers"} className='hover:underline'>Job Openings</Link>
+                            <Link to={"/gym"} className='hover:underline'>Gym</Link>
                         </div>
 
                         <div>
@@ -48,7 +48,7 @@ const Footer = () => {
                 <hr className="h-px my-6 bg-white border-none dark:bg-white" />
 
                 <div>
-                    <p className="text-center text-secondary-white opacity-65">Copyright {date} ©Segen Consulting. All rights reserved.</p>
+                    <p className="text-center text-white opacity-65">Copyright {date} ©Segen Consulting. All rights reserved.</p>
                 </div>
             </div>
         </footer>

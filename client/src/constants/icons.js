@@ -4,6 +4,9 @@ import {
   FaFacebook,
   FaInstagram,
   FaGoogle,
+  FaLinkedin,
+  FaTwitter,
+  FaArrowRight,
 } from "react-icons/fa6";
 import { RxHamburgerMenu } from "react-icons/rx";
 const MessageIcon = ({ className }) => {
@@ -30,6 +33,16 @@ const GoogleIcon = ({ className }) => {
   return <FaGoogle className={className} />;
 };
 
+const LinkedInIcon = ({ className }) => {
+  return <FaLinkedin className={className} />;
+};
+
+const TwitterIcon = ({ className }) => {
+  return <FaTwitter className={className} />;
+};
+const ArrowRightIcon = ({ className }) => {
+  return <FaArrowRight className={className} />;
+};
 export {
   MessageIcon,
   XMarkIcon,
@@ -37,4 +50,7 @@ export {
   FaceBookIcon,
   InstagramIcon,
   GoogleIcon,
+  LinkedInIcon,
+  TwitterIcon,
+  ArrowRightIcon,
 };

@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const CustomButtons = ({ className, text, handleClick }) => {
 
@@ -6,5 +7,11 @@ const CustomButtons = ({ className, text, handleClick }) => {
         <button onClick={() => handleClick} className={`${className}`}>{text}</button>
     )
 }
+const CustomLink = ({ className, text, url, Icon }) => {
 
-export default CustomButtons
+    return (
+        <Link to={url} className={`${className}`}>{text} {Icon} </Link>
+    )
+}
+
+export { CustomButtons, CustomLink }

@@ -12,7 +12,7 @@ const Home = () => {
                             Personalized Fitness & Nutrition Plans
                         </h1>
                         <div className="max-w-[800px] mx-auto">
-                            <h2 className="font-poppins text-center text-base sm:text-xl md:text-3xl">
+                            <h2 className="text-gray-light font-poppins text-center text-base sm:text-xl md:text-2xl">
                                 Achieve your fitness goals with custom workouts and meal plans
                                 tailored just for you.
                             </h2>
@@ -32,7 +32,7 @@ const Home = () => {
                     <h1 className="text-center text-2xl sm:text-4xl md:text-5xl xl:text-6xl font-teko">Custom Fitness & Diet Programs</h1>
                     <div className="max-w-[700px] mx-auto text-center text-base sm:text-lg">
 
-                        <h3>
+                        <h3 className="text-gray-light">
                             Unlock your fitness goals with personalized exercise routines and nutrition plans designed exclusively for you.
                         </h3>
                     </div>
@@ -43,7 +43,7 @@ const Home = () => {
                     </div>
                     <div className="md:md:w-[50%] mt-4 md:mt-0 md:p-4">
                         <h3 className="text-2xl lg:text-5xl font-teko">Tailored workout plans</h3>
-                        <p>
+                        <p className="text-gray-light">
                             Our expert trainers craft personalized workout routines to help
                             you reach your fitness goals effectively and efficiently.
                         </p>
@@ -58,7 +58,7 @@ const Home = () => {
                     </div>
                     <div className="md:w-[50%] mt-4 md:mt-0 md:p-4">
                         <h3 className="text-2xl lg:text-5xl font-teko">Customized meal plans</h3>
-                        <p>
+                        <p className="text-gray-light">
                             Nutritionists design meal plans that cater to your dietary needs and fitness objectives, ensuring you stay on track with your health goals.
                         </p>
                     </div>
@@ -71,7 +71,7 @@ const Home = () => {
                     </div>
                     <div className="md:w-[50%] mt-4 md:mt-0 md:p-4">
                         <h3 className="text-2xl lg:text-5xl font-teko">Track your progress</h3>
-                        <p>
+                        <p className="text-gray-light">
                             Monitor your fitness journey with progress tracking tools, allowing you to see the results of your hard work and dedication.
                         </p>
                     </div>

@@ -5,6 +5,7 @@ import { MessageIcon, XMarkIcon, BurgerIcon } from "../../constants/icons"
 const Header = () => {
     const [isNavbarOpen, setIsNavbarOpen] = useState(false);
 
+    const id = "asdasa"
     const toggleNavbar = () => {
         setIsNavbarOpen(!isNavbarOpen);
     };
@@ -28,11 +29,13 @@ const Header = () => {
                         </div>
                     </div>
                     <div className={`${isNavbarOpen ? "h-full" : "hidden"} transition-all duration-300 basis-full grow md:block `}>
-                        <div className="flex flex-col gap-y-4 gap-x-0 mt-5 md:flex-row md:items-center md:justify-end md:gap-y-0 md:gap-x-7 md:mt-0 md:ps-7">
-                            <Link to={"/"} className="text-center lg:text-xs text-primary md:text-white md:font-semibold hover:opacity-75 md:focus:text-primary">Home</Link>
-                            <Link to={"/careers"} className="text-center lg:text-xs text-primary md:text-white md:font-semibold hover:opacity-75 md:focus:text-primary">Job Openings</Link>
-                            <Link to={"/about"} className="text-center lg:text-xs text-primary md:text-white md:font-semibold hover:opacity-75 md:focus:text-primary" >About Us</Link>
-                            {/* <Link to={"/FAQs"} className="text-center lg:text-xs text-primary md:text-white md:font-semibold hover:opacity-75 md:focus:text-primary" >FAQs</Link> */}
+                        <div className="flex flex-col uppercase gap-y-4 gap-x-0 mt-5 md:flex-row md:items-center md:justify-end md:gap-y-0 md:gap-x-7 md:mt-0 md:ps-7">
+                            <Link to={"/"} className="text-center lg:text-sm text-primary md:text-white md:font-semibold hover:opacity-75 md:focus:text-primary">Home</Link>
+                            <Link to={"/services"} className="text-center lg:text-sm text-primary md:text-white md:font-semibold hover:opacity-75 md:focus:text-primary">Services</Link>
+                            <Link to={"/gym"} className="text-center lg:text-sm text-primary md:text-white md:font-semibold hover:opacity-75 md:focus:text-primary">Gym</Link>
+                            <Link to={`/meal-planner:${id}`} className="text-center lg:text-sm text-primary md:text-white md:font-semibold hover:opacity-75 md:focus:text-primary">Meal Planner</Link>
+                            <Link to={"/about"} className="text-center lg:text-sm text-primary md:text-white md:font-semibold hover:opacity-75 md:focus:text-primary" >About Us</Link>
+                            {/* <Link to={"/FAQs"} className="text-center lg:text-sm text-primary md:text-white md:font-semibold hover:opacity-75 md:focus:text-primary" >FAQs</Link> */}
                             <Link to={"/contact"} className={`text-nowrap font-semibold text-white md:text-white md:font-semibold rounded-full transition-all hover:opacity-75 py-2 bg-primary-dark text-center px-[20px] text-white md:flex md:items-center md:gap-2`} >Contact Us <MessageIcon className={"hidden md:block text-primary md:text-white"} /></Link>
                         </div>
                     </div>

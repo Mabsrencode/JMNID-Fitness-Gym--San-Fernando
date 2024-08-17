@@ -13,7 +13,7 @@ function App() {
         <Routes>
           <Route path="/" element={<RootLayout />}>
             <Route index element={<Home />} />
-            {/* <Route path="/careers" element={<Careers />} />
+            {/* <Route path="/gym" element={<Careers />} />
             <Route path="/FAQs" element={<FAQs />} /> */}
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
