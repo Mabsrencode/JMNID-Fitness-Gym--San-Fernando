@@ -86,10 +86,10 @@ const Services = () => {
 
                 </div>
             </section>
-            <section className="text-white-light h-screen flex justify-center items-center">
+            <section className="text-white-light my-12 md:mt-0 md:h-screen flex justify-center items-center">
                 <div className="relative bg-gray p-12 max-w-[900px] mx-4 md:mx-auto rounded-xl">
                     <h2 className="font-teko font-semibold text-2xl md:text-4xl lg:text-6xl text-center">Start Your Fitness Journey.</h2>
-                    <p className="text-center font-poppins">“JMNID FITNESS GYM has been a game-changer for me. The personalized meal plans and workouts have made a significant impact on my fitness journey. I highly recommend JMNID FITNESS GYM to anyone looking to improve their health and well-being.” - Ava Thomas</p>
+                    <p className="text-center text-xs md:text-base font-poppins">“JMNID FITNESS GYM has been a game-changer for me. The personalized meal plans and workouts have made a significant impact on my fitness journey. I highly recommend JMNID FITNESS GYM to anyone looking to improve their health and well-being.” - Ava Thomas</p>
                     <Link className="px-6 py-3 bg-primary text-white block mt-12 text-center rounded-full font-semibold">Start Meal</Link>
                 </div>
             </section>

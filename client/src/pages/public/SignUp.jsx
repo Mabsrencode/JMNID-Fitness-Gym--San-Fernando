@@ -1,11 +1,12 @@
 import React from 'react'
-import SignInForm from "../../components/Forms/SignInForm.jsx"
-const SignIn = () => {
+import SignUpForm from '../../components/Forms/SignUpForm'
+
+const SignUp = () => {
     return (
         <section className='min-h-screen px-4 flex justify-center items-center'>
-            <SignInForm />
+            <SignUpForm />
         </section>
     )
 }
 
-export default SignIn
+export default SignUp

@@ -1,11 +1,20 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { images } from '../../constants';
-import { MessageIcon, XMarkIcon, BurgerIcon } from "../../constants/icons"
+import { XMarkIcon, BurgerIcon } from "../../constants/icons"
+import axios from 'axios';
+import LogoutButton from '../LogoutButton/LogoutButton';
 const Header = () => {
     const [isNavbarOpen, setIsNavbarOpen] = useState(false);
-
-    const id = "asdasa"
+    const [user, setUser] = useState(null);
+    console.log(user)
+    useEffect(() => {
+        const verifyCookie = async () => {
+            const { data } = await axios.post("/auth", {}, { withCredentials: true });
+            setUser(data);
+        };
+        verifyCookie();
+    }, []);
     const toggleNavbar = () => {
         setIsNavbarOpen(!isNavbarOpen);
     };
@@ -16,10 +25,10 @@ const Header = () => {
                     <div className="flex items-center justify-between">
                         <div className='flex gap-2 items-center'>
                             <Link to={"/"} className="flex-none text-xl font-semibold dark:text-white" aria-current="page">
-                                <img src={images.logo} className='hidden md:block h-[40px] md:h-[60px]' alt="segen-consulting" />
+                                <img src={images.logo} className='hidden md:block h-[40px] md:h-[60px]' alt="jmnid-logo" />
                             </Link>
                             <Link to={"/"} className="block md:hidden flex-none text-xl font-semibold dark:text-white" aria-current="page">
-                                <img src={images.mobileLogo} className='h-[40px] md:h-[60px]' alt="segen-consulting" />
+                                <img src={images.mobileLogo} className='h-[40px] md:h-[60px]' alt="jmnid-logo" />
                             </Link>
                         </div>
                         <div className="md:hidden">
@@ -30,15 +39,17 @@ const Header = () => {
                     </div>
                     <div className={`${isNavbarOpen ? "h-full" : "hidden"} transition-all duration-300 basis-full grow md:block `}>
                         <div className="flex flex-col uppercase gap-y-4 gap-x-0 mt-5 md:flex-row md:items-center md:justify-end md:gap-y-0 md:gap-x-7 md:mt-0 md:ps-7">
-                            <Link to={"/"} className="text-center lg:text-sm text-primary md:text-white md:font-semibold hover:opacity-75 md:focus:text-primary">Home</Link>
-                            <Link to={"/services"} className="text-center lg:text-sm text-primary md:text-white md:font-semibold hover:opacity-75 md:focus:text-primary">Services</Link>
-                            <Link to={"/gym"} className="text-center lg:text-sm text-primary md:text-white md:font-semibold hover:opacity-75 md:focus:text-primary">Gym</Link>
-                            <Link to={`/meal-planner:${id}`} className="text-center lg:text-sm text-primary md:text-white md:font-semibold hover:opacity-75 md:focus:text-primary">Meal Planner</Link>
-                            <Link to={"/about"} className="text-center lg:text-sm text-primary md:text-white md:font-semibold hover:opacity-75 md:focus:text-primary" >About Us</Link>
-                            {/* <Link to={"/FAQs"} className="text-center lg:text-sm text-primary md:text-white md:font-semibold hover:opacity-75 md:focus:text-primary" >FAQs</Link> */}
-                            <div className='flex gap-2 items-center justify-center'>
-                                <Link to={"/sign-in"} className={`text-nowrap border-2 border-primary font-semibold text-white md:text-white md:font-semibold rounded-full transition-all hover:opacity-75 py-2 bg-primary-dark text-center px-[20px] md:flex md:items-center md:gap-2`} >Sign In </Link>
-                                <Link to={"/sign-up"} className={`text-nowrap border-2 border-primary font-semibold text-white md:text-white md:font-semibold rounded-full transition-all hover:opacity-75 py-2 bg-black text-center px-[20px] md:flex md:items-center md:gap-2`} >Sign Up</Link>
+                            <Link to={"/"} className="text-center md:text-xs lg:text-sm text-primary md:text-white md:font-semibold hover:opacity-75 md:focus:text-primary">Home</Link>
+                            <Link to={"/services"} className="text-center md:text-xs lg:text-sm text-primary md:text-white md:font-semibold hover:opacity-75 md:focus:text-primary">Services</Link>
+                            <Link to={"/gym"} className="text-center md:text-xs lg:text-sm text-primary md:text-white md:font-semibold hover:opacity-75 md:focus:text-primary">Gym</Link>
+                            {/* <Link to={`/meal-planner:${id}`} className="text-center md:text-xs lg:text-sm text-primary md:text-white md:font-semibold hover:opacity-75 md:focus:text-primary">Meal Planner</Link> */}
+                            <Link to={"/about"} className="text-center md:text-xs lg:text-sm text-primary md:text-white md:font-semibold hover:opacity-75 md:focus:text-primary" >About Us</Link>
+                            {/* <Link to={"/FAQs"} className="text-center md:text-xs lg:text-sm text-primary md:text-white md:font-semibold hover:opacity-75 md:focus:text-primary" >FAQs</Link> */}
+                            <div className='flex gap-2 items-center justify-center border-t md:border-none pt-4 md:pt-0'>
+                                {user && user.status ? <LogoutButton /> : <>
+                                    <Link to={"/sign-in"} className={`text-nowrap border-2 border-primary font-semibold text-white md:text-white md:font-semibold rounded-full transition-all hover:opacity-75 py-2 bg-primary-dark text-center px-[20px] md:flex md:items-center md:gap-2`} >Sign In </Link>
+                                    <Link to={"/sign-up"} className={`text-nowrap border-2 border-primary font-semibold text-white md:text-white md:font-semibold rounded-full transition-all hover:opacity-75 py-2 bg-black text-center px-[20px] md:flex md:items-center md:gap-2`} >Sign Up</Link>
+                                </>}
                             </div>
                         </div>
                     </div>
