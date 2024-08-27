@@ -48,7 +48,7 @@ const Footer = () => {
                 <hr className="h-px my-6 bg-white border-none dark:bg-white" />
 
                 <div>
-                    <p className="text-center text-white opacity-65">Copyright {date} ©Segen Consulting. All rights reserved.</p>
+                    <p className="text-xs md:text-base text-center text-white opacity-65">Copyright {date} ©JMNID FITNESS GYM. All rights reserved.</p>
                 </div>
             </div>
         </footer>

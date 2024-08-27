@@ -25,7 +25,7 @@ const Services = () => {
                     <h2 className='text-center md:text-left text-2xl sm:text-3xl md:text-4xl xl:text-5xl font-teko'>Personalized Fitness & Nutrition Plans.</h2>
                     <p className='text-center md:text-left text-sm sm:text-base max-w-[600px] font-poppins text-gray-light'>Access personalized fitness and nutrition plans tailored to your individual needs, helping you achieve your health and wellness objectives effectively.</p>
                 </div>
-                <div className='flex flex-wrap justify-center gap-4 text-white-light mx-4 mt-12'>
+                <div className='flex flex-wrap justify-center gap-4 text-white-light mx-0 md:mx-4 mt-12'>
                     {services.map((data, index) => (
                         <ServicesCard
                             key={index}
@@ -39,26 +39,26 @@ const Services = () => {
                     ))}
                 </div>
             </section>
-            <section className='min-h-screen px-4 mt-24 flex flex-col md:flex-row gap-4 items-center text-white-light'>
+            <section className='min-h-screen px-4 mt-12 md:mt-0 flex flex-col md:flex-row gap-4 items-center text-white-light'>
                 <div className='w-full md:w-[50%] md:pr-6'>
                     <div>
                         <span className="block text-gray-light font-teko text-base md:text-2xl">
                             Customized Fitness & Meal Plans
                         </span>
-                        <h4 className=' text-2xl sm:text-3xl md:text-4xl xl:text-5xl font-teko'>Tailored Nutrition Plans.</h4>
+                        <h4 className=' text-2xl sm:text-3xl md:text-5xl xl:text-6xl font-teko'>Tailored Nutrition Plans.</h4>
                     </div>
                     <hr />
                     <div className='md:pr-12'>
                         <div className='mt-8'>
-                            <h5 className='font-teko text-xl md:text-2xl'>Custom Workout Plans </h5>
+                            <h5 className='font-teko text-xl md:text-4xl'>Custom Workout Plans </h5>
                             <p className='font-poppins text-gray-light text-xs md:text-sm'>Receive personalized workout plans designed to target your specific fitness objectives and preferences.</p>
                         </div>
                         <div className='mt-12'>
-                            <h5 className='font-teko text-xl md:text-2xl'>Personalized Meal Plans </h5>
+                            <h5 className='font-teko text-xl md:text-4xl'>Personalized Meal Plans </h5>
                             <p className='font-poppins text-gray-light text-xs md:text-sm'>Get customized meal plans that align with your dietary requirements and fitness goals for optimal results.</p>
                         </div>
                         <div className='mt-12'>
-                            <h5 className='font-teko text-xl md:text-2xl'>Progress Tracking Tools</h5>
+                            <h5 className='font-teko text-xl md:text-4xl'>Progress Tracking Tools</h5>
                             <p className='font-poppins text-gray-light text-xs md:text-sm'>Utilize progress tracking tools to monitor your fitness journey and stay motivated as you work towards your goals.</p>
                         </div>
                     </div>
