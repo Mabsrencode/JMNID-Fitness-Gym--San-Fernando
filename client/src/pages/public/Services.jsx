@@ -22,8 +22,8 @@ const Services = () => {
             </section>
             <section className='min-h-screen px-4 mt-24'>
                 <div className='mt-12 text-white-light'>
-                    <h2 className='text-center md:text-left text-2xl sm:text-3xl md:text-4xl xl:text-5xl font-teko'>Personalized Fitness & Nutrition Plans.</h2>
-                    <p className='text-center md:text-left text-sm sm:text-base max-w-[600px] font-poppins text-gray-light'>Access personalized fitness and nutrition plans tailored to your individual needs, helping you achieve your health and wellness objectives effectively.</p>
+                    <h2 className='text-center text-2xl sm:text-3xl md:text-4xl xl:text-5xl font-teko'>Personalized Fitness & Nutrition Plans.</h2>
+                    <p className='mx-auto text-sm sm:text-base max-w-[600px] font-poppins text-gray-light'>Access personalized fitness and nutrition plans tailored to your individual needs, helping you achieve your health and wellness objectives effectively.</p>
                 </div>
                 <div className='flex flex-wrap justify-center gap-4 text-white-light mx-0 md:mx-4 mt-12'>
                     {services.map((data, index) => (

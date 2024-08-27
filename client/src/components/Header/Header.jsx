@@ -36,7 +36,10 @@ const Header = () => {
                             <Link to={`/meal-planner:${id}`} className="text-center lg:text-sm text-primary md:text-white md:font-semibold hover:opacity-75 md:focus:text-primary">Meal Planner</Link>
                             <Link to={"/about"} className="text-center lg:text-sm text-primary md:text-white md:font-semibold hover:opacity-75 md:focus:text-primary" >About Us</Link>
                             {/* <Link to={"/FAQs"} className="text-center lg:text-sm text-primary md:text-white md:font-semibold hover:opacity-75 md:focus:text-primary" >FAQs</Link> */}
-                            <Link to={"/contact"} className={`text-nowrap font-semibold text-white md:text-white md:font-semibold rounded-full transition-all hover:opacity-75 py-2 bg-primary-dark text-center px-[20px] text-white md:flex md:items-center md:gap-2`} >Contact Us <MessageIcon className={"hidden md:block text-primary md:text-white"} /></Link>
+                            <div className='flex gap-2 items-center justify-center'>
+                                <Link to={"/sign-in"} className={`text-nowrap border-2 border-primary font-semibold text-white md:text-white md:font-semibold rounded-full transition-all hover:opacity-75 py-2 bg-primary-dark text-center px-[20px] md:flex md:items-center md:gap-2`} >Sign In </Link>
+                                <Link to={"/sign-up"} className={`text-nowrap border-2 border-primary font-semibold text-white md:text-white md:font-semibold rounded-full transition-all hover:opacity-75 py-2 bg-black text-center px-[20px] md:flex md:items-center md:gap-2`} >Sign Up</Link>
+                            </div>
                         </div>
                     </div>
                 </nav>
