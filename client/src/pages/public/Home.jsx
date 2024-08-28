@@ -27,7 +27,7 @@ const Home = () => {
                 </div>
             </section>
             {/* 1 */}
-            <section className="text-white-light px-4">
+            <section className="text-white-light px-4 lg:px-[10%]">
                 <div className="">
                     <h1 className="text-center text-2xl sm:text-4xl md:text-5xl xl:text-6xl font-teko">Custom Fitness & Diet Programs</h1>
                     <div className="max-w-[700px] mx-auto text-center text-base sm:text-lg">
@@ -51,7 +51,7 @@ const Home = () => {
                 </div>
             </section>
             {/* 2 */}
-            <section className="text-white-light px-4">
+            <section className="text-white-light px-4 lg:px-[10%]">
                 <div className="md:flex flex-row-reverse mt-12 items-center">
                     <div className="md:w-[50%]">
                         <img className="rounded-xl" src={images.program1} alt="program" />
@@ -64,7 +64,7 @@ const Home = () => {
                     </div>
                 </div>
             </section>
-            <section className="text-white-light px-4">
+            <section className="text-white-light px-4 lg:px-[10%]">
                 <div className="md:flex mt-12 items-center">
                     <div className="md:w-[50%]">
                         <img className="rounded-xl" src={images.program1} alt="program" />

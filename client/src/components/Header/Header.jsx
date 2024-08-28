@@ -7,7 +7,6 @@ import LogoutButton from '../LogoutButton/LogoutButton';
 const Header = () => {
     const [isNavbarOpen, setIsNavbarOpen] = useState(false);
     const [user, setUser] = useState(null);
-    console.log(user)
     useEffect(() => {
         const verifyCookie = async () => {
             const { data } = await axios.post("/auth", {}, { withCredentials: true });
