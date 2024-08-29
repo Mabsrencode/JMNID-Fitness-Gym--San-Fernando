@@ -8,6 +8,10 @@ import NoPage from "./pages/public/NoPage.jsx";
 import SignIn from "./pages/public/SignIn.jsx";
 import { UserProvider } from "./context/UserContext.jsx";
 import SignUp from "./pages/public/SignUp.jsx";
+import Profile from "./pages/private/Profile.jsx";
+import MealPlanner from "./pages/private/MealPlanner.jsx";
+import Workout from "./pages/private/Workout.jsx";
+import WorkoutView from "./pages/private/WorkoutView.jsx";
 function App() {
   return (
     <div className="App">
@@ -19,8 +23,12 @@ function App() {
             <Route path="/FAQs" element={<FAQs />} /> */}
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/services" element={<Services />} />
             <Route element={<UserProvider />}>
-              <Route path="/services" element={<Services />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/meal-planner" element={<MealPlanner />} />
+              <Route path="/workout/:_id" element={<WorkoutView />} />
+              <Route path="/workout" element={<Workout />} />
             </Route>
             <Route path="/sign-up" element={<SignUp />} />
             <Route path="/sign-in" element={<SignIn />} />
