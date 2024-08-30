@@ -16,7 +16,11 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    membership_status: {},
+    membership_status: {
+      type: String,
+      enum: ["active", "inactive"],
+      default: "pending",
+    },
     role: {
       type: String,
       enum: ["admin", "moderator", "user", "nutritionist", "instructor"],
