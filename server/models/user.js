@@ -26,6 +26,10 @@ const userSchema = new mongoose.Schema(
       enum: ["admin", "moderator", "user", "nutritionist", "instructor"],
       default: "user",
     },
+    fitness_goals: {
+      type: String,
+      required: true,
+    },
   },
   { timestamps: true }
 );

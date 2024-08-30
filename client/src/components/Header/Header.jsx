@@ -42,10 +42,12 @@ const Header = () => {
                             <Link to={"/services"} className="text-center md:text-xs lg:text-sm text-primary md:text-white md:font-semibold hover:opacity-75 md:focus:text-primary">Services</Link>
                             <Link to={"/gym"} className="text-center md:text-xs lg:text-sm text-primary md:text-white md:font-semibold hover:opacity-75 md:focus:text-primary">Gym</Link>
                             <Link to={"/about"} className="text-center md:text-xs lg:text-sm text-primary md:text-white md:font-semibold hover:opacity-75 md:focus:text-primary" >About Us</Link>
-                            <Link to={`/meal-planner`} className="text-center md:text-xs lg:text-sm text-primary md:text-white md:font-semibold hover:opacity-75 md:focus:text-primary">Meal Planner</Link>
-                            <Link to={`/meal-view`} className="text-center md:text-xs lg:text-sm text-primary md:text-white md:font-semibold hover:opacity-75 md:focus:text-primary">View My Meals</Link>
-                            <Link to={`/workouts`} className="text-center md:text-xs lg:text-sm text-primary md:text-white md:font-semibold hover:opacity-75 md:focus:text-primary">Workouts</Link>
-                            <Link to={`/workout-planner/:_id`} className="text-center md:text-xs lg:text-sm text-primary md:text-white md:font-semibold hover:opacity-75 md:focus:text-primary">My Workout</Link>
+                            {user && user.status && <>
+                                <Link to={`/meal-planner`} className="text-center md:text-xs lg:text-sm text-primary md:text-white md:font-semibold hover:opacity-75 md:focus:text-primary">Meal Planner</Link>
+                                <Link to={`/meal-view`} className="text-center md:text-xs lg:text-sm text-primary md:text-white md:font-semibold hover:opacity-75 md:focus:text-primary">View My Meals</Link>
+                                <Link to={`/workouts`} className="text-center md:text-xs lg:text-sm text-primary md:text-white md:font-semibold hover:opacity-75 md:focus:text-primary">Workouts</Link>
+                                <Link to={`/workout-planner/:_id`} className="text-center md:text-xs lg:text-sm text-primary md:text-white md:font-semibold hover:opacity-75 md:focus:text-primary">My Workout</Link>
+                            </>}
                             <div className='flex gap-2 items-center justify-center border-t md:border-none pt-4 md:pt-0'>
                                 <Link to={`/workout`} className="text-center md:text-xs lg:text-sm text-primary md:text-white md:font-semibold hover:opacity-75 md:focus:text-primary">Meal Planner</Link>
                                 <Link to={`/my-workout/:_id`} className="text-center md:text-xs lg:text-sm text-primary md:text-white md:font-semibold hover:opacity-75 md:focus:text-primary">Meal Planner</Link>
