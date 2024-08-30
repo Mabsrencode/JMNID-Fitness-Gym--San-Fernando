@@ -12,6 +12,11 @@ import Profile from "./pages/private/Profile.jsx";
 import MealPlanner from "./pages/private/MealPlanner.jsx";
 import Workout from "./pages/private/Workout.jsx";
 import WorkoutView from "./pages/private/WorkoutView.jsx";
+import AdminLayout from "./Layout/AdminLayout.jsx";
+import Dashboard from "./pages/admin/Dashboard.jsx";
+import MealDashboard from "./pages/admin/MealDashboard.jsx";
+import WorkoutDashboard from "./pages/admin/WorkoutDashboard.jsx";
+import { AdminProvider } from "./context/AdminContext.jsx";
 function App() {
   return (
     <div className="App">
@@ -34,6 +39,17 @@ function App() {
             <Route path="/sign-in" element={<SignIn />} />
             <Route path="*" element={<NoPage />} />
           </Route>
+          <Route path="/" element={<AdminLayout />}>
+            <Route element={<AdminProvider />}>
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route
+                path="/meal-planner-dashboard"
+                element={<MealDashboard />}
+              />
+              <Route path="/workout-dashboard" element={<WorkoutDashboard />} />
+            </Route>
+          </Route>
+
           {/* <Route path="/" element={<AdminLayout />}>
             <Route element={<UserProvider />}>
               <Route path="/admin" element={<AdminDashboardViewer />} />

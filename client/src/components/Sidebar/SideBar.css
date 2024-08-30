@@ -1,0 +1,15 @@
+aside h1,
+.logo {
+  display: none !important;
+}
+.logo {
+  text-wrap: nowrap;
+}
+
+aside:hover h1,
+aside:hover .logo {
+  display: block !important;
+}
+aside:hover nav {
+  min-width: 240px;
+}
