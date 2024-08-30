@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import "./header.css"
 import { images } from '../../constants';
-import { XMarkIcon, BurgerIcon } from "../../constants/icons"
+import { XMarkIcon, BurgerIcon, ArrowLeftNavIcon } from "../../constants/icons"
 import axios from 'axios';
 import LogoutButton from '../LogoutButton/LogoutButton';
+import { CustomLink } from '../CustomButtons/CustomButtons';
 const Header = () => {
     const [isNavbarOpen, setIsNavbarOpen] = useState(false);
     const [user, setUser] = useState(null);
@@ -38,15 +40,19 @@ const Header = () => {
                     </div>
                     <div className={`${isNavbarOpen ? "h-full" : "hidden"} transition-all duration-300 basis-full grow md:block `}>
                         <div className="flex flex-col uppercase gap-y-4 gap-x-0 mt-5 md:flex-row md:items-center md:justify-end md:gap-y-0 md:gap-x-7 md:mt-0 md:ps-7">
-                            <Link to={"/"} className="text-center md:text-xs lg:text-sm text-primary md:text-white md:font-semibold hover:opacity-75 md:focus:text-primary">Home</Link>
-                            <Link to={"/services"} className="text-center md:text-xs lg:text-sm text-primary md:text-white md:font-semibold hover:opacity-75 md:focus:text-primary">Services</Link>
-                            <Link to={"/gym"} className="text-center md:text-xs lg:text-sm text-primary md:text-white md:font-semibold hover:opacity-75 md:focus:text-primary">Gym</Link>
-                            <Link to={"/about"} className="text-center md:text-xs lg:text-sm text-primary md:text-white md:font-semibold hover:opacity-75 md:focus:text-primary" >About Us</Link>
+                            <Link to={"/"} className="py-3 text-center md:text-xs lg:text-sm text-primary md:text-white md:font-semibold hover:opacity-75 md:focus:text-primary">Home</Link>
+                            <Link to={"/services"} className="py-3 text-center md:text-xs lg:text-sm text-primary md:text-white md:font-semibold hover:opacity-75 md:focus:text-primary">Services</Link>
+                            <Link to={"/gym"} className="py-3 text-center md:text-xs lg:text-sm text-primary md:text-white md:font-semibold hover:opacity-75 md:focus:text-primary">Gym</Link>
+                            <Link to={"/about"} className="py-3 text-center md:text-xs lg:text-sm text-primary md:text-white md:font-semibold hover:opacity-75 md:focus:text-primary" >About Us</Link>
                             {user && user.status && <>
-                                <Link to={`/meal-planner`} className="text-center md:text-xs lg:text-sm text-primary md:text-white md:font-semibold hover:opacity-75 md:focus:text-primary">Meal Plan</Link>
-                                <Link to={`/meal-view/:_id`} className="text-center md:text-xs lg:text-sm text-primary md:text-white md:font-semibold hover:opacity-75 md:focus:text-primary">View My Meals</Link>
-                                <Link to={`/workouts`} className="text-center md:text-xs lg:text-sm text-primary md:text-white md:font-semibold hover:opacity-75 md:focus:text-primary">Workouts</Link>
-                                <Link to={`/workout-planner/:_id`} className="text-center md:text-xs lg:text-sm text-primary md:text-white md:font-semibold hover:opacity-75 md:focus:text-primary">My Workout</Link>
+                                <div id='meal-planner-root' className='relative'>
+                                    <CustomLink url={`/meal-planner`} text={"Meal plans"} className={"py-3 text-center md:text-xs lg:text-sm text-primary md:text-white md:font-semibold hover:opacity-75 md:focus:text-primary"} Icon={<ArrowLeftNavIcon className={"inline text-[20px] arrow-icon-nav"} />} />
+                                    <div id='meal-planner' className='absolute bg-white  top-7 px-6 py-3 left-0 rounded-xl'>
+                                        <Link to={`/meal-view/:_id`} className="text-nowrap px-6 py-3 text-center md:text-xs lg:text-sm text-primary md:text-black md:font-semibold hover:opacity-75 md:focus:text-primary">View My Meals</Link>
+                                    </div>
+                                </div>
+                                <Link to={`/workouts`} className="py-3 text-center md:text-xs lg:text-sm text-primary md:text-white md:font-semibold hover:opacity-75 md:focus:text-primary">Workouts</Link>
+                                <Link to={`/workout-planner/:_id`} className="py-3 text-center md:text-xs lg:text-sm text-primary md:text-white md:font-semibold hover:opacity-75 md:focus:text-primary">My Workout</Link>
                             </>}
                             <div className='flex gap-2 items-center justify-center border-t md:border-none pt-4 md:pt-0'>
                                 {user && user.status ? <LogoutButton /> : <>

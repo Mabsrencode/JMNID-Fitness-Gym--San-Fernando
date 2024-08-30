@@ -9,6 +9,7 @@ import {
   FaArrowRight,
 } from "react-icons/fa6";
 import { RxHamburgerMenu } from "react-icons/rx";
+import { IoIosArrowBack } from "react-icons/io";
 const MessageIcon = ({ className }) => {
   return <FaMessage className={className} />;
 };
@@ -43,6 +44,10 @@ const TwitterIcon = ({ className }) => {
 const ArrowRightIcon = ({ className }) => {
   return <FaArrowRight className={className} />;
 };
+
+const ArrowLeftNavIcon = ({ className }) => {
+  return <IoIosArrowBack className={className} />;
+};
 export {
   MessageIcon,
   XMarkIcon,
@@ -53,4 +58,5 @@ export {
   LinkedInIcon,
   TwitterIcon,
   ArrowRightIcon,
+  ArrowLeftNavIcon,
 };
