@@ -25,8 +25,6 @@ function App() {
         <Routes>
           <Route path="/" element={<RootLayout />}>
             <Route index element={<Home />} />
-            {/* <Route path="/gym" element={<Careers />} />
-            <Route path="/FAQs" element={<FAQs />} /> */}
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/services" element={<Services />} />
@@ -51,16 +49,6 @@ function App() {
               <Route path="/workout-dashboard" element={<WorkoutDashboard />} />
             </Route>
           </Route>
-
-          {/* <Route path="/" element={<AdminLayout />}>
-            <Route element={<UserProvider />}>
-              <Route path="/admin" element={<AdminDashboardViewer />} />
-              <Route
-                path="/admin-create-account"
-                element={<AdminCreateAccount />}
-              />
-            </Route>
-          </Route> */}
         </Routes>
       </BrowserRouter>
     </div>

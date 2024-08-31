@@ -10,6 +10,7 @@ import gymHero from "../assets/images/gym-hero.jpg";
 import gym1 from "../assets/images/gym-1.jpg";
 import gym2 from "../assets/images/gym-2.jpg";
 import gym3 from "../assets/images/gym-3.jpg";
+import aboutHero from "../assets/images/about-hero.jpg";
 const images = {
   logo,
   mobileLogo,
@@ -23,6 +24,7 @@ const images = {
   gym1,
   gym2,
   gym3,
+  aboutHero,
 };
 
 export default images;
