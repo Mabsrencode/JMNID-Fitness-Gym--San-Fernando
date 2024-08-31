@@ -5,7 +5,10 @@ const { createSecretToken } = require("../utils/createSecretToken.js");
 // Register a new user
 const register = async (req, res, next) => {
   try {
-    const { username, email, password } = req.body;
+    const { username, email, password, cpassword } = req.body;
+    if (password !== cpassword) {
+      return res.status(400).json({ message: "Passwords do not match" });
+    }
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.json({ message: "User already exists" });
@@ -32,8 +35,7 @@ const register = async (req, res, next) => {
 // Login with an existing user
 const login = async (req, res, next) => {
   try {
-    const { username, password } = req.body;
-
+    const { username, password, cpassword } = req.body;
     if (!username || !password) {
       return res.json({ message: "All fields are required" });
     }

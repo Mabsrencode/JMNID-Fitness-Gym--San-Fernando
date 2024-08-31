@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from "react-hook-form"
 import axios from 'axios'
 import { FaEye, FaEyeSlash } from 'react-icons/fa6'
+import { AiOutlineLoading3Quarters } from 'react-icons/ai'
 const SignUpForm = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const [isLoading, setIsLoading] = useState(false);
@@ -18,9 +19,11 @@ const SignUpForm = () => {
             await axios.post('/auth/register', {
                 username: data.username,
                 email: data.email,
-                password: data.password
+                password: data.password,
+                cpassword: data.cpassword
             }, { withCredentials: true })
             location('/');
+            window.location.reload();
         } catch (error) {
             console.error('Login failed:', error);
             setError(error.response?.data?.message || error.message);
@@ -100,9 +103,10 @@ const SignUpForm = () => {
                         }
                     })} id='cpassword' type={showPasswords ? "text" : "password"} placeholder="Confirm Password" />
                 </div>
-                {errors.password && <span className='font-poppins font-semibold text-xs text-red'>{errors.password.message}</span>}
+                {errors.cpassword && <span className='font-poppins font-semibold text-xs text-red'>{errors.cpassword.message}</span>}
             </div>
-            <button className='text-nowrap text-center font-semibold text-white md:text-white md:font-semibold rounded-full transition-all hover:opacity-75 py-2 bg-primary-dark' type="submit">Sign Up</button>
+            <button className='text-nowrap text-center font-semibold text-white md:text-white md:font-semibold rounded-full transition-all hover:opacity-75 py-2 bg-primary-dark' type="submit">{isLoading ? <AiOutlineLoading3Quarters className='mx-auto text-[24px] animate-spin' /> : "Sign Up"}</button>
+            {error && <span className='font-poppins font-semibold text-xs text-red'>{error}</span>}
             <div>
                 <Link className='underline text-gray-light font-poppins text-xs font-semibold text-center block mt-2' to={"/sign-in"}>Already have an account? <span className='text-primary-dark'>Sign In</span></Link>
             </div>

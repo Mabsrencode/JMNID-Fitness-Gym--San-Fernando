@@ -2,7 +2,6 @@
   transform: scale(0);
 }
 #meal-planner-root:hover #meal-planner {
-  display: block;
   transform: scale(1);
   transition: transform 0.3s ease-in-out;
 }
