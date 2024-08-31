@@ -18,7 +18,7 @@ const userSchema = new mongoose.Schema(
     },
     membership_status: {
       type: String,
-      enum: ["active", "inactive"],
+      enum: ["verified", "pending"],
       default: "pending",
     },
     role: {
@@ -28,7 +28,6 @@ const userSchema = new mongoose.Schema(
     },
     fitness_goals: {
       type: String,
-      required: true,
     },
   },
   { timestamps: true }
