@@ -72,8 +72,8 @@ const SignForm = () => {
             <button className='text-nowrap text-center font-semibold text-white md:text-white md:font-semibold rounded-full transition-all hover:opacity-75 py-2 bg-primary-dark' type="submit">{isLoading ? <AiOutlineLoading3Quarters className='mx-auto text-[24px] animate-spin' /> : "Sign In"}</button>
             {error && <span className='font-poppins font-semibold text-xs text-red'>{error}</span>}
             <div>
-                <Link className='underline font-poppins text-sm font-semibold text-center block' to={"/forgot-password"}>Forgot Username / Password?</Link>
-                <Link className='underline font-poppins text-sm font-semibold text-center block mt-2' to={"/sign-up"}>Don't have an account? <span className='text-primary-dark'>Sign Up</span></Link>
+                <Link className='text-gray-light underline font-poppins text-xs font-semibold text-center block' to={"/forgot-password"}>Forgot Username / Password?</Link>
+                <Link className='text-gray-light underline font-poppins text-xs font-semibold text-center block mt-2' to={"/sign-up"}>Don't have an account? <span className='text-primary-dark'>Sign Up</span></Link>
             </div>
         </form>
     )

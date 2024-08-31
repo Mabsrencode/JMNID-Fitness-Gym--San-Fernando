@@ -98,13 +98,13 @@ const SignUpForm = () => {
                             value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
                             message: "Password must be at least 8 characters long, contain at least one uppercase letter, one lowercase letter, one number, and one special character"
                         }
-                    })} id='cpassword' type={showPasswords ? "text" : "password"} placeholder="Password" />
+                    })} id='cpassword' type={showPasswords ? "text" : "password"} placeholder="Confirm Password" />
                 </div>
                 {errors.password && <span className='font-poppins font-semibold text-xs text-red'>{errors.password.message}</span>}
             </div>
             <button className='text-nowrap text-center font-semibold text-white md:text-white md:font-semibold rounded-full transition-all hover:opacity-75 py-2 bg-primary-dark' type="submit">Sign Up</button>
             <div>
-                <Link className='underline font-poppins text-sm font-semibold text-center block mt-2' to={"/sign-in"}>Already have an account? <span className='text-primary-dark'>Sign In</span></Link>
+                <Link className='underline text-gray-light font-poppins text-xs font-semibold text-center block mt-2' to={"/sign-in"}>Already have an account? <span className='text-primary-dark'>Sign In</span></Link>
             </div>
         </form>
     )
