@@ -17,6 +17,7 @@ import Dashboard from "./pages/admin/Dashboard.jsx";
 import MealDashboard from "./pages/admin/MealDashboard.jsx";
 import WorkoutDashboard from "./pages/admin/WorkoutDashboard.jsx";
 import { AdminProvider } from "./context/AdminContext.jsx";
+import Gym from "./pages/public/Gym.jsx";
 function App() {
   return (
     <div className="App">
@@ -29,6 +30,7 @@ function App() {
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/services" element={<Services />} />
+            <Route path="/gym" element={<Gym />} />
             <Route element={<UserProvider />}>
               <Route path="/profile" element={<Profile />} />
               <Route path="/meal-planner" element={<MealPlanner />} />

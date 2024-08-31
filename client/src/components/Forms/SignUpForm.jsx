@@ -12,6 +12,9 @@ const SignUpForm = () => {
     const handleClick = () => {
         setShowPasswords(!showPasswords);
     }
+
+    //!TODO: EMAIL VERIFICATION
+
     const location = useNavigate();
     const onSubmit = async (data) => {
         setIsLoading(true);

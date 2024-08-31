@@ -6,6 +6,10 @@ import gridServices1 from "../assets/images/grid-services-1.jpg";
 import gridServices2 from "../assets/images/grid-services-2.jpg";
 import gridServices3 from "../assets/images/grid-services-3.jpg";
 import gridServices4 from "../assets/images/grid-services-4.jpg";
+import gymHero from "../assets/images/gym-hero.jpg";
+import gym1 from "../assets/images/gym-1.jpg";
+import gym2 from "../assets/images/gym-2.jpg";
+import gym3 from "../assets/images/gym-3.jpg";
 const images = {
   logo,
   mobileLogo,
@@ -15,6 +19,10 @@ const images = {
   gridServices2,
   gridServices3,
   gridServices4,
+  gymHero,
+  gym1,
+  gym2,
+  gym3,
 };
 
 export default images;
