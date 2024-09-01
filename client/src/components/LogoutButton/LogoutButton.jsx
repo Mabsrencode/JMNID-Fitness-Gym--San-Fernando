@@ -27,11 +27,10 @@ const LogoutButton = () => {
 
     return (
         <button
-            className="bg-primary text-black hover:text-black  rounded-full p-2 hover:bg-primary-light transition-all"
+            className="bg-primary text-black hover:text-black  rounded-full p-2 hover:bg-primary-light transition-all flex justify-center items-center"
             onClick={handleLogout}
         >
-            {/* <i className="fa-solid fa-right-from-bracket" title="Log Out"></i> */}
-            <AiOutlineLogout className="text-[20px]" title="Log Out" />
+            <AiOutlineLogout className="text-[20px] text-white" title="Log Out" />
         </button>
     );
 };

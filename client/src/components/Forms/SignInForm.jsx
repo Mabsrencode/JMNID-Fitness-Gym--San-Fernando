@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from "react-hook-form"
 import axios from 'axios'
@@ -9,10 +9,21 @@ const SignForm = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
     const [showPasswords, setShowPasswords] = useState(false);
+    const [user, setUser] = useState(null);
+    const location = useNavigate()
     const handleClick = () => {
         setShowPasswords(!showPasswords);
     }
-    const location = useNavigate()
+    if (user && user.status) {
+        location(-1)
+    }
+    useEffect(() => {
+        const verifyCookie = async () => {
+            const { data } = await axios.post("/auth", {}, { withCredentials: true });
+            setUser(data);
+        };
+        verifyCookie();
+    }, []);
     const onSubmit = async (data) => {
         try {
             setIsLoading(true);
@@ -21,7 +32,7 @@ const SignForm = () => {
                 email: data.email,
                 password: data.password
             }, { withCredentials: true })
-            location('/');
+            location('/client');
             window.location.reload();
         } catch (error) {
             console.error('Login failed:', error);

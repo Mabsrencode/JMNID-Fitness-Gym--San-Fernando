@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from "react-hook-form"
 import axios from 'axios'
@@ -9,18 +9,31 @@ const SignUpForm = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(false);
     const [showPasswords, setShowPasswords] = useState(false);
+    const [user, setUser] = useState(null);
+    const location = useNavigate();
+    if (user && user.status) {
+        location(-1)
+    }
+    useEffect(() => {
+        const verifyCookie = async () => {
+            const { data } = await axios.post("/auth", {}, { withCredentials: true });
+            setUser(data);
+        };
+        verifyCookie();
+    }, []);
     const handleClick = () => {
         setShowPasswords(!showPasswords);
     }
 
     //!TODO: EMAIL VERIFICATION
 
-    const location = useNavigate();
     const onSubmit = async (data) => {
         setIsLoading(true);
         try {
             await axios.post('/auth/register', {
                 username: data.username,
+                firstName: data.firstName,
+                lastName: data.lastName,
                 email: data.email,
                 password: data.password,
                 cpassword: data.cpassword
@@ -35,40 +48,77 @@ const SignUpForm = () => {
     };
     return (
         <form className='w-full md:w-[600px] bg-white-light px-6 py-3 grid gap-4 rounded-xl' onSubmit={handleSubmit(onSubmit)}>
-            <div>
-                <div className='w-full relative'>
-                    <label className='text-black w-full text-2xl' htmlFor="username">Username</label>
-                    <input className='border-2 border-primary w-full px-6 py-3 rounded-xl' {...register('username', {
-                        required: {
-                            value: true,
-                            message: "Username is required"
-                        }, maxLength: {
-                            value: 30,
-                            message: "Username must be at most 30 characters long"
-                        }
-                    })} id='username' type="text" placeholder="Username" />
+            <div className='flex gap-4'>
+                <div>
+                    <div className='w-full relative'>
+                        <label className='text-black w-full text-2xl' htmlFor="username">Username</label>
+                        <input className='border-2 border-primary w-full px-6 py-3 rounded-xl' {...register('username', {
+                            required: {
+                                value: true,
+                                message: "Username is required"
+                            }, maxLength: {
+                                value: 30,
+                                message: "Username must be at most 30 characters long"
+                            }
+                        })} id='username' type="text" placeholder="Username" />
+                    </div>
+                    {errors.username && <span className='font-poppins font-semibold text-xs text-red'>{errors.username.message}</span>}
                 </div>
-                {errors.username && <span className='font-poppins font-semibold text-xs text-red'>{errors.username.message}</span>}
-            </div>
-            <div>
-                <div className='w-full relative'>
-                    <label className='text-black w-full text-2xl' htmlFor="email">Email</label>
-                    <input className='border-2 border-primary w-full px-6 py-3 rounded-xl' {...register('email', {
-                        required: {
-                            value: true,
-                            message: "Email is required"
-                        },
-                        pattern: {
-                            value: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/,
-                            message: 'Invalid email format'
-                        }, maxLength: {
-                            value: 30,
-                            message: "Email must be at most 30 characters long"
-                        }
-                    })} id='email' type="text" placeholder="Email" />
+                <div>
+                    <div className='w-full relative'>
+                        <label className='text-black w-full text-2xl' htmlFor="email">Email</label>
+                        <input className='border-2 border-primary w-full px-6 py-3 rounded-xl' {...register('email', {
+                            required: {
+                                value: true,
+                                message: "Email is required"
+                            },
+                            pattern: {
+                                value: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/,
+                                message: 'Invalid email format'
+                            }, maxLength: {
+                                value: 30,
+                                message: "Email must be at most 30 characters long"
+                            }
+                        })} id='email' type="text" placeholder="Email" />
+                    </div>
+                    {errors.email && <span className='font-poppins font-semibold text-xs text-red'>{errors.email.message}</span>}
                 </div>
-                {errors.email && <span className='font-poppins font-semibold text-xs text-red'>{errors.email.message}</span>}
             </div>
+
+            {/* first name and last name */}
+            <div className='flex gap-4'>
+                <div>
+                    <div className='w-full relative'>
+                        <label className='text-black w-full text-2xl' htmlFor="firstName">First Name</label>
+                        <input className='border-2 border-primary w-full px-6 py-3 rounded-xl' {...register('firstName', {
+                            required: {
+                                value: true,
+                                message: "First Name is required"
+                            }, maxLength: {
+                                value: 30,
+                                message: "First Name must be at most 30 characters long"
+                            }
+                        })} id='firstName' type="text" placeholder="First Name" />
+                    </div>
+                    {errors.firstName && <span className='font-poppins font-semibold text-xs text-red'>{errors.firstName.message}</span>}
+                </div>
+                <div>
+                    <div className='w-full relative'>
+                        <label className='text-black w-full text-2xl' htmlFor="lastName">Last Name</label>
+                        <input className='border-2 border-primary w-full px-6 py-3 rounded-xl' {...register('lastName', {
+                            required: {
+                                value: true,
+                                message: "Last Name is required"
+                            }, maxLength: {
+                                value: 30,
+                                message: "Last Name must be at most 30 characters long"
+                            }
+                        })} id='lastName' type="text" placeholder="Last Name" />
+                    </div>
+                    {errors.lastName && <span className='font-poppins font-semibold text-xs text-red'>{errors.lastName.message}</span>}
+                </div>
+            </div>
+
             <div>
                 <div className='w-full relative'>
                     {showPasswords ? <FaEye className='absolute right-[14px] bottom-[14px] text-[20px] cursor-pointer' onClick={handleClick} /> : <FaEyeSlash className='absolute right-[14px] bottom-[14px] text-[20px] cursor-pointer' onClick={handleClick} />}

@@ -12,7 +12,13 @@ const userVerification = (req, res) => {
     } else {
       const user = await User.findById(data.id);
       if (user)
-        return res.json({ status: true, user: user.username, role: user.role });
+        return res.json({
+          status: true,
+          user: user.username,
+          role: user.role,
+          firstName: user.firstName,
+          lastName: user.lastName,
+        });
       else return res.json({ status: false, message: "User not found" });
     }
   });

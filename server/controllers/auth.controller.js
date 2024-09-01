@@ -5,7 +5,8 @@ const { createSecretToken } = require("../utils/createSecretToken.js");
 // Register a new user
 const register = async (req, res, next) => {
   try {
-    const { username, email, password, cpassword } = req.body;
+    const { username, firstName, lastName, email, password, cpassword } =
+      req.body;
     if (password !== cpassword) {
       return res.status(400).json({ message: "Passwords do not match" });
     }
@@ -15,6 +16,8 @@ const register = async (req, res, next) => {
     }
     const user = await User.create({
       username,
+      firstName,
+      lastName,
       email,
       password,
     });
@@ -35,7 +38,7 @@ const register = async (req, res, next) => {
 // Login with an existing user
 const login = async (req, res, next) => {
   try {
-    const { username, password, cpassword } = req.body;
+    const { username, password } = req.body;
     if (!username || !password) {
       return res.json({ message: "All fields are required" });
     }
@@ -54,6 +57,8 @@ const login = async (req, res, next) => {
 
     const userData = {
       username: user.username,
+      firstName: user.firstName,
+      lastName: user.lastName,
       email: user.email,
       role: user.role,
       _id: user._id,

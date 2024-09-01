@@ -18,6 +18,9 @@ import MealDashboard from "./pages/admin/MealDashboard.jsx";
 import WorkoutDashboard from "./pages/admin/WorkoutDashboard.jsx";
 import { AdminProvider } from "./context/AdminContext.jsx";
 import Gym from "./pages/public/Gym.jsx";
+import MemberLayout from "./Layout/MemberLayout.jsx";
+import MyWorkouts from "./pages/private/MyWorkouts.jsx";
+
 function App() {
   return (
     <div className="App">
@@ -25,28 +28,35 @@ function App() {
         <Routes>
           <Route path="/" element={<RootLayout />}>
             <Route index element={<Home />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/services" element={<Services />} />
-            <Route path="/gym" element={<Gym />} />
-            <Route element={<UserProvider />}>
-              <Route path="/profile" element={<Profile />} />
-              <Route path="/meal-planner" element={<MealPlanner />} />
-              <Route path="/workout/:_id" element={<WorkoutView />} />
-              <Route path="/workout" element={<Workout />} />
-            </Route>
-            <Route path="/sign-up" element={<SignUp />} />
-            <Route path="/sign-in" element={<SignIn />} />
+            <Route path="about" element={<About />} />
+            <Route path="contact" element={<Contact />} />
+            <Route path="services" element={<Services />} />
+            <Route path="gym" element={<Gym />} />
+            <Route path="sign-up" element={<SignUp />} />
+            <Route path="sign-in" element={<SignIn />} />
             <Route path="*" element={<NoPage />} />
           </Route>
+          {/* member layout */}
+          <Route path="/client" element={<MemberLayout />}>
+            <Route element={<UserProvider />}>
+              {/* Change the nested routes to relative paths */}
+              <Route path="profile" element={<Profile />} />
+              <Route path="meal-planner" element={<MealPlanner />} />
+              <Route path="workout/:_id" element={<WorkoutView />} />
+              <Route path="workouts" element={<Workout />} />
+              <Route path="my-workouts" element={<MyWorkouts />} />
+            </Route>
+          </Route>
+          {/* admin layout */}
           <Route path="/" element={<AdminLayout />}>
             <Route element={<AdminProvider />}>
-              <Route path="/dashboard" element={<Dashboard />} />
+              {/* Change the nested routes to relative paths */}
+              <Route path="dashboard" element={<Dashboard />} />
               <Route
-                path="/meal-planner-dashboard"
+                path="meal-planner-dashboard"
                 element={<MealDashboard />}
               />
-              <Route path="/workout-dashboard" element={<WorkoutDashboard />} />
+              <Route path="workout-dashboard" element={<WorkoutDashboard />} />
             </Route>
           </Route>
         </Routes>
