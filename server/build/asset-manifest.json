@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.65fcb4f5.css",
-    "main.js": "/static/js/main.83b35732.js",
+    "main.js": "/static/js/main.b4179f33.js",
     "static/media/meal-planner.jpg": "/static/media/meal-planner.3cab3cfa30c8c2ce809c.jpg",
     "static/media/program-1.jpg": "/static/media/program-1.2b17042b03fe4ed39281.jpg",
     "static/media/logo.png": "/static/media/logo.70b5de61e9d142db9a94.png",
@@ -14,18 +14,20 @@
     "static/media/banner-services.jpg": "/static/media/banner-services.63b5055adcc2047205da.jpg",
     "static/media/about-hero.jpg": "/static/media/about-hero.f90addb6b9527d719fdc.jpg",
     "static/media/gym-3.jpg": "/static/media/gym-3.37b93ce97d95ea58f71d.jpg",
+    "static/media/home2.jpg": "/static/media/home2.693deda6db4d7f711e05.jpg",
     "static/media/grid-services-1.jpg": "/static/media/grid-services-1.a221437af72549062468.jpg",
     "static/media/gym-1.jpg": "/static/media/gym-1.04325d0af1237f98cc99.jpg",
     "static/media/gym-2.jpg": "/static/media/gym-2.56871e424faf697a6bd1.jpg",
     "static/media/services-3.jpg": "/static/media/services-3.873f564e61ac6dc91ef7.jpg",
+    "static/media/home1.jpg": "/static/media/home1.45f78c7104691e4eba6f.jpg",
     "static/media/hero.jpg": "/static/media/hero.d548352151d41b823eb8.jpg",
     "static/media/mobile-logo.png": "/static/media/mobile-logo.eecb049172a4fc94b37f.png",
     "index.html": "/index.html",
     "main.65fcb4f5.css.map": "/static/css/main.65fcb4f5.css.map",
-    "main.83b35732.js.map": "/static/js/main.83b35732.js.map"
+    "main.b4179f33.js.map": "/static/js/main.b4179f33.js.map"
   },
   "entrypoints": [
     "static/css/main.65fcb4f5.css",
-    "static/js/main.83b35732.js"
+    "static/js/main.b4179f33.js"
   ]
 }
