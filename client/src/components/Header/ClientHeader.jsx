@@ -6,7 +6,7 @@ const ClientHeader = () => {
     const [profileName, setProfileName] = useState(null);
     const firstName = user?.firstName?.split('')[0];
     const lastName = user?.lastName?.split('')[0];
-
+    // TODO: call userProvider instead of using useEffect on auth
     useEffect(() => {
         const randomColor = () => {
             const r = Math.floor(Math.random() * 255).toString();

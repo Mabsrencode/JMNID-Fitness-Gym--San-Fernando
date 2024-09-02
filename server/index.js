@@ -32,7 +32,7 @@ app.use(
     referrerPolicy: { policy: "no-referrer" },
   })
 );
-app.set("trust proxy", 1);
+// app.set("trust proxy", 1);
 app.disable("x-powered-by");
 app.use((req, res, next) => {
   res.removeHeader("Server");
@@ -60,11 +60,11 @@ app.use("/contact", contactRoutes);
 app.use("/job", jobOffers);
 app.use("/admin", adminRoutes);
 
-// app.use(express.static(path.join(__dirname, "build")));
+app.use(express.static(path.join(__dirname, "build")));
 
-// app.get("/*", (req, res) => {
-//   res.sendFile(path.join(__dirname, "build", "index.html"));
-// });
+app.get("/*", (req, res) => {
+  res.sendFile(path.join(__dirname, "build", "index.html"));
+});
 
 connectDB()
   .then(() => {
