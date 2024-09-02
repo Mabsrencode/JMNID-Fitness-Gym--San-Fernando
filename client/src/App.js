@@ -20,6 +20,7 @@ import { AdminProvider } from "./context/AdminContext.jsx";
 import Gym from "./pages/public/Gym.jsx";
 import MemberLayout from "./Layout/MemberLayout.jsx";
 import MyWorkouts from "./pages/private/MyWorkouts.jsx";
+import WorkoutPlanner from "./pages/private/WorkoutPlanner.jsx";
 
 function App() {
   return (
@@ -45,6 +46,7 @@ function App() {
               <Route path="workout/:_id" element={<WorkoutView />} />
               <Route path="workouts" element={<Workout />} />
               <Route path="my-workouts" element={<MyWorkouts />} />
+              <Route path="workout-planner" element={<WorkoutPlanner />} />
             </Route>
           </Route>
           {/* admin layout */}
