@@ -12,6 +12,8 @@ import gym2 from "../assets/images/gym-2.jpg";
 import gym3 from "../assets/images/gym-3.jpg";
 import aboutHero from "../assets/images/about-hero.jpg";
 import mealPlanner from "../assets/images/meal-planner.jpg";
+import home1 from "../assets/images/home1.jpg";
+import home2 from "../assets/images/home2.jpg";
 const images = {
   logo,
   mobileLogo,
@@ -27,6 +29,8 @@ const images = {
   gym3,
   aboutHero,
   mealPlanner,
+  home1,
+  home2,
 };
 
 export default images;

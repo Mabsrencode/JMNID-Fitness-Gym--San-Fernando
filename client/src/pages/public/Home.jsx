@@ -54,7 +54,7 @@ const Home = () => {
             <section className="text-white-light px-4 lg:px-[10%]">
                 <div className="md:flex flex-row-reverse mt-12 items-center">
                     <div className="md:w-[50%]">
-                        <img className="rounded-xl" src={images.program1} alt="program" />
+                        <img className="rounded-xl" src={images.home1} alt="program" />
                     </div>
                     <div className="md:w-[50%] mt-4 md:mt-0 md:p-4">
                         <h3 className="text-2xl lg:text-5xl font-teko">Customized meal plans</h3>
@@ -67,7 +67,7 @@ const Home = () => {
             <section className="text-white-light px-4 lg:px-[10%]">
                 <div className="md:flex mt-12 items-center">
                     <div className="md:w-[50%]">
-                        <img className="rounded-xl" src={images.program1} alt="program" />
+                        <img className="rounded-xl" src={images.home2} alt="program" />
                     </div>
                     <div className="md:w-[50%] mt-4 md:mt-0 md:p-4">
                         <h3 className="text-2xl lg:text-5xl font-teko">Track your progress</h3>
