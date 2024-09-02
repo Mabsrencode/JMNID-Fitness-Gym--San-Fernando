@@ -38,7 +38,7 @@ const SignUpForm = () => {
                 password: data.password,
                 cpassword: data.cpassword
             }, { withCredentials: true })
-            location('/');
+            location('/client');
             window.location.reload();
         } catch (error) {
             console.error('Login failed:', error);
