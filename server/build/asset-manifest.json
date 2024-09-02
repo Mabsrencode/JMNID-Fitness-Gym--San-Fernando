@@ -1,7 +1,8 @@
 {
   "files": {
-    "main.css": "/static/css/main.dda13a76.css",
-    "main.js": "/static/js/main.3ae51a01.js",
+    "main.css": "/static/css/main.65fcb4f5.css",
+    "main.js": "/static/js/main.83b35732.js",
+    "static/media/meal-planner.jpg": "/static/media/meal-planner.3cab3cfa30c8c2ce809c.jpg",
     "static/media/program-1.jpg": "/static/media/program-1.2b17042b03fe4ed39281.jpg",
     "static/media/logo.png": "/static/media/logo.70b5de61e9d142db9a94.png",
     "static/media/grid-services-3.jpg": "/static/media/grid-services-3.5dbef1e5543d4d3bf81c.jpg",
@@ -20,11 +21,11 @@
     "static/media/hero.jpg": "/static/media/hero.d548352151d41b823eb8.jpg",
     "static/media/mobile-logo.png": "/static/media/mobile-logo.eecb049172a4fc94b37f.png",
     "index.html": "/index.html",
-    "main.dda13a76.css.map": "/static/css/main.dda13a76.css.map",
-    "main.3ae51a01.js.map": "/static/js/main.3ae51a01.js.map"
+    "main.65fcb4f5.css.map": "/static/css/main.65fcb4f5.css.map",
+    "main.83b35732.js.map": "/static/js/main.83b35732.js.map"
   },
   "entrypoints": [
-    "static/css/main.dda13a76.css",
-    "static/js/main.3ae51a01.js"
+    "static/css/main.65fcb4f5.css",
+    "static/js/main.83b35732.js"
   ]
 }
