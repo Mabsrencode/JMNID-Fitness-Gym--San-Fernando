@@ -2,13 +2,12 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import "./SideBar.css"
 import LogoutButton from "../LogoutButton/LogoutButton.jsx"
-import { BarbelIcon, FoodMenuIcon } from '../../constants/icons.js'
-import { MdSpaceDashboard } from "react-icons/md";
+import { BarbelIcon, DashboardIcon, FoodMenuIcon } from '../../constants/icons.js'
 const AdminSidebar = () => {
     return (
         <aside className="relative flex flex-col  bg-black text-white-light h-cover max-w-[4rem]  hover:max-w-[18rem] border-r border-gray-light transition-all z-50">
             <Link to={"/admin"}>  <div className="mb-2 p-4 flex gap-4 items-center">
-                <MdSpaceDashboard className='w-[30px] h-[30px]' /> <h5 className="logo block antialiased tracking-normal font-sans text-xl font-bold leading-snug text-primary-dark">Dashboard</h5>
+                <DashboardIcon className='w-[30px] h-[30px]' /> <h5 className="logo block antialiased tracking-normal font-sans text-xl font-bold leading-snug text-primary-dark">Dashboard</h5>
             </div></Link>
             <nav className="flex flex-col gap-2 p-2 font-sans text-base font-normal text-white flex flex-col justify-between h-full">
                 <div className='flex flex-col gap-2'>
