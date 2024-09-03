@@ -49,7 +49,7 @@ const SignUpForm = () => {
     return (
         <form className='w-full md:w-[600px] bg-white-light px-6 py-3 grid gap-4 rounded-xl' onSubmit={handleSubmit(onSubmit)}>
             <div className='flex gap-4'>
-                <div>
+                <div className='flex-1'>
                     <div className='w-full relative'>
                         <label className='text-black w-full text-2xl' htmlFor="username">Username</label>
                         <input className='border-2 border-primary w-full px-6 py-3 rounded-xl' {...register('username', {
@@ -64,7 +64,7 @@ const SignUpForm = () => {
                     </div>
                     {errors.username && <span className='font-poppins font-semibold text-xs text-red'>{errors.username.message}</span>}
                 </div>
-                <div>
+                <div className='flex-1'>
                     <div className='w-full relative'>
                         <label className='text-black w-full text-2xl' htmlFor="email">Email</label>
                         <input className='border-2 border-primary w-full px-6 py-3 rounded-xl' {...register('email', {
@@ -87,7 +87,7 @@ const SignUpForm = () => {
 
             {/* first name and last name */}
             <div className='flex gap-4'>
-                <div>
+                <div className='flex-1'>
                     <div className='w-full relative'>
                         <label className='text-black w-full text-2xl' htmlFor="firstName">First Name</label>
                         <input className='border-2 border-primary w-full px-6 py-3 rounded-xl' {...register('firstName', {
@@ -102,7 +102,7 @@ const SignUpForm = () => {
                     </div>
                     {errors.firstName && <span className='font-poppins font-semibold text-xs text-red'>{errors.firstName.message}</span>}
                 </div>
-                <div>
+                <div className='flex-1'>
                     <div className='w-full relative'>
                         <label className='text-black w-full text-2xl' htmlFor="lastName">Last Name</label>
                         <input className='border-2 border-primary w-full px-6 py-3 rounded-xl' {...register('lastName', {

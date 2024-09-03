@@ -18,8 +18,8 @@ export const AdminProvider = () => {
             if (!data.status) {
                 navigate("/sign-in");
             }
-            if (data.role === "admin") {
-                navigate("/dashboard");
+            if (data.role !== "admin") {
+                navigate("/sign-in");
             }
             setUser(data);
             localStorage.setItem("jmnid-admin", data.role);

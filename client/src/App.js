@@ -38,8 +38,8 @@ function App() {
             <Route path="*" element={<NoPage />} />
           </Route>
           {/* member layout */}
-          <Route path="/client" element={<MemberLayout />}>
-            <Route element={<UserProvider />}>
+          <Route element={<UserProvider />}>
+            <Route path="/client" element={<MemberLayout />}>
               {/* Change the nested routes to relative paths */}
               <Route path="profile" element={<Profile />} />
               <Route path="meal-planner" element={<MealPlanner />} />
@@ -50,8 +50,8 @@ function App() {
             </Route>
           </Route>
           {/* admin layout */}
-          <Route path="/" element={<AdminLayout />}>
-            <Route element={<AdminProvider />}>
+          <Route element={<AdminProvider />}>
+            <Route path="/admin" element={<AdminLayout />}>
               {/* Change the nested routes to relative paths */}
               <Route path="dashboard" element={<Dashboard />} />
               <Route

@@ -32,8 +32,8 @@ app.use(
     referrerPolicy: { policy: "no-referrer" },
   })
 );
-// app.set("trust proxy", 1);
-// app.disable("x-powered-by");
+app.set("trust proxy", 1);
+app.disable("x-powered-by");
 app.use((req, res, next) => {
   res.removeHeader("Server");
   next();

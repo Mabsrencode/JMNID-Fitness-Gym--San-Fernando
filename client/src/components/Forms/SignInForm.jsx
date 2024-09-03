@@ -10,13 +10,11 @@ const SignForm = () => {
     const [error, setError] = useState(null);
     const [showPasswords, setShowPasswords] = useState(false);
     const [user, setUser] = useState(null);
-    const location = useNavigate()
+    const navigate = useNavigate()
     const handleClick = () => {
         setShowPasswords(!showPasswords);
     }
-    if (user && user.status) {
-        location(-1)
-    }
+
     useEffect(() => {
         const verifyCookie = async () => {
             const { data } = await axios.post("/auth", {}, { withCredentials: true });
@@ -24,16 +22,24 @@ const SignForm = () => {
         };
         verifyCookie();
     }, []);
+    useEffect(() => {
+        if (user) {
+            if (user.role === 'user') {
+                navigate('/client');
+            } else if (user.role === 'admin') {
+                navigate('/admin');
+            }
+        }
+    }, [user, navigate]);
     const onSubmit = async (data) => {
         try {
             setIsLoading(true);
-            await axios.post('/auth/login', {
+            const res = await axios.post('/auth/login', {
                 username: data.username,
                 email: data.email,
                 password: data.password
             }, { withCredentials: true })
-            location('/client');
-            window.location.reload();
+            res.data.userData.role === 'admin' ? navigate('/admin') : navigate('/client');
         } catch (error) {
             console.error('Login failed:', error);
             setError(error.response?.data?.message || error?.message);

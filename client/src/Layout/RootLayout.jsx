@@ -5,10 +5,8 @@ import Footer from "../components/Footer/Footer.jsx"
 import axios from 'axios';
 const RootLayout = () => {
     const [user, setUser] = useState(null)
-    const location = useNavigate()
-    if (user && user.status) {
-        location(-1)
-    }
+    const navigate = useNavigate()
+
     useEffect(() => {
         const verifyCookie = async () => {
             const { data } = await axios.post("/auth", {}, { withCredentials: true });
@@ -16,6 +14,15 @@ const RootLayout = () => {
         };
         verifyCookie();
     }, []);
+    useEffect(() => {
+        if (user) {
+            if (user.role === 'user') {
+                navigate('/client');
+            } else if (user.role === 'admin') {
+                navigate('/admin');
+            }
+        }
+    }, [user, navigate]);
     return (
         <>
             <Header />
