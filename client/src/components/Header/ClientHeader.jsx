@@ -31,7 +31,7 @@ const ClientHeader = () => {
         verifyCookie();
     }, []);
     return (
-        <header className='w-full bg-bg-color border-b border-gray-light py-3 px-6 top-0 right-0 z-0 flex justify-end'>
+        <header className='fixed w-full bg-black z-[1001] border-b border-gray-light py-3 px-6 top-0 right-0 z-0 flex justify-end'>
             <div className=''>
                 {user?.profile ? <img src={user?.profile} alt="profile" /> : <div id='profile' className='rounded-full font-teko font-semibold w-[40px] h-[40px] grid justify-center items-center'>{profileName}</div>}
             </div>

@@ -9,11 +9,11 @@ const MemberLayout = () => {
     const location = useLocation();
     const navigate = useNavigate();
     if (location.pathname === '/client') {
-        return <main className='bg-bg-color min-h-screen w-full flex'>
+        return <main className='bg-black min-h-screen w-full flex'>
             <ClientSideBar />
             <section className='w-full'>
                 <ClientHeader />
-                <div className='my-12 px-4 flex flex-col md:flex-row gap-2 justify-center'>
+                <div className='mt-[6rem] px-4 flex flex-col md:flex-row gap-2 justify-center ml-[4rem]'>
                     <div onClick={() => navigate("meal-planner")} className='parent-container relative max-w-[600px] bg-white-dark px-6 py-3 rounded-xl shadow-xl overflow-hidden'>
                         <div className='hover-container z-[1]'>
                         </div>
@@ -48,7 +48,7 @@ const MemberLayout = () => {
                 <ClientSideBar />
                 <section className='w-full'>
                     <ClientHeader />
-                    <div className='mt-12 px-4'>
+                    <div className='mt-[6rem] px-4 ml-[4rem]'>
                         <Outlet />
                     </div>
                 </section>

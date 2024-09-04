@@ -13,7 +13,6 @@ import MealPlanner from "./pages/private/MealPlanner.jsx";
 import Workout from "./pages/private/Workout.jsx";
 import WorkoutView from "./pages/private/WorkoutView.jsx";
 import AdminLayout from "./Layout/AdminLayout.jsx";
-import Dashboard from "./pages/admin/Dashboard.jsx";
 import MealDashboard from "./pages/admin/MealDashboard.jsx";
 import WorkoutDashboard from "./pages/admin/WorkoutDashboard.jsx";
 import { AdminProvider } from "./context/AdminContext.jsx";
@@ -21,6 +20,7 @@ import Gym from "./pages/public/Gym.jsx";
 import MemberLayout from "./Layout/MemberLayout.jsx";
 import MyWorkouts from "./pages/private/MyWorkouts.jsx";
 import WorkoutPlanner from "./pages/private/WorkoutPlanner.jsx";
+import Dashboard from "./pages/admin/Dashboard.jsx";
 
 function App() {
   return (
@@ -54,11 +54,8 @@ function App() {
             <Route path="/admin" element={<AdminLayout />}>
               {/* Change the nested routes to relative paths */}
               <Route path="dashboard" element={<Dashboard />} />
-              <Route
-                path="meal-planner-dashboard"
-                element={<MealDashboard />}
-              />
-              <Route path="workout-dashboard" element={<WorkoutDashboard />} />
+              <Route path="meals" element={<MealDashboard />} />
+              <Route path="workouts" element={<WorkoutDashboard />} />
             </Route>
           </Route>
         </Routes>
