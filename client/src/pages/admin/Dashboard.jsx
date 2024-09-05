@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useCallback, useEffect, useState } from "react";
-import { AgGridReact } from "ag-grid-react"; // React Data Grid Component
+import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-quartz.css";
 import VerifyButton from "../../components/CustomButtons/VerifyButton";
@@ -41,12 +41,12 @@ const Dashboard = () => {
                             <VerifyButton
                                 _id={params.data.action}
                                 status={params.data.status}
-                                handleFunction={fetchUsers} // Pass the function down
+                                handleFunction={fetchUsers}
                             />
                             <DeclineButton
                                 _id={params.data.action}
                                 status={params.data.status}
-                                handleFunction={fetchUsers} // Pass the function down
+                                handleFunction={fetchUsers}
                             />
                         </div>
                     ),
