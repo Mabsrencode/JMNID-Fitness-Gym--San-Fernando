@@ -1,49 +1,76 @@
-import axios from 'axios'
-import React, { useEffect, useState } from 'react'
-import { AgGridReact } from 'ag-grid-react'; // React Data Grid Component
+import axios from "axios";
+import React, { useCallback, useEffect, useState } from "react";
+import { AgGridReact } from "ag-grid-react"; // React Data Grid Component
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-quartz.css";
+import VerifyButton from "../../components/CustomButtons/VerifyButton";
+import DeclineButton from "../../components/CustomButtons/DeclineButton";
 const Dashboard = () => {
-    const [users, setUsers] = useState(null)
-    const [loading, setLoading] = useState(false)
-    const [rowData, setRowData] = useState([
-        { make: "Tesla", model: "Model Y", price: 64950, electric: true },
-        { make: "Ford", model: "F-Series", price: 33850, electric: false },
-        { make: "Toyota", model: "Corolla", price: 29600, electric: false },
-    ]);
+    const [loading, setLoading] = useState(false);
+    const [rowData, setRowData] = useState([]);
+    const [colDefs, setColDefs] = useState([]);
 
-    // Column Definitions: Defines the columns to be displayed.
-    const [colDefs, setColDefs] = useState([
-        { field: "make" },
-        { field: "model" },
-        { field: "price" },
-        { field: "electric" }
-    ]);
-    useEffect(() => {
-        const fetchUsers = async () => {
-            try {
-                setLoading(true)
-                const data = await axios.get('/users/all-users')?.data;
-                setUsers(data)
-            } catch (error) {
-
-            } finally {
-                setLoading(false);
-            }
+    const fetchUsers = useCallback(async () => {
+        try {
+            setLoading(true);
+            const response = await axios.get("/client/all-users");
+            const data = response?.data || [];
+            console.log(data);
+            const filteredData = data.map((item) => ({
+                username: item.username,
+                email: item.email,
+                fullName: `${item.firstName} ${item.lastName}`,
+                accountId: item._id,
+                role: item.role,
+                status: item.membership_status,
+                action: item._id,
+            }));
+            setRowData(filteredData);
+            setColDefs([
+                { field: "username", headerName: "Username" },
+                { field: "email", headerName: "Email" },
+                { field: "fullName", headerName: "Full Name" },
+                { field: "accountId", headerName: "Account ID" },
+                { field: "role", headerName: "Role" },
+                { field: "status", headerName: "Status" },
+                {
+                    field: "action",
+                    headerName: "Action",
+                    cellRenderer: (params) => (
+                        <div style={{ display: "flex", gap: "10px" }}>
+                            <VerifyButton
+                                _id={params.data.action}
+                                status={params.data.status}
+                                handleFunction={fetchUsers} // Pass the function down
+                            />
+                            <DeclineButton
+                                _id={params.data.action}
+                                status={params.data.status}
+                                handleFunction={fetchUsers} // Pass the function down
+                            />
+                        </div>
+                    ),
+                },
+            ]);
+        } catch (error) {
+            console.error("Error fetching users:", error);
+        } finally {
+            setLoading(false);
         }
-        fetchUsers()
-    }, [])
+    }, []);
+    useEffect(() => {
+        fetchUsers();
+    }, [fetchUsers]);
     return (
-        <div
-            className="ag-theme-quartz" // applying the Data Grid theme
-            style={{ height: 500 }} // the Data Grid will fill the size of the parent container
-        >
+        <div className="ag-theme-quartz h-[85vh]">
             <AgGridReact
+                pagination
                 rowData={rowData}
                 columnDefs={colDefs}
+                loading={loading}
             />
         </div>
-    )
-}
+    );
+};
 
-export default Dashboard
+export default Dashboard;

@@ -3,9 +3,9 @@ const router = express.Router();
 const {
   getAllUsers,
   deleteUser,
-  changeRoleUser,
+  handleChangeMembershipStatus,
 } = require("../controllers/user.controller.js");
 router.get("/all-users", getAllUsers);
 router.delete("/delete-account/:id", deleteUser);
-router.put("/change-role", changeRoleUser);
+router.patch("/verify/:id", handleChangeMembershipStatus);
 module.exports = router;

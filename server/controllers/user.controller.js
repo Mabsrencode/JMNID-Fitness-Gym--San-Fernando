@@ -14,18 +14,13 @@ const deleteUser = async (req, res) => {
   }
 };
 
-const changeRoleUser = async (req, res) => {
+const handleChangeMembershipStatus = async (req, res) => {
   try {
-    const { id, newRole } = req.body;
-
-    // Validate newRole
-    if (!["admin", "moderator"].includes(newRole)) {
-      return res.status(400).json({ message: "Invalid role" });
-    }
-
+    const userId = req.params.id;
+    const status = req.body.membership_status;
     const user = await User.findByIdAndUpdate(
-      id,
-      { role: newRole },
+      userId,
+      { membership_status: status },
       { new: true }
     );
 
@@ -33,10 +28,13 @@ const changeRoleUser = async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    res.json({ message: "User role updated successfully", user });
+    res.status(200).json({ message: "User verified successfully", user });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    console.error("Error verifying user:", error);
+    res
+      .status(500)
+      .json({ message: "An error occurred while verifying the user" });
   }
 };
 
-module.exports = { getAllUsers, deleteUser, changeRoleUser };
+module.exports = { getAllUsers, deleteUser, handleChangeMembershipStatus };

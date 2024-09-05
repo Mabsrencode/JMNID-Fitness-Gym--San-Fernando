@@ -26,12 +26,12 @@ const userSchema = new mongoose.Schema(
     },
     membership_status: {
       type: String,
-      enum: ["verified", "pending"],
+      enum: ["verified", "pending", "declined"],
       default: "pending",
     },
     role: {
       type: String,
-      enum: ["admin", "moderator", "user", "nutritionist", "instructor"],
+      enum: ["admin", "moderator", "user"],
       default: "user",
     },
     fitness_goals: {

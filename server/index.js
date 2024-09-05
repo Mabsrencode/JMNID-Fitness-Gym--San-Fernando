@@ -7,7 +7,7 @@ const cors = require("cors");
 const helmet = require("helmet");
 const rateLimit = require("express-rate-limit");
 const connectDB = require("./db.js");
-const adminRoutes = require("./routes/user.route.js");
+const usersRoutes = require("./routes/user.route.js");
 const contactRoutes = require("./routes/email.route.js");
 const authRoutes = require("./routes/auth.route.js");
 const jobOffers = require("./routes/offers.route");
@@ -58,7 +58,7 @@ app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 app.use("/auth", authRoutes);
 app.use("/contact", contactRoutes);
 app.use("/job", jobOffers);
-app.use("/admin", adminRoutes);
+app.use("/client", usersRoutes);
 
 app.use(express.static(path.join(__dirname, "build")));
 
