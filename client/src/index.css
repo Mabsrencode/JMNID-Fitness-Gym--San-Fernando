@@ -8,4 +8,5 @@ p {
 }
 label {
   font-family: "teko", sans-serif;
+  display: block;
 }

@@ -10,7 +10,8 @@ const connectDB = require("./db.js");
 const usersRoutes = require("./routes/user.route.js");
 const contactRoutes = require("./routes/email.route.js");
 const authRoutes = require("./routes/auth.route.js");
-const jobOffers = require("./routes/offers.route");
+const jobOffers = require("./routes/offers.route.js");
+const mealsRoutes = require("./routes/meal.route.js");
 const app = express();
 
 app.use(
@@ -59,6 +60,7 @@ app.use("/auth", authRoutes);
 app.use("/contact", contactRoutes);
 app.use("/job", jobOffers);
 app.use("/client", usersRoutes);
+app.use("/meals", mealsRoutes);
 
 app.use(express.static(path.join(__dirname, "build")));
 

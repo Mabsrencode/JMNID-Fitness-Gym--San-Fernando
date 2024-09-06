@@ -17,7 +17,7 @@ const AdminLayout = () => {
                 <AdminSidebar />
                 <section className='w-full'>
                     <ClientHeader />
-                    <div className='mt-[6rem] px-4 ml-[4rem]'>
+                    <div className='mt-[5rem] px-4 ml-[4rem]'>
                         <Outlet />
                     </div>
                 </section>
