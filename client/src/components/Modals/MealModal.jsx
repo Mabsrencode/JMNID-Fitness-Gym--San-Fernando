@@ -1,32 +1,58 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import "./modal.css";
 import { IoIosCloseCircle } from "react-icons/io";
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import FileBase64 from 'react-file-base64';
 
-const MealModal = ({ onclick, handleRefetch }) => {
+const MealModal = ({ onclick, handleRefetch, meal }) => {
+    console.log(meal)
     const { register, handleSubmit, reset, setValue, formState: { errors } } = useForm();
     const [loading, setLoading] = useState(false);
     const [imageBase64, setImageBase64] = useState("");
 
+    useEffect(() => {
+        if (meal) {
+            setValue("name", meal.name);
+            setValue("ingredients", meal.ingredients?.join(", "));
+            setValue("calories", meal.calories);
+            setValue("dietary_preferences", meal.dietary_preferences);
+            setValue("instructions", meal.instructions);
+            setImageBase64(meal.image);
+        } else {
+            reset();
+        }
+    }, [meal, setValue, reset]);
+
     const onSubmit = async (data) => {
-        console.log(data);
         const ingredientsArray = data.ingredients
             .split(',')
             .map(ingredient => ingredient.trim())
             .filter(ingredient => ingredient !== "");
         try {
             setLoading(true);
-            await axios.post("/meals/create-meal", {
-                name: data.name,
-                ingredients: ingredientsArray,
-                calories: data.calories,
-                dietary_preferences: data.dietary_preferences,
-                image: imageBase64
-            });
+            if (meal) {
+                await axios.put(`/meals/update-meal/${meal._id}`, {
+                    name: data.name,
+                    ingredients: ingredientsArray,
+                    calories: data.calories,
+                    dietary_preferences: data.dietary_preferences,
+                    image: imageBase64,
+                    instructions: data.instructions,
+                });
+            } else {
+                await axios.post("/meals/create-meal", {
+                    name: data.name,
+                    ingredients: ingredientsArray,
+                    calories: data.calories,
+                    dietary_preferences: data.dietary_preferences,
+                    image: imageBase64,
+                    instructions: data.instructions,
+                });
+            }
+
             handleRefetch();
-            reset();
+            onclick();
         } catch (error) {
             console.error(error);
         } finally {
@@ -126,8 +152,22 @@ const MealModal = ({ onclick, handleRefetch }) => {
                         onDone={handleFileUpload}
                     />
                 </div>
+                <div>
+                    <label className='text-black w-full text-2xl' htmlFor="instructions">Instructions</label>
+                    <textarea {...register('instructions', {
+                        required: {
+                            value: true,
+                            message: "Instructions is required"
+                        },
+                        maxLength: {
+                            value: 500,
+                            message: "Instructions must be at most 500 characters long"
+                        }
+                    })} className='border-2 border-primary w-full px-6 py-3 rounded-xl' placeholder='Write the instructions here...' id="instructions"></textarea>
+                    {errors.instructions && <span className='font-poppins font-semibold text-xs text-red'>{errors.instructions.message}</span>}
+                </div>
                 <div className="flex justify-center gap-4">
-                    <button className='font-poppins uppercase rounded-lg py-3 px-6 font-semibold bg-primary-dark text-white-light' type='submit'>{loading ? "loading" : "submit"}</button>
+                    <button className='font-poppins uppercase rounded-lg py-3 px-6 font-semibold bg-primary-dark text-white-light' type='submit'>{loading ? "loading" : meal ? "Update" : "Submit"}</button>
                     <button type="button" onClick={onClear} className='font-poppins uppercase rounded-lg py-3 px-6 font-semibold bg-red-500 text-white-light'>Clear</button>
                 </div>
             </form>
