@@ -29,7 +29,9 @@ const createMeal = async (req, res) => {
 
   try {
     const savedMeal = await newMeal.save();
-    res.json(savedMeal);
+    res
+      .status(200)
+      .json({ message: "Meal created successfully!", meal: savedMeal });
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
