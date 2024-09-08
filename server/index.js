@@ -12,6 +12,7 @@ const contactRoutes = require("./routes/email.route.js");
 const authRoutes = require("./routes/auth.route.js");
 const jobOffers = require("./routes/offers.route.js");
 const mealsRoutes = require("./routes/meal.route.js");
+const mealPlanRoutes = require("./routes/mealPlan.route.js");
 const app = express();
 
 app.use(
@@ -61,6 +62,7 @@ app.use("/contact", contactRoutes);
 app.use("/job", jobOffers);
 app.use("/client", usersRoutes);
 app.use("/meals", mealsRoutes);
+app.use("/meal-planner", mealPlanRoutes);
 
 app.use(express.static(path.join(__dirname, "build")));
 

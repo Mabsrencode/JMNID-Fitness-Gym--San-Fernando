@@ -15,6 +15,7 @@ const createMeal = async (req, res) => {
     ingredients,
     calories,
     dietary_preferences,
+    category,
     image,
     instructions,
   } = req.body;
@@ -23,6 +24,7 @@ const createMeal = async (req, res) => {
     ingredients,
     calories,
     dietary_preferences,
+    category,
     image,
     instructions,
   });

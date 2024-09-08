@@ -71,7 +71,7 @@ const MealDashboard = () => {
                         <MealSkeleton />
                     ) : meals && meals.length > 0 ? (
                         meals.map((data, index) => (
-                            <li key={index} className="w-full md:w-[400px] bg-white-dark rounded-xl p-4">
+                            <li key={index} className="w-full md:w-[400px] max-h-auto bg-white-dark rounded-xl p-4">
                                 <div className="relative w-full h-[200px] shadow-2xl">
                                     <BsThreeDots
                                         onClick={() => handleShowActionButtons(index)}
@@ -109,9 +109,14 @@ const MealDashboard = () => {
                                         </p>
                                     </div>
                                 </div>
-                                <span className="font-poppins text-sm block bg-gray-dark inline px-3 py-1 text-white-dark rounded-full">
-                                    {data.dietary_preferences}
-                                </span>
+                                <div className="flex justify-between items-center">
+                                    <span className="font-poppins text-sm block bg-gray-dark inline px-3 py-1 text-white-dark rounded-full">
+                                        {data.dietary_preferences}
+                                    </span>
+                                    <span className="font-poppins text-sm block bg-gray-light inline px-3 py-1 text-white-dark rounded-full">
+                                        {data.category}
+                                    </span>
+                                </div>
                             </li>
                         ))
                     ) : (

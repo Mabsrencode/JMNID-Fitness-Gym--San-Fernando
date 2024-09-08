@@ -6,9 +6,9 @@ import { IoIosCloseCircle } from "react-icons/io";
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import FileBase64 from 'react-file-base64';
+import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 
 const MealModal = ({ onclick, handleRefetch, meal }) => {
-    console.log(meal)
     const { register, handleSubmit, reset, setValue, formState: { errors } } = useForm();
     const [loading, setLoading] = useState(false);
     const [imageBase64, setImageBase64] = useState("");
@@ -19,6 +19,7 @@ const MealModal = ({ onclick, handleRefetch, meal }) => {
             setValue("ingredients", meal.ingredients?.join(", "));
             setValue("calories", meal.calories);
             setValue("dietary_preferences", meal.dietary_preferences);
+            setValue("category", meal.category);
             setValue("instructions", meal.instructions);
             setImageBase64(meal.image);
         } else {
@@ -40,6 +41,7 @@ const MealModal = ({ onclick, handleRefetch, meal }) => {
                     ingredients: ingredientsArray,
                     calories: data.calories,
                     dietary_preferences: data.dietary_preferences,
+                    category: data.category,
                     image: imageBase64,
                     instructions: data.instructions,
                 });
@@ -49,6 +51,7 @@ const MealModal = ({ onclick, handleRefetch, meal }) => {
                     ingredients: ingredientsArray,
                     calories: data.calories,
                     dietary_preferences: data.dietary_preferences,
+                    category: data.category,
                     image: imageBase64,
                     instructions: data.instructions,
                 });
@@ -153,12 +156,32 @@ const MealModal = ({ onclick, handleRefetch, meal }) => {
                             {errors.dietary_preferences && <span className='font-poppins font-semibold text-xs text-red'>{errors.dietary_preferences.message}</span>}
                         </div>
                     </div>
-                    <div>
-                        <label className='text-black w-full text-2xl' htmlFor="image">Image</label>
-                        <FileBase64
-                            multiple={false}
-                            onDone={handleFileUpload}
-                        />
+
+                    <div className='flex flex-row-reverse gap-4'>
+                        <div className='flex-1'>
+                            <label className='text-black w-full text-2xl' htmlFor="image">Image</label>
+                            <div className='w-[100px]'>
+                                <FileBase64
+                                    multiple={false}
+                                    onDone={handleFileUpload}
+                                />
+                            </div>
+                        </div>
+                        <div className='flex-1'>
+                            <div className='w-full relative'>
+                                <label className='text-black w-full text-2xl' htmlFor="category">Category</label>
+                                <input className='border-2 border-primary w-full px-6 py-3 rounded-xl' id='category' placeholder='Category' {...register('category', {
+                                    required: {
+                                        value: true,
+                                        message: 'Category is required'
+                                    }, maxLength: {
+                                        value: 50,
+                                        message: 'Category must be at most 50 characters long'
+                                    }
+                                })} type="text" />
+                            </div>
+                            {errors.category && <span className='font-poppins font-semibold text-xs text-red'>{errors.category.message}</span>}
+                        </div>
                     </div>
                     <div>
                         <label className='text-black w-full text-2xl' htmlFor="instructions">Instructions</label>
@@ -175,7 +198,7 @@ const MealModal = ({ onclick, handleRefetch, meal }) => {
                         {errors.instructions && <span className='font-poppins font-semibold text-xs text-red'>{errors.instructions.message}</span>}
                     </div>
                     <div className="flex justify-center gap-4">
-                        <button className='font-poppins uppercase rounded-lg py-3 px-6 font-semibold bg-primary-dark text-white-light' type='submit'>{loading ? "loading" : meal ? "Update" : "Submit"}</button>
+                        <button className='font-poppins uppercase rounded-lg py-3 px-6 font-semibold bg-primary-dark text-white-light' type='submit'>{loading ? <AiOutlineLoading3Quarters className='mx-auto text-[20px] animate-spin' /> : meal ? "Update" : "Submit"}</button>
                         <button type="button" onClick={onClear} className='font-poppins uppercase rounded-lg py-3 px-6 font-semibold bg-red-500 text-white-light'>Clear</button>
                     </div>
                 </form>

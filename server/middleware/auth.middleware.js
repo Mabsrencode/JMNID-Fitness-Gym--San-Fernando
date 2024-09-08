@@ -18,6 +18,7 @@ const userVerification = (req, res) => {
           role: user.role,
           firstName: user.firstName,
           lastName: user.lastName,
+          _id: user._id,
         });
       else return res.json({ status: false, message: "User not found" });
     }

@@ -15,7 +15,6 @@ const Dashboard = () => {
             setLoading(true);
             const response = await axios.get("/client/all-users");
             const data = response?.data || [];
-            console.log(data);
             const filteredData = data.map((item) => ({
                 username: item.username,
                 email: item.email,
