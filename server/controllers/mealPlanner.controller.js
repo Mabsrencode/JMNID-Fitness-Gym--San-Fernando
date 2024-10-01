@@ -30,6 +30,7 @@ const getMealPlan = async (req, res) => {
 const saveMealPlan = async (req, res) => {
   try {
     const { userId, week, meals } = req.body;
+
     if (!userId || !week || !meals || !Array.isArray(meals)) {
       return res.status(400).json({ message: "Invalid input data." });
     }
@@ -44,23 +45,52 @@ const saveMealPlan = async (req, res) => {
     if (mealPlan) {
       mealPlan.meals = meals;
       await mealPlan.save();
-      res
+      return res
         .status(200)
         .json({ message: "Meal plan updated successfully.", mealPlan });
     } else {
       mealPlan = new MealPlan({ user: userId, week: parsedWeek, meals });
       await mealPlan.save();
-      res
+      return res
         .status(201)
         .json({ message: "Meal plan created successfully.", mealPlan });
     }
   } catch (error) {
     console.error(error);
-    res.status(500).json({
+    return res.status(500).json({
       message: "An error occurred while saving the meal plan.",
       error: error.message,
     });
   }
 };
 
-module.exports = { getMealPlan, saveMealPlan };
+const removeMealPlan = async (req, res) => {
+  try {
+      const userId = req.params.userId;
+      const week = new Date(req.query.week);
+      const mealIds = req.body.mealIds;
+
+      if (!userId || isNaN(week) || !Array.isArray(mealIds)) {
+          return res.status(400).json({ message: "Invalid user ID, week format, or meal IDs." });
+      }
+
+      const mealPlan = await MealPlan.findOne({ user: userId, week });
+      if (!mealPlan) {
+          return res.status(404).json({ message: "Meal plan not found." });
+      }
+
+      mealPlan.meals = mealPlan.meals.filter(mealId => !mealIds.includes(mealId));
+
+      await mealPlan.save();
+
+      res.status(200).json({ message: "Meal(s) removed successfully.", mealPlan });
+  } catch (error) {
+      console.error(error);
+      res.status(500).json({
+          message: "An error occurred while removing the meal plan.",
+          error: error.message,
+      });
+  }
+};
+
+module.exports = { getMealPlan, saveMealPlan, removeMealPlan };
