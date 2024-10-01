@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.914f4d7f.css",
-    "main.js": "/static/js/main.b31d6e2c.js",
+    "main.css": "/static/css/main.14f1862e.css",
+    "main.js": "/static/js/main.0b92b5c8.js",
     "static/media/meal-planner.jpg": "/static/media/meal-planner.3cab3cfa30c8c2ce809c.jpg",
     "static/media/program-1.jpg": "/static/media/program-1.2b17042b03fe4ed39281.jpg",
     "static/media/logo.png": "/static/media/logo.70b5de61e9d142db9a94.png",
@@ -23,11 +23,11 @@
     "static/media/hero.jpg": "/static/media/hero.d548352151d41b823eb8.jpg",
     "static/media/mobile-logo.png": "/static/media/mobile-logo.eecb049172a4fc94b37f.png",
     "index.html": "/index.html",
-    "main.914f4d7f.css.map": "/static/css/main.914f4d7f.css.map",
-    "main.b31d6e2c.js.map": "/static/js/main.b31d6e2c.js.map"
+    "main.14f1862e.css.map": "/static/css/main.14f1862e.css.map",
+    "main.0b92b5c8.js.map": "/static/js/main.0b92b5c8.js.map"
   },
   "entrypoints": [
-    "static/css/main.914f4d7f.css",
-    "static/js/main.b31d6e2c.js"
+    "static/css/main.14f1862e.css",
+    "static/js/main.0b92b5c8.js"
   ]
 }
