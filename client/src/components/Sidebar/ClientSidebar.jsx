@@ -19,7 +19,7 @@ const ClientSideBar = () => {
                         </div><h1 className='ml-4'>Meal Planner</h1>
 
                     </Link>
-                    <Link to={"workouts"} className="flex items-center w-full p-3 text-nowrap rounded-lg text-start leading-tight transition-all hover:bg-primary-dark font-semibold hover:bg-opacity-80 hover:text-white focus:bg-primary-dark focus:bg-opacity-80 active:bg-gray-50 active:bg-opacity-80 hover:text-white-light focus:text-white-light active:text-white-light outline-none">
+                    <Link to={"workout-planner"} className="flex items-center w-full p-3 text-nowrap rounded-lg text-start leading-tight transition-all hover:bg-primary-dark font-semibold hover:bg-opacity-80 hover:text-white focus:bg-primary-dark focus:bg-opacity-80 active:bg-gray-50 active:bg-opacity-80 hover:text-white-light focus:text-white-light active:text-white-light outline-none">
                         <div className="grid place-items-center">
                             <BarbelIcon />
                         </div><h1 className='ml-4'>Workout Planner</h1>
@@ -28,7 +28,7 @@ const ClientSideBar = () => {
                     <Link to={"my-workouts"} className="flex items-center w-full p-3 text-nowrap rounded-lg text-start leading-tight transition-all hover:bg-primary-dark font-semibold hover:bg-opacity-80 hover:text-white focus:bg-primary-dark focus:bg-opacity-80 active:bg-primary-dark active:bg-opacity-80 hover:text-white-light focus:text-white-light active:text-white-light outline-none">
                         <div className="grid place-items-center">
                             <LightBarbelIcon />
-                        </div><h1 className='ml-4'>My Workouts</h1>
+                        </div><h1 className='ml-4'>My Workout</h1>
                     </Link>
                 </div>
                 <LogoutButton />
