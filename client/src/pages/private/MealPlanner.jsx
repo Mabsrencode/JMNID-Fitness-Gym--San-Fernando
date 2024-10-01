@@ -75,27 +75,56 @@ const MealPlanner = () => {
 
     const handleSaveMealPlan = async () => {
         try {
+            const mealsToSave = Object.entries(mealPlan.meals).flatMap(([day, mealIds]) =>
+                mealIds.map((mealId) => {
+                    const meal = meals.find(meal => meal._id === mealId);
+                    return { day, meal: mealId, mealName: meal ? meal.name : "Unknown Meal" };
+                })
+            );
+    
+            console.log("Saving the following meal plan:", {
+                userId,
+                week: selectedWeek,
+                meals: mealsToSave,
+            });
+    
             const response = await axios.post('/meal-planner/save-meal-plan', {
                 userId,
                 week: selectedWeek,
-                meals: Object.entries(mealPlan.meals).flatMap(([day, mealIds]) =>
-                    mealIds.map((mealId) => ({ day, meal: mealId }))
-                ),
+                meals: mealsToSave,
             });
-            toast(response.data.message)
+    
+            toast(response.data.message, { autoClose: 2000 });
+            setTimeout(() => {
+                window.location.reload();
+            }, 2000);
         } catch (error) {
             console.error(error);
             toast.error(error?.response?.data?.message || "An error occurred. Please try again.");
         }
+    };
+    
+
+    const handleMealRemove = (day, mealId) => {
+        setMealPlan((prev) => {
+            const updatedMeals = prev.meals[day].filter(id => id !== mealId);
+            return {
+                ...prev,
+                meals: {
+                    ...prev.meals,
+                    [day]: updatedMeals,
+                },
+            };
+        });
     };
 
     return (
         <div className="meal-planner-container">
             <style>
                 {`
-          .date-input::-webkit-calendar-picker-indicator {
-            filter: invert(1); 
-          }
+                .date-input::-webkit-calendar-picker-indicator {
+                filter: invert(1); 
+            }
         `}
             </style>
             <header className="meal-planner-header py-3 px-6 bg-white-dark rounded-xl flex flex-row-reverse items-center gap-6">
@@ -189,16 +218,17 @@ const MealPlanner = () => {
                                     </button>
                                 </div>
                                 {mealPlan.meals && mealPlan.meals[day] && (
-                                    <div className='mt-1'>
+                                    <div className='mt-1 overflow-auto'>
                                         <h1>Selected Meals:</h1>
-                                        <ul className='bg-white-dark p-1 rounded-lg flex flex-col gap-1'>
+                                        <ul className='bg-white-dark p-1 rounded-lg flex flex-col gap-5 overflow-y-auto'>
                                             {mealPlan.meals[day].map((mealId) => {
                                                 const meal = meals.find((meal) => meal._id === mealId);
                                                 return (
-                                                    <li className={`text-black capitalize font-semibold `} key={mealId}>
-                                                        <div className='flex justify-between items-center '>
-                                                            <h3>{meal ? meal.name : 'Unknown Meal'}</h3>
-                                                            <button className='py-1 px-3 rounded-full bg-red-500 hover:bg-red-600'>Remove</button>
+                                                    <li className={`text-black capitalize font-semibold`} key={mealId}>
+                                                        <div className='bg-slate-600 p-2 rounded'>
+                                                            <h3 className='text-white'>{meal ? meal.name : 'Unknown Meal'}</h3>
+                                                            <hr />
+                                                            <button className='mt-5 py-2 px-3 rounded bg-red-500 hover:bg-red-600 text-white' onClick={() => handleMealRemove(day, mealId)}>Remove</button>
                                                         </div>
                                                     </li>
                                                 );

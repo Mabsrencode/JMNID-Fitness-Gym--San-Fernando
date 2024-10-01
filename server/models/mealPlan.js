@@ -7,6 +7,7 @@ const MealPlanSchema = new mongoose.Schema({
     {
       day: { type: String, required: true },
       meal: { type: mongoose.Schema.Types.ObjectId, ref: "Meal" },
+      mealName: { type: String, required: true }
     },
   ],
 });
