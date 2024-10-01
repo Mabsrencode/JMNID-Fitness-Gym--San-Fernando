@@ -1,23 +1,27 @@
-const mongoose = require("mongoose");
-const workoutSchema = new mongoose.Schema(
-  {
+const mongoose = require('mongoose');
+
+const workoutSchema = new mongoose.Schema({
     title: {
-      type: String,
-      required: true,
+        type: String,
+        required: true
     },
     description: {
-      type: String,
-      required: true,
+        type: String,
+        required: true
     },
-    images: {
-      type: [String],
-      required: true,
+    video: {
+        type: String,
+        required: true,
     },
-  },
-  {
-    timestamps: true,
-  }
-);
+    url: {
+        type: String,
+        required: true
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now
+    }
+});
 
-const Workout = mongoose.model("Workout", workoutSchema);
+const Workout = mongoose.model('Workout', workoutSchema);
 module.exports = Workout;
