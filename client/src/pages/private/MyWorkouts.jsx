@@ -1,48 +1,116 @@
 import { useUser } from '../../context/UserContext';
-const React = require('react');
-const { useState } = React;
-const { Calendar, momentLocalizer } = require('react-big-calendar');
-const moment = require('moment');
-require('react-big-calendar/lib/css/react-big-calendar.css');
+import React, { useState, useEffect, useId } from 'react';
+import { Calendar, momentLocalizer } from 'react-big-calendar';
+import moment from 'moment';
+import 'react-big-calendar/lib/css/react-big-calendar.css';
 
 const localizer = momentLocalizer(moment);
 
 const MyWorkouts = () => {
     const user = useUser();
     const [dailyPlans, setDailyPlans] = useState({});
+    const [events, setEvents] = useState([]);
     const [selectedDate, setSelectedDate] = useState(null);
+
+    const fetchPlans = async () => {
+        const userId = user?.user?._id;
+    
+        if (!userId) {
+            console.error("Error: Invalid user ID.");
+            return;
+        }
+    
+        console.log('Data Fetch: ', { userId });
+    
+        try {
+            // Fetch all workout plans
+            const workoutResponse = await fetch(`http://localhost:4000/workout-planner/${userId}/plan`);
+            const workoutData = await workoutResponse.json();
+    
+            // Fetch all meal plans
+            const mealResponse = await fetch(`http://localhost:4000/meal-planner/${userId}/plan`);
+            const mealData = await mealResponse.json();
+    
+            // Check if data is valid
+            if (!workoutData || !mealData || 
+                (Array.isArray(workoutData.workoutPlan) && workoutData.workoutPlan.length === 0) || 
+                (Array.isArray(mealData.mealPlan) && mealData.mealPlan.length === 0)) {
+                throw new Error('No workout or meal plans found.');
+            }
+    
+            // Set the fetched plans
+            setDailyPlans({
+                workoutPlan: workoutData.workoutPlan || null,
+                mealPlan: mealData.mealPlan || null,
+            });
+    
+            // Create events for the calendar
+            const newEvents = [];
+    
+            // Process workout plans
+            if (workoutData.workoutPlan?.workouts) {
+                workoutData.workoutPlan.workouts.forEach((workout) => {
+                    newEvents.push({
+                        start: new Date(), // Using current date as a placeholder
+                        end: new Date(),   // Using current date as a placeholder
+                        title: `Workout: ${workout.title}`,
+                    });
+                });
+            }
+    
+            // Process meal plans
+            if (mealData.mealPlan) {
+                mealData.mealPlan.forEach((mealPlan) => {
+                    const weekDate = new Date(mealPlan.week);
+                    mealPlan.meals.forEach((meal) => {
+                        newEvents.push({
+                            start: weekDate, // Use the week date from the meal plan
+                            end: weekDate,   // End date same as start for one-day meals
+                            title: `Meal: ${meal.mealName} (${meal.day})`, // Include day in title for clarity
+                        });
+                    });
+                });
+            }
+    
+            setEvents(newEvents);
+        } catch (error) {
+            console.error('Error fetching plans:', error);
+        }
+    };
+
+    useEffect(() => {
+        fetchPlans();
+    }, []);
+    
 
     const fetchPlansForDate = async (date) => {
         const userId = user?.user?._id;
-    
+
         if (!date) {
             console.error("Error: Invalid date passed to fetchPlansForDate.");
             return;
         }
-    
-        console.log('Selected Data: ' + selectedDate);
+
         const selectedDateISO = moment(date).format('YYYY-MM-DD');
-        console.log('Selected Date ISO:', selectedDateISO);
-    
         console.log('Data Fetch: ', {
             userId: userId,
             selectedDate: selectedDateISO,
-            url: `http://localhost:4000/meal-planner/${userId}?week=${selectedDateISO}`
         });
-    
+
         try {
             const workoutResponse = await fetch(`http://localhost:4000/workout-planner/${userId}?week=${selectedDateISO}`);
             const workoutData = await workoutResponse.json();
-    
+
             const mealResponse = await fetch(`http://localhost:4000/meal-planner/${userId}?week=${selectedDateISO}`);
             const mealData = await mealResponse.json();
-    
+
             if (!workoutData || !mealData || 
                 (Array.isArray(workoutData.workoutPlan) && workoutData.workoutPlan.length === 0) || 
                 (Array.isArray(mealData.mealPlan) && mealData.mealPlan.length === 0)) {
                 throw new Error('No workout or meal plans found for this date.');
             }
-    
+
+            // Set the fetched plans for the selected date
             setDailyPlans((prev) => ({
                 ...prev,
                 [selectedDateISO]: {
@@ -54,7 +122,11 @@ const MyWorkouts = () => {
             console.error('Error fetching plans:', error);
         }
     };
-    
+
+    useEffect(() => {
+        fetchPlans();
+    }, [])
+
     const handleSelectSlot = (slotInfo) => {
         const selectedDate = slotInfo.start;
         console.log('Slot Info Start:', selectedDate);
@@ -72,6 +144,7 @@ const MyWorkouts = () => {
                     views={['month']}
                     defaultView="month"
                     onSelectSlot={handleSelectSlot}
+                    events={events} // Pass events to the calendar
                     startAccessor="start"
                     endAccessor="end"
                     style={{ height: 500 }}
