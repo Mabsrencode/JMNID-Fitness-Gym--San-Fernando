@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import "./styles/workout-planner.css";
 import axios from 'axios';
 import { toast } from 'react-toastify';
@@ -15,14 +15,22 @@ const WorkoutPlanner = () => {
     const [selectedWeek, setSelectedWeek] = useState(new Date().toISOString().slice(0, 10));
     const [selectedWorkouts, setSelectedWorkouts] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [selectedDay, setSelectedDay] = useState('');
+
+    const workoutRefs = useRef({});
+
+    useEffect(() => {
+        const selectDate = new Date(selectedWeek);
+        const dayOfWeek = daysOfWeek[selectDate.getUTCDay()];
+        setSelectedDay(dayOfWeek);
+    }, [selectedWeek]);
 
     useEffect(() => {
         const fetchWorkouts = async () => {
+            setLoading(true);
             try {
-                setLoading(true);
                 const response = await axios.get('/workouts/all-workouts');
-                const data = response.data || [];
-                setWorkouts(data);
+                setWorkouts(response.data || []);
             } catch (err) {
                 console.error(err);
             } finally {
@@ -37,38 +45,32 @@ const WorkoutPlanner = () => {
         const fetchWorkoutPlan = async () => {
             try {
                 const response = await axios.get(`/workout-planner/workout-plans/${userId}`, { params: { week: selectedWeek } });
-                if (response.data) {
-                    setWorkoutPlan({ workouts: response.data.workouts || {} });
-                } else {
-                    setWorkoutPlan({ workouts: {} });
-                }
+                setWorkoutPlan({ workouts: response.data.workouts || {} });
             } catch (err) {
                 console.error(err);
                 setWorkoutPlan({ workouts: {} });
             }
         };
 
-        fetchWorkoutPlan();
+        if (userId) fetchWorkoutPlan();
     }, [userId, selectedWeek]);
 
     const handleWorkoutSelect = (workout) => {
-        setSelectedWorkouts((prevSelectedWorkouts) => {
-            if (prevSelectedWorkouts.includes(workout._id)) {
-                return prevSelectedWorkouts.filter((id) => id !== workout._id);
-            } else {
-                return [...prevSelectedWorkouts, workout._id];
-            }
+        setSelectedWorkouts(prev => {
+            return prev.includes(workout._id) 
+                ? prev.filter(id => id !== workout._id) 
+                : [...prev, workout._id];
         });
     };
 
     const handleWorkoutAssign = (day) => {
         if (selectedWorkouts.length > 0) {
-            setWorkoutPlan((prev) => ({
+            setWorkoutPlan(prev => ({
                 ...prev,
                 workouts: {
                     ...prev.workouts,
                     [day]: [...(prev.workouts[day] || []), ...selectedWorkouts],
-                }
+                },
             }));
             setSelectedWorkouts([]);
         }
@@ -82,31 +84,25 @@ const WorkoutPlanner = () => {
                     return { day, workout: workoutId, title: workout ? workout.title : "Unknown Workout" };
                 })
             );
-    
-            console.log("Saving the following workout plan:", {
-                userId,
-                week: selectedWeek,
-                workouts: workoutsToSave,
-            });
-    
+
+            console.log("Saving the following workout plan:", { userId, week: selectedWeek, workouts: workoutsToSave });
+
             const response = await axios.post('/workout-planner/save-workout-plan', {
                 userId,
                 week: selectedWeek,
                 workouts: workoutsToSave,
             });
-    
+
             toast(response.data.message, { autoClose: 2000 });
-            setTimeout(() => {
-                window.location.reload();
-            }, 2000);
+            setTimeout(() => window.location.reload(), 2000);
         } catch (error) {
             console.error(error);
-            toast.error(error?.response?.data?.message || "An error occurred. Please try again." + error);
+            toast.error(error?.response?.data?.message || "An error occurred. Please try again.");
         }
     };
 
     const handleWorkoutRemove = (day, workoutId) => {
-        setWorkoutPlan((prev) => {
+        setWorkoutPlan(prev => {
             const updatedWorkouts = prev.workouts[day].filter(id => id !== workoutId);
             return {
                 ...prev,
@@ -120,6 +116,13 @@ const WorkoutPlanner = () => {
 
     return (
         <div className="workout-planner-container">
+            <style>
+                {`
+                .date-input::-webkit-calendar-picker-indicator {
+                    filter: invert(1); 
+                }
+                `}
+            </style>
             <header className="workout-planner-header py-3 px-6 bg-white-dark rounded-xl flex flex-row-reverse items-center gap-6">
                 <div className='w-[50%]'>
                     <h2 className='font-teko text-4xl font-semibold'>Create a Weekly Workout Plan</h2>
@@ -138,8 +141,8 @@ const WorkoutPlanner = () => {
                 <div className="workouts-list mb-12">
                     {loading ? <WorkoutSkeleton /> : (
                         <ul className='list-none flex gap-4 flex-wrap justify-center'>
-                            {workouts && workouts.map((workout, index) => (
-                                <li key={index} className="w-full md:w-[400px] bg-white-dark rounded-xl p-4 flex flex-col justify-between">
+                            {workouts.map((workout) => (
+                                <li key={workout._id} ref={el => (workoutRefs.current[workout._id] = el)} className="w-full md:w-[400px] bg-white-dark rounded-xl p-4 flex flex-col justify-between">
                                     <h1 className="font-teko text-2xl uppercase mt-2 font-semibold">{workout.title}</h1>
                                     <h2 className="font-poppins capitalize mt-2 font-semibold">Description: {workout.description}</h2>
                                     <div className="relative w-full h-[200px] shadow-2xl">
@@ -157,24 +160,31 @@ const WorkoutPlanner = () => {
                     )}
                 </div>
             </main>
-            <div className="workout-planner-aside">
+            <aside className="workout-planner-aside">
                 <div className='sticky top-20 right-0 bg-white-dark rounded-xl p-3'>
                     <h1 className='font-teko font-semibold text-2xl'>Select a day to assign workouts.</h1>
                     <div className='flex flex-col gap-2'>
                         {daysOfWeek.map((day) => (
-                            <div className='bg-black p-3 rounded-lg text-white-light' key={day}>
+                            <div className={`bg-black p-3 rounded-lg text-white-light ${day !== selectedDay ? 'opacity-50 cursor-not-allowed' : ''}`}key={day}>
                                 <div className='flex justify-between items-center'>
                                     <h3 className='font-bold'>{day}</h3>
-                                    <button className={`${selectedWorkouts && selectedWorkouts.length > 0 ? "bg-primary hover:bg-primary-dark" : "bg-gray"} p-2 text-black font-teko font-semibold rounded-full`} onClick={() => handleWorkoutAssign(day)}>
-                                        {workoutPlan.workouts && workoutPlan.workouts[day] ? 'Add More Workouts' : 'Assign Workouts'}
+                                    <button 
+                                        className={`${selectedWorkouts.length > 0 && day === selectedDay ? "bg-primary hover:bg-primary-dark" : "bg-gray"} p-2 text-black font-teko font-semibold rounded-full`} 
+                                        onClick={() => {
+                                            setSelectedDay(day);
+                                            handleWorkoutAssign(day);
+                                        }}
+                                        disabled={selectedWorkouts.length === 0}
+                                    >
+                                        {workoutPlan.workouts[day]?.length ? 'Add More Workouts' : 'Assign Workouts'}
                                     </button>
                                 </div>
-                                {workoutPlan.workouts && workoutPlan.workouts[day] && (
+                                {workoutPlan.workouts[day] && (
                                     <div className='mt-1'>
                                         <h1>Assigned Workouts:</h1>
                                         <ul className='bg-white-dark p-1 rounded-lg flex flex-col gap-5 overflow-y-auto'>
                                             {workoutPlan.workouts[day].map((workoutId) => {
-                                                const workout = workouts.find((workout) => workout._id === workoutId);
+                                                const workout = workouts.find(workout => workout._id === workoutId);
                                                 return (
                                                     <li className={`text-black capitalize font-semibold bg-slate-600 p-2 rounded`} key={workoutId}>
                                                         <h3 className='text-white'>{workout ? workout.title : 'Unknown Workout'}</h3>
@@ -191,7 +201,7 @@ const WorkoutPlanner = () => {
                     </div>
                     <button className='bg-primary hover:bg-primary-dark px-6 py-3 rounded-xl w-full mt-2 font-semibold font-poppins' onClick={handleSaveWorkoutPlan}>Save Workout Plan</button>
                 </div>
-            </div>
+            </aside>
         </div>
     );
 };
