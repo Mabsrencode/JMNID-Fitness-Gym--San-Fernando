@@ -1,5 +1,31 @@
 const WorkoutPlan = require("../models/workoutPlan.js");
 
+const getWorkoutPlanByID = async (req, res) => {
+  try {
+    const userId = req.params.userId;
+
+    if (!userId) {
+      return res.status(400).json({ message: "Invalid user ID." });
+    }
+
+    const workoutPlan = await WorkoutPlan.find({ user: userId });
+
+    if (!workoutPlan) {
+      return res.status(404).json({ message: "Workout plan not found." });
+    }
+
+    res.status(200).json({
+      message: "Workout plan retrieved successfully.",
+      workoutPlan,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      message: "An error occurred while fetching the workout plan.",
+      error: error.message,
+    });
+  }
+};
 
 
 const getWorkoutPlan = async (req, res) => {
@@ -104,4 +130,4 @@ const removeWorkoutPlan = async (req, res) => {
 };
 
 
-module.exports = { getWorkoutPlan, saveWorkoutPlan, removeWorkoutPlan };
+module.exports = { getWorkoutPlan, saveWorkoutPlan, removeWorkoutPlan, getWorkoutPlanByID };

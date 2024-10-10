@@ -1,5 +1,34 @@
 const MealPlan = require("../models/mealPlan.js");
 
+
+const getMealPlansByID = async (req, res) => {
+  try {
+    const userId = req.params.userId;
+
+    if (!userId) {
+      return res.status(400).json({ message: "Invalid user ID." });
+    }
+
+    const mealPlan = await MealPlan.find({ user: userId });
+
+    if (!mealPlan) {
+      return res.status(404).json({ message: "Meal plan not found." });
+    }
+
+    res.status(200).json({
+      message: "Meal plan retrieved successfully.",
+      mealPlan,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      message: "An error occurred while fetching the meal plan.",
+      error: error.message,
+    });
+  }
+};
+
+
 const getMealPlan = async (req, res) => {
   try {
     const userId = req.params.userId;
@@ -93,4 +122,4 @@ const removeMealPlan = async (req, res) => {
   }
 };
 
-module.exports = { getMealPlan, saveMealPlan, removeMealPlan };
+module.exports = { getMealPlan, saveMealPlan, removeMealPlan, getMealPlansByID };
