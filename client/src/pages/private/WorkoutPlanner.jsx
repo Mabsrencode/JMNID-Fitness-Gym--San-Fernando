@@ -21,7 +21,7 @@ const WorkoutPlanner = () => {
 
     useEffect(() => {
         const selectDate = new Date(selectedWeek);
-        const dayOfWeek = daysOfWeek[selectDate.getUTCDay()];
+        const dayOfWeek = daysOfWeek[selectDate.getUTCDay() - 1];
         setSelectedDay(dayOfWeek);
     }, [selectedWeek]);
 

@@ -1,5 +1,5 @@
 import { useUser } from '../../context/UserContext';
-import React, { useState, useEffect, useId } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
@@ -11,67 +11,61 @@ const MyWorkouts = () => {
     const [dailyPlans, setDailyPlans] = useState({});
     const [events, setEvents] = useState([]);
     const [selectedDate, setSelectedDate] = useState(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     const fetchPlans = async () => {
         const userId = user?.user?._id;
-    
+
         if (!userId) {
             console.error("Error: Invalid user ID.");
             return;
         }
-    
+
         console.log('Data Fetch: ', { userId });
-    
+
         try {
-            // Fetch all workout plans
             const workoutResponse = await fetch(`http://localhost:4000/workout-planner/${userId}/plan`);
             const workoutData = await workoutResponse.json();
-    
-            // Fetch all meal plans
+
             const mealResponse = await fetch(`http://localhost:4000/meal-planner/${userId}/plan`);
             const mealData = await mealResponse.json();
-    
-            // Check if data is valid
+
             if (!workoutData || !mealData || 
                 (Array.isArray(workoutData.workoutPlan) && workoutData.workoutPlan.length === 0) || 
                 (Array.isArray(mealData.mealPlan) && mealData.mealPlan.length === 0)) {
                 throw new Error('No workout or meal plans found.');
             }
-    
-            // Set the fetched plans
+
             setDailyPlans({
                 workoutPlan: workoutData.workoutPlan || null,
                 mealPlan: mealData.mealPlan || null,
             });
-    
-            // Create events for the calendar
+
             const newEvents = [];
-    
-            // Process workout plans
+
             if (workoutData.workoutPlan?.workouts) {
                 workoutData.workoutPlan.workouts.forEach((workout) => {
                     newEvents.push({
-                        start: new Date(), // Using current date as a placeholder
-                        end: new Date(),   // Using current date as a placeholder
+                        start: new Date(),
+                        end: new Date(),
                         title: `Workout: ${workout.title}`,
                     });
                 });
             }
-    
-            // Process meal plans
+
             if (mealData.mealPlan) {
                 mealData.mealPlan.forEach((mealPlan) => {
                     const weekDate = new Date(mealPlan.week);
                     mealPlan.meals.forEach((meal) => {
                         newEvents.push({
-                            start: weekDate, // Use the week date from the meal plan
-                            end: weekDate,   // End date same as start for one-day meals
-                            title: `Meal: ${meal.mealName} (${meal.day})`, // Include day in title for clarity
+                            start: weekDate,
+                            end: weekDate,
+                            title: `Meal: ${meal.mealName} (${meal.day})`,
                         });
                     });
                 });
             }
-    
+
             setEvents(newEvents);
         } catch (error) {
             console.error('Error fetching plans:', error);
@@ -81,7 +75,6 @@ const MyWorkouts = () => {
     useEffect(() => {
         fetchPlans();
     }, []);
-    
 
     const fetchPlansForDate = async (date) => {
         const userId = user?.user?._id;
@@ -110,7 +103,6 @@ const MyWorkouts = () => {
                 throw new Error('No workout or meal plans found for this date.');
             }
 
-            // Set the fetched plans for the selected date
             setDailyPlans((prev) => ({
                 ...prev,
                 [selectedDateISO]: {
@@ -123,15 +115,23 @@ const MyWorkouts = () => {
         }
     };
 
-    useEffect(() => {
-        fetchPlans();
-    }, [])
-
     const handleSelectSlot = (slotInfo) => {
         const selectedDate = slotInfo.start;
         console.log('Slot Info Start:', selectedDate);
         setSelectedDate(selectedDate);
         fetchPlansForDate(selectedDate);
+        setIsModalOpen(true);
+    };
+
+    const closeModal = (e) => {
+        e.stopPropagation();
+        setIsModalOpen(false);
+    };
+
+    const handleModalBackgroundClick = (e) => {
+        if (e.target === e.currentTarget) {
+            setIsModalOpen(false);
+        }
     };
 
     return (
@@ -144,44 +144,58 @@ const MyWorkouts = () => {
                     views={['month']}
                     defaultView="month"
                     onSelectSlot={handleSelectSlot}
-                    events={events} // Pass events to the calendar
+                    events={events}
                     startAccessor="start"
                     endAccessor="end"
                     style={{ height: 500 }}
                     className="rounded-lg"
                 />
             </div>
-            {selectedDate && (
-                <div className="bg-gray-800 rounded-lg shadow-lg p-4 w-full max-w-3xl mb-4">
-                    <h2 className="text-white text-xl font-semibold mb-2">Plans for {moment(selectedDate).format('MMMM Do YYYY')}</h2>
-                    <div className="mb-4">
-                        <h1 className="text-white mb-5">Workout Plan</h1>
-                        {dailyPlans[moment(selectedDate).format('YYYY-MM-DD')]?.workoutPlan ? (
-                            <div className="text-gray-200">
-                                {dailyPlans[moment(selectedDate).format('YYYY-MM-DD')].workoutPlan.workouts.map((workout, index) => (
-                                    <div key={index} className="text-gray-200">
-                                        <p>Title: <b>{workout.title}</b></p>
-                                    </div>
-                                ))}
-                            </div>
-                        ) : (
-                            <p className="text-gray-400">No workout plan found for this day.</p>
-                        )}
-                    </div>
-                    <hr />
-                    <div>
-                        <h1 className="text-white mb-5">Meal Plan</h1>
-                        {dailyPlans[moment(selectedDate).format('YYYY-MM-DD')]?.mealPlan ? (
-                            <div>
-                                {dailyPlans[moment(selectedDate).format('YYYY-MM-DD')].mealPlan.meals.map((meal, index) => (
-                                    <div key={index} className="text-gray-200">
-                                        <p>Name: <b>{meal.mealName}</b></p>
-                                    </div>
-                                ))}
-                            </div>
-                        ) : (
-                            <p className="text-gray-400">No meal plan found for this day.</p>
-                        )}
+
+            {isModalOpen && (
+                <div
+                    className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50"
+                    onClick={handleModalBackgroundClick}
+                >
+                    <div className="bg-gray-800 rounded-lg shadow-lg p-6 w-full max-w-3xl relative">
+                        <button
+                            className="absolute top-2 right-4 text-white"
+                            onClick={closeModal}
+                        >
+                            X
+                        </button>
+                        <h2 className="text-white text-xl font-semibold mb-4">
+                            Plans for {moment(selectedDate).format('MMMM Do YYYY')}
+                        </h2>
+                        <div className="mb-4">
+                            <h1 className="text-white mb-5">Workout Plan</h1>
+                            {dailyPlans[moment(selectedDate).format('YYYY-MM-DD')]?.workoutPlan ? (
+                                <div className="text-gray-200">
+                                    {dailyPlans[moment(selectedDate).format('YYYY-MM-DD')].workoutPlan.workouts.map((workout, index) => (
+                                        <div key={index} className="text-gray-200">
+                                            <p>Title: <b>{workout.title}</b></p>
+                                        </div>
+                                    ))}
+                                </div>
+                            ) : (
+                                <p className="text-gray-400">No workout plan found for this day.</p>
+                            )}
+                        </div>
+                        <hr />
+                        <div>
+                            <h1 className="text-white mb-5">Meal Plan</h1>
+                            {dailyPlans[moment(selectedDate).format('YYYY-MM-DD')]?.mealPlan ? (
+                                <div>
+                                    {dailyPlans[moment(selectedDate).format('YYYY-MM-DD')].mealPlan.meals.map((meal, index) => (
+                                        <div key={index} className="text-gray-200">
+                                            <p>Name: <b>{meal.mealName}</b></p>
+                                        </div>
+                                    ))}
+                                </div>
+                            ) : (
+                                <p className="text-gray-400">No meal plan found for this day.</p>
+                            )}
+                        </div>
                     </div>
                 </div>
             )}
