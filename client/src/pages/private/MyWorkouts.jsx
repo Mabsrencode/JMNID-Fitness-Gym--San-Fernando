@@ -1,5 +1,5 @@
 import { useUser } from '../../context/UserContext';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
@@ -13,7 +13,7 @@ const MyWorkouts = () => {
     const [selectedDate, setSelectedDate] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const fetchPlans = async () => {
+    const fetchPlans = useCallback(async () => {
         const userId = user?.user?._id;
 
         if (!userId) {
@@ -30,8 +30,8 @@ const MyWorkouts = () => {
             const mealResponse = await fetch(`http://localhost:4000/meal-planner/${userId}/plan`);
             const mealData = await mealResponse.json();
 
-            if (!workoutData || !mealData || 
-                (Array.isArray(workoutData.workoutPlan) && workoutData.workoutPlan.length === 0) || 
+            if (!workoutData || !mealData ||
+                (Array.isArray(workoutData.workoutPlan) && workoutData.workoutPlan.length === 0) ||
                 (Array.isArray(mealData.mealPlan) && mealData.mealPlan.length === 0)) {
                 throw new Error('No workout or meal plans found.');
             }
@@ -70,11 +70,11 @@ const MyWorkouts = () => {
         } catch (error) {
             console.error('Error fetching plans:', error);
         }
-    };
+    }, [user, setDailyPlans]);
 
     useEffect(() => {
         fetchPlans();
-    }, []);
+    }, [fetchPlans]);
 
     const fetchPlansForDate = async (date) => {
         const userId = user?.user?._id;
@@ -97,8 +97,8 @@ const MyWorkouts = () => {
             const mealResponse = await fetch(`http://localhost:4000/meal-planner/${userId}?week=${selectedDateISO}`);
             const mealData = await mealResponse.json();
 
-            if (!workoutData || !mealData || 
-                (Array.isArray(workoutData.workoutPlan) && workoutData.workoutPlan.length === 0) || 
+            if (!workoutData || !mealData ||
+                (Array.isArray(workoutData.workoutPlan) && workoutData.workoutPlan.length === 0) ||
                 (Array.isArray(mealData.mealPlan) && mealData.mealPlan.length === 0)) {
                 throw new Error('No workout or meal plans found for this date.');
             }
