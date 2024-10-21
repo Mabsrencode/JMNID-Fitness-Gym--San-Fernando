@@ -5,7 +5,7 @@ const { createSecretToken } = require("../utils/createSecretToken.js");
 // Register a new user
 const register = async (req, res, next) => {
   try {
-    const { username, firstName, lastName, email, password, cpassword } =
+    const { username, firstName, lastName, email, password, cpassword, email_verified } =
       req.body;
     if (password !== cpassword) {
       return res.status(400).json({ message: "Passwords do not match" });
@@ -20,6 +20,7 @@ const register = async (req, res, next) => {
       lastName,
       email,
       password,
+      email_verified
     });
     const token = createSecretToken(user._id.toString());
     res.cookie("jmnid-tk", token, {
@@ -32,6 +33,7 @@ const register = async (req, res, next) => {
     res.status(201).json({ message: "Registration successful", user });
   } catch (error) {
     next(error);
+    res.status(500).json(error);
   }
 };
 
@@ -54,6 +56,7 @@ const login = async (req, res, next) => {
     if (!passwordMatch) {
       return res.status(401).json({ message: "Incorrect password" });
     }
+
 
     const userData = {
       username: user.username,

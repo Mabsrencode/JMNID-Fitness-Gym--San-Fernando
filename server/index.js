@@ -9,6 +9,7 @@ const rateLimit = require("express-rate-limit");
 const connectDB = require("./db.js");
 const usersRoutes = require("./routes/user.route.js");
 const contactRoutes = require("./routes/email.route.js");
+const emailVerify = require("./routes/email-verify.route.js");
 const authRoutes = require("./routes/auth.route.js");
 const jobOffers = require("./routes/offers.route.js");
 const mealsRoutes = require("./routes/meal.route.js");
@@ -77,6 +78,7 @@ app.use("/meals", mealsRoutes);
 app.use("/meal-planner", mealPlanRoutes);
 app.use("/workouts", workoutRoutes);
 app.use("/workout-planner", workoutPlanRoutes);
+app.use("/verify-email", emailVerify);
 
 app.use(express.static(path.join(__dirname, "build")));
 

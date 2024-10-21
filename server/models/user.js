@@ -24,6 +24,10 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    email_verified: {
+      type: Boolean,
+      default: false,
+    },
     membership_status: {
       type: String,
       enum: ["verified", "pending", "declined"],
