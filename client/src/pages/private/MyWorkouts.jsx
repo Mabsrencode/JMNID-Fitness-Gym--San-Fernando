@@ -214,7 +214,6 @@ const MyWorkouts = () => {
     }
 
     const removeSchedule = () => {
-        alert("Sometime I want to be lonely")
         setIsModalOpen(false);
     }
 
