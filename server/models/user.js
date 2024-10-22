@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
+
 const userSchema = new mongoose.Schema(
   {
     username: {
@@ -39,11 +40,44 @@ const userSchema = new mongoose.Schema(
       default: "user",
     },
     fitness_goals: {
+      type: [String],
+      enum: [
+        "Ectomorph", 
+        "Mesomorph", 
+        "Endomorph", 
+        "Shredded", 
+        "Lean", 
+        "Defined", 
+        "Bulky", 
+        "Athletic", 
+        "Fit", 
+        "Curvy", 
+        "Powerlifter", 
+        "Functional"
+      ],
+    },
+    body_assessment: {
+      height: {
+        type: Number, // Height in cm
+        required: true,
+      },
+      weight: {
+        type: Number, // Weight in kg
+        required: true,
+      },
+      bmi: {
+        type: Number,
+        required: true,
+      }
+    },
+    body_type: {
       type: String,
+      enum: ["ectomorph", "mesomorph", "endomorph"],
     },
   },
   { timestamps: true }
 );
+
 userSchema.pre("save", async function () {
   this.password = await bcrypt.hash(this.password, 12);
 });

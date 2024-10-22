@@ -52,7 +52,7 @@ const createWorkout = (req, res) => {
             return res.status(422).json({ message: err.message });
         }
 
-        const { title, description } = req.body;
+        const { title, description, category } = req.body;
 
         if (!title || !description || !req.file) {
             return res.status(400).json({ message: "Title, description, and video file are required." });
@@ -64,7 +64,8 @@ const createWorkout = (req, res) => {
             title,
             description,
             video: req.file.filename,
-            url: fileUrl
+            url: fileUrl,
+            category: category
         });
 
         try {

@@ -17,6 +17,23 @@ const workoutSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    category: {
+        type: [String],
+        enum: [
+            "Ectomorph", 
+            "Mesomorph", 
+            "Endomorph", 
+            "Shredded", 
+            "Lean", 
+            "Defined", 
+            "Bulky", 
+            "Athletic", 
+            "Fit", 
+            "Curvy", 
+            "Powerlifter", 
+            "Functional"
+        ],
+    },
     createdAt: {
         type: Date,
         default: Date.now

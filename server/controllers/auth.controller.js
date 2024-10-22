@@ -3,26 +3,48 @@ const User = require("../models/user.js");
 const { createSecretToken } = require("../utils/createSecretToken.js");
 
 // Register a new user
-const register = async (req, res, next) => {
+const register = async (req, res) => {
   try {
-    const { username, firstName, lastName, email, password, cpassword, email_verified } =
-      req.body;
+    const { username, firstName, lastName, email, password, cpassword, email_verified, fitness_goals, body_assessment, body_type } = req.body;
+
+    // Validate required fields
+    if (!username || !firstName || !lastName || !email || !password || !cpassword || !fitness_goals || !body_assessment) {
+        return res.status(400).json({ message: "All fields are required." });
+    }
+
+    // Check if passwords match
+    if (password !== cpassword) {
+        return res.status(400).json({ message: "Passwords do not match." });
+    }
+
+    const validBodyTypes = ["ectomorph", "mesomorph", "endomorph"];
+    if (!body_type || !validBodyTypes.includes(body_type)) {
+        return res.status(400).json({ message: "Body type is required and must be one of: ectomorph, mesomorph, or endomorph." });
+    }
+
     if (password !== cpassword) {
       return res.status(400).json({ message: "Passwords do not match" });
     }
+
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.status(401).json({ message: "User already exists" });
     }
+
     const user = await User.create({
       username,
       firstName,
       lastName,
       email,
       password,
-      email_verified
+      email_verified,
+      fitness_goals,
+      body_assessment,
+      body_type
     });
+
     const token = createSecretToken(user._id.toString());
+
     res.cookie("jmnid-tk", token, {
       withCredentials: true,
       httpOnly: false,
@@ -30,10 +52,13 @@ const register = async (req, res, next) => {
       sameSite: "strict",
       maxAge: 60 * 60 * 1000,
     });
+
     res.status(201).json({ message: "Registration successful", user });
   } catch (error) {
-    next(error);
-    res.status(500).json(error);
+    res.status(500).json({
+        message: "Internal Server Error",
+        error: error.message || error
+    });
   }
 };
 
