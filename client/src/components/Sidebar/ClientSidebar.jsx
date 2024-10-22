@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import "./SideBar.css"
 import LogoutButton from "../LogoutButton/LogoutButton.jsx"
-import { BarbelIcon, DashboardIcon, FoodMenuIcon, LightBarbelIcon } from '../../constants/icons.js'
+import { BarbelIcon, DashboardIcon, FoodMenuIcon, LightBarbelIcon, AccomplishmentTask } from '../../constants/icons.js'
 const ClientSideBar = () => {
     return (
         <aside className="fixed h-full flex flex-col bg-black text-white-light h-cover max-w-[4rem]  hover:max-w-[18rem] border-r border-gray-light transition-all z-[2000]">
@@ -29,6 +29,11 @@ const ClientSideBar = () => {
                         <div className="grid place-items-center">
                             <LightBarbelIcon />
                         </div><h1 className='ml-4'>My Workout</h1>
+                    </Link>
+                    <Link to={"accomplish-task"} className="flex items-center w-full p-3 text-nowrap rounded-lg text-start leading-tight transition-all hover:bg-primary-dark font-semibold hover:bg-opacity-80 hover:text-white focus:bg-primary-dark focus:bg-opacity-80 active:bg-primary-dark active:bg-opacity-80 hover:text-white-light focus:text-white-light active:text-white-light outline-none">
+                        <div className="grid place-items-center">
+                            <AccomplishmentTask />
+                        </div><h1 className='ml-4'>Task Accomplishment</h1>
                     </Link>
                 </div>
                 <LogoutButton />
