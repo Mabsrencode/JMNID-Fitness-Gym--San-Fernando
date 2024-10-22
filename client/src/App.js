@@ -20,6 +20,7 @@ import MemberLayout from "./Layout/MemberLayout.jsx";
 import MyWorkouts from "./pages/private/MyWorkouts.jsx";
 import WorkoutPlanner from "./pages/private/WorkoutPlanner.jsx";
 import Dashboard from "./pages/admin/Dashboard.jsx";
+import AccomplishmentTask from "./pages/private/AccomplishmentTask.jsx";
 
 function App() {
   return (
@@ -45,6 +46,7 @@ function App() {
               <Route path="workout/:_id" element={<WorkoutView />} />
               <Route path="my-workouts" element={<MyWorkouts />} />
               <Route path="workout-planner" element={<WorkoutPlanner />} />
+              <Route path="accomplish-task" element={<AccomplishmentTask />} />
             </Route>
           </Route>
           {/* admin layout */}
