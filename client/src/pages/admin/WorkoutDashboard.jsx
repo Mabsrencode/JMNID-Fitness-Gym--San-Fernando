@@ -114,6 +114,19 @@ const WorkoutDashboard = () => {
                                         {data.description}
                                     </p>
                                 </div>
+                                <div>
+                                    <h2 className="font-poppins font-semibold">Category Type:</h2>
+                                    <p className="font-poppins text-sm overflow-hidden text-ellipsis line-clamp-3">
+                                            {data.category && data.category.length > 0 ? (
+                                            data.category.map((category, index) => (
+                                                <span key={index}>{category + ", "}</span>
+                                            ))
+                                        ) : (
+                                            <span>No categories available</span>
+                                        )}
+                                    </p>
+                                </div>
+
                             </li>
                         ))
                     ) : (
