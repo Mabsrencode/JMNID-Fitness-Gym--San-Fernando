@@ -144,7 +144,18 @@ const WorkoutPlanner = () => {
                             {workouts.map((workout) => (
                                 <li key={workout._id} ref={el => (workoutRefs.current[workout._id] = el)} className="w-full md:w-[400px] bg-white-dark rounded-xl p-4 flex flex-col justify-between">
                                     <h1 className="font-teko text-2xl uppercase mt-2 font-semibold">{workout.title}</h1>
-                                    <h2 className="font-poppins capitalize mt-2 font-semibold">Description: {workout.description}</h2>
+                                    <hr className='border-4 border-indigo-200 border-l-indigo-500' />
+                                    <h2 className="font-poppins capitalize mt-2"><span className='font-teko text-2xl uppercase mt-2 font-semibold'>Description</span>: <br></br> {workout.description}</h2>
+                                    <h2 className='font-teko text-2xl uppercase mt-2 font-semibold'>Cateory Body Type:</h2>
+                                    <div className="grid grid-cols-3 gap-2 mb-2">
+                                        {workout.category.map((category, index) => (
+                                            <p 
+                                            className="font-poppins capitalize mt-2 font-semibold bg-slate-800 p-2 rounded-lg text-center text-white" 
+                                            key={index}>
+                                            {category}
+                                            </p>
+                                        ))}
+                                    </div>
                                     <div className="relative w-full h-[200px] shadow-2xl">
                                         <video crossOrigin='anonymous' className="object-cover w-full h-full rounded-lg" controls>
                                             <source src={workout.url} type="video/mp4" />
