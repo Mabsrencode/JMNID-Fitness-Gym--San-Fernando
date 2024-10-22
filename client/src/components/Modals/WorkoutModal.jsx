@@ -24,6 +24,8 @@ const WorkoutModal = ({ onclick, handleRefetch, workout }) => {
     if (workout) {
       setValue("title", workout.title);
       setValue("description", workout.description);
+      setValue('categoryType', workout.category);
+
       setVideoFile(null); // Clear the selected video
     } else {
       reset(); // Reset form when creating a new workout
@@ -53,6 +55,11 @@ const WorkoutModal = ({ onclick, handleRefetch, workout }) => {
       const formData = new FormData();
       formData.append("title", data.title);
       formData.append("description", data.description);
+
+      data.categoryType.forEach((category) => {
+        formData.append("category", category);
+        console.log('Category Array Data: ', data.category);
+      });
 
       // Append video file if uploaded
       if (videoFile) {
@@ -95,6 +102,30 @@ const WorkoutModal = ({ onclick, handleRefetch, workout }) => {
     reset();
     setVideoFile(null);
     setVideoError("");
+  };
+
+  const bodyType = [
+    "Ectomorph", 
+    "Mesomorph", 
+    "Endomorph", 
+    "Shredded", 
+    "Lean", 
+    "Defined", 
+    "Bulky", 
+    "Athletic", 
+    "Fit", 
+    "Curvy", 
+    "Powerlifter", 
+    "Functional"
+  ]
+
+  const handleCategoryChange = (event) => {
+      // Get the selected options
+      const selectedOptions = Array.from(event.target.selectedOptions).map(option => option.value);
+      
+      // Update state with the selected categories
+      console.log('Each Category:', selectedOptions);
+      setValue("categoryType", selectedOptions);
   };
 
   return (
@@ -171,6 +202,24 @@ const WorkoutModal = ({ onclick, handleRefetch, workout }) => {
           {videoError && (
             <span className="text-xs text-red">{videoError}</span>
           )}
+        </div>
+
+        <div className="relative w-full mx-auto">
+          <label className="text-black block text-lg md:text-xl mb-2" htmlFor="category">
+            Select Category Type
+          </label>
+          <select
+              className="border-2 border-primary w-full px-4 py-2 rounded-lg text-base md:text-lg focus:outline-none focus:ring focus:ring-primary transition"
+              name="categoryType"
+              id="categoryType"
+              onChange={handleCategoryChange}
+              defaultValue={workout ? workout.category : []}
+              multiple
+          >
+              {bodyType && bodyType.map((category, index) => (
+                  <option key={index} value={category}>{category}</option>
+              ))}
+          </select>
         </div>
 
         <div className="flex justify-center gap-4">
