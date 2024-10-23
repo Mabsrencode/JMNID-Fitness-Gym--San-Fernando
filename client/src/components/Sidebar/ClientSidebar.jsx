@@ -28,7 +28,7 @@ const ClientSideBar = () => {
                     <Link to={"my-workouts"} className="flex items-center w-full p-3 text-nowrap rounded-lg text-start leading-tight transition-all hover:bg-primary-dark font-semibold hover:bg-opacity-80 hover:text-white focus:bg-primary-dark focus:bg-opacity-80 active:bg-primary-dark active:bg-opacity-80 hover:text-white-light focus:text-white-light active:text-white-light outline-none">
                         <div className="grid place-items-center">
                             <LightBarbelIcon />
-                        </div><h1 className='ml-4'>My Workout</h1>
+                        </div><h1 className='ml-4'>My Plans</h1>
                     </Link>
                     <Link to={"accomplish-task"} className="flex items-center w-full p-3 text-nowrap rounded-lg text-start leading-tight transition-all hover:bg-primary-dark font-semibold hover:bg-opacity-80 hover:text-white focus:bg-primary-dark focus:bg-opacity-80 active:bg-primary-dark active:bg-opacity-80 hover:text-white-light focus:text-white-light active:text-white-light outline-none">
                         <div className="grid place-items-center">

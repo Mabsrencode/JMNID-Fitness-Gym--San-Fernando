@@ -24,7 +24,7 @@ const MemberLayout = () => {
                         <div className='h-[200px] md:h-[300px] mb-2 md:mb-6 rounded-lg overflow-hidden shadow-2xl'>
                             <img className='w-full h-full object-cover' src={images.mealPlanner} alt="gym" />
                         </div>
-                        <p className='font-poppins text-gray text-sm md:text-base'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis doloremque magni magnam natus asperiores? Eveniet, est numquam porro inventore libero, vero cumque suscipit sunt optio quidem iusto necessitatibus error illo!</p>
+                        {/* <p className='font-poppins text-gray text-sm md:text-base'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis doloremque magni magnam natus asperiores? Eveniet, est numquam porro inventore libero, vero cumque suscipit sunt optio quidem iusto necessitatibus error illo!</p> */}
                     </div>
                     <div onClick={() => navigate("workout-planner")} className='parent-container relative max-w-[600px] bg-white-dark px-6 py-3 rounded-xl shadow-xl overflow-hidden'>
                         <div className='hover-container'>
@@ -36,7 +36,7 @@ const MemberLayout = () => {
                         <div className='h-[200px] md:h-[300px] mb-2 md:mb-6 rounded-lg overflow-hidden shadow-2xl'>
                             <img className='w-full h-full object-cover' src={images.gym1} alt="gym" />
                         </div>
-                        <p className='font-poppins text-gray text-sm md:text-base'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident recusandae maiores ipsa aliquam culpa aliquid nemo quae? Quibusdam unde sequi error quidem amet explicabo, similique repellat officiis? Pariatur, tempora quo!</p>
+                        {/* <p className='font-poppins text-gray text-sm md:text-base'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident recusandae maiores ipsa aliquam culpa aliquid nemo quae? Quibusdam unde sequi error quidem amet explicabo, similique repellat officiis? Pariatur, tempora quo!</p> */}
                     </div>
                 </div>
             </section>
