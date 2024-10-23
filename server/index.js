@@ -16,6 +16,7 @@ const mealsRoutes = require("./routes/meal.route.js");
 const mealPlanRoutes = require("./routes/mealPlan.route.js");
 const workoutPlanRoutes = require("./routes/workoutPlan.route.js");
 const workoutRoutes = require("./routes/workout.route.js");
+const accomplishmentTask = require("./routes/accomplishment-task.route.js");
 
 const app = express();
 
@@ -78,6 +79,7 @@ app.use("/meals", mealsRoutes);
 app.use("/meal-planner", mealPlanRoutes);
 app.use("/workouts", workoutRoutes);
 app.use("/workout-planner", workoutPlanRoutes);
+app.use("/task-history", accomplishmentTask);
 app.use("/verify-email", emailVerify);
 
 app.use(express.static(path.join(__dirname, "build")));

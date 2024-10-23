@@ -3,6 +3,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
+import axios from 'axios';
 
 const localizer = momentLocalizer(moment);
 
@@ -12,6 +13,10 @@ const MyWorkouts = () => {
     const [events, setEvents] = useState([]);
     const [selectedDate, setSelectedDate] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
+
+
+    const [workouts, setWorkouts] = useState([]);
+    const [meals, setMeals] = useState([]);
 
     const fetchPlans = useCallback(async () => {
         const userId = user?.user?._id;
@@ -134,6 +139,85 @@ const MyWorkouts = () => {
         }
     };
 
+    const addScheduleHistory = async (date) => {
+        const userId = user?.user?._id;
+    
+        if (!date) {
+            console.error("Error: Invalid date passed to addScheduleHistory.");
+            return;
+        }
+    
+        const selectedDateISO = moment(date).format('YYYY-MM-DD');
+        console.log('Data Fetch: ', {
+            userId: userId,
+            selectedDate: selectedDateISO,
+        });
+
+        const currentDate = new Date().toLocaleDateString('en-CA');
+        console.log("Current Date:", currentDate);
+        console.log("Select Date:", selectedDateISO);
+
+        if (selectedDateISO === currentDate) {
+            alert('You can now accomplish this task');
+        
+            // eslint-disable-next-line no-restricted-globals
+            const userConfirmed = confirm("Click OK to continue, or Cancel to not proceed.");
+            
+            if (userConfirmed) {
+                try {
+                    const workoutResponse = await fetch(`http://localhost:4000/workout-planner/${userId}?week=${selectedDateISO}`);
+                    const workoutData = await workoutResponse.json();
+            
+                    const mealResponse = await fetch(`http://localhost:4000/meal-planner/${userId}?week=${selectedDateISO}`);
+                    const mealData = await mealResponse.json();
+            
+                    if (!workoutData || !mealData || 
+                        (Array.isArray(workoutData.workoutPlan) && workoutData.workoutPlan.length === 0) || 
+                        (Array.isArray(mealData.mealPlan) && mealData.mealPlan.length === 0)) {
+                        throw new Error('No workout or meal plans found for this date.');
+                    }
+            
+                    const workoutTitles = workoutData.workoutPlan.workouts.map(workout => workout.title);
+                    console.log('Workout:', workoutTitles);
+                    setWorkouts(workoutTitles);
+            
+                    const mealNames = mealData.mealPlan.meals.map(meal => meal.mealName);
+                    console.log('Meals:', mealNames);
+                    setMeals(mealNames);
+            
+                    console.log('Workout UseState', workouts);
+                    console.log('Meals UseState', meals);
+            
+                    const response = await axios.post('/task-history', {
+                        userId: userId,
+                        date: selectedDateISO,
+                        workouts: workoutTitles,
+                        meals: mealNames,
+                    });
+            
+                    console.log("Data: ", response);
+                    alert('Successfully accomplished the task');
+                    setIsModalOpen(false);
+            
+                } catch (error) {
+                    alert('Failed to log the task');
+                    setIsModalOpen(false);
+                    console.error('Error fetching plans or posting task history:', error);
+                }
+            } else {
+                alert('Task continuation canceled.');
+                setIsModalOpen(false);
+            }
+        } else if (selectedDate !== currentDate) {
+            alert('You cannot accomplish this task; you need to meet the day before you can complete it.');
+            setIsModalOpen(false)
+        }
+    }
+
+    const removeSchedule = () => {
+        setIsModalOpen(false);
+    }
+
     return (
         <div className="text-white min-h-screen flex flex-col items-center p-6">
             <h1 className='text-white text-3xl font-bold mb-4'>My Workouts and Meal Plans</h1>
@@ -195,6 +279,10 @@ const MyWorkouts = () => {
                             ) : (
                                 <p className="text-gray-400">No meal plan found for this day.</p>
                             )}
+                        </div>
+                        <div className="flex gap-2 mt-2 float-right">
+                            <button onClick={() => removeSchedule()} className='bg-red-500 px-5 py-2 rounded-lg text-white'>Remove</button>
+                            <button onClick={() => addScheduleHistory(selectedDate)} className='bg-primary px-10 py-2 rounded-lg text-white'>Done</button>
                         </div>
                     </div>
                 </div>

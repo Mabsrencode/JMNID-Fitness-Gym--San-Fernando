@@ -14,6 +14,7 @@ import { BiFoodMenu } from "react-icons/bi";
 import { PiBarbellBold } from "react-icons/pi";
 import { IoBarbell } from "react-icons/io5";
 import { MdSpaceDashboard } from "react-icons/md";
+import { MdOutlineTask } from "react-icons/md";
 const MessageIcon = ({ className }) => {
   return <FaMessage className={className} />;
 };
@@ -64,6 +65,9 @@ const LightBarbelIcon = ({ className }) => {
 const DashboardIcon = ({ className }) => {
   return <MdSpaceDashboard className={className} />;
 };
+const AccomplishmentTask = ({className}) => {
+  return <MdOutlineTask className={className} />
+}
 export {
   MessageIcon,
   XMarkIcon,
@@ -79,4 +83,5 @@ export {
   BarbelIcon,
   LightBarbelIcon,
   DashboardIcon,
+  AccomplishmentTask
 };
