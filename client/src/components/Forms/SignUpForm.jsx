@@ -312,6 +312,7 @@ const SignUpForm = () => {
         } catch (error) {
             console.error('Registration failed:', error);
             setError(error.message);
+        } finally {
             setIsLoading(false);
         }
     };
