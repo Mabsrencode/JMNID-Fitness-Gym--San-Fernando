@@ -155,7 +155,7 @@ const BodyAssessment = ({ onAssessmentChange, assessmentData }) => {
             {assessmentData.bodyType && (
                 <div className='mt-4'>
                     <h3 className='text-lg'>Your Body Type: {assessmentData.bodyType.charAt(0).toUpperCase() + assessmentData.bodyType.slice(1)}</h3>
-                    <img src={bodyTypes[assessmentData.bodyType]} alt="Body Type" width={120} height={100}/>
+                    <img src={bodyTypes[assessmentData.bodyType]} alt="Body Type" width={120} height={100} />
                 </div>
             )}
         </div>
@@ -179,18 +179,18 @@ const SignUpForm = () => {
 
     const TabBar = () => (
         <div className="absolute top-0 left-0 mt-4 ml-4">
-            <button 
-                onClick={() => setActiveTab('signup')} 
+            <button
+                onClick={() => setActiveTab('signup')}
                 className={`px-4 py-2 ${activeTab === 'signup' ? 'bg-primary text-white' : 'bg-gray-200'} rounded-l-lg`}>
                 Sign Up
             </button>
-            <button 
-                onClick={() => setActiveTab('assessment')} 
+            <button
+                onClick={() => setActiveTab('assessment')}
                 className={`px-4 py-2 ${activeTab === 'assessment' ? 'bg-primary text-white' : 'bg-gray-200'}`}>
                 Body Assessment
             </button>
-            <button 
-                onClick={() => setActiveTab('body-goals')} 
+            <button
+                onClick={() => setActiveTab('body-goals')}
                 className={`px-4 py-2 ${activeTab === 'body-goals' ? 'bg-primary text-white' : 'bg-gray-200'} rounded-r-lg`}>
                 Body Goals
             </button>
@@ -252,7 +252,7 @@ const SignUpForm = () => {
     };
 
     const onSubmit = async (data) => {
-        
+
         if (isEmailVerified === false) {
             setError("Please verified your email");
         }
@@ -261,7 +261,7 @@ const SignUpForm = () => {
             setError("Passwords do not match.");
             return;
         }
-        
+
         setIsLoading(true);
 
         console.log('Email_verified', isEmailVerified);
@@ -300,7 +300,7 @@ const SignUpForm = () => {
                     weight: assessmentData.weight,
                     bmi: assessmentData.bmi,
                 },
-                body_type: assessmentData.bodyType, 
+                body_type: assessmentData.bodyType,
             }, { withCredentials: true });
             navigate('/client');
             console.log("Response: ", response.data);
@@ -317,8 +317,8 @@ const SignUpForm = () => {
     };
 
     return (
-        <>  
-            <TabBar/>
+        <>
+            <TabBar />
             {activeTab === 'signup' && (
                 <form className='w-full md:w-[600px] bg-white-light px-6 py-3 grid gap-4 rounded-xl' onSubmit={handleSubmit(onSubmit)}>
                     <div className='flex gap-4'>
@@ -347,8 +347,8 @@ const SignUpForm = () => {
                                     message: 'Invalid email format'
                                 },
                                 maxLength: {
-                                    value: 30,
-                                    message: "Email must be at most 30 characters long"
+                                    value: 150,
+                                    message: "Email must be at most 150 characters long"
                                 }
                             })} id='email' type="text" placeholder="Email" />
                             {errors.email && <span className='font-poppins font-semibold text-xs text-red'>{errors.email.message}</span>}
@@ -380,9 +380,9 @@ const SignUpForm = () => {
                                 />
                                 {errors.verificationCode && <span className='font-poppins font-semibold text-xs text-red'>{errors.verificationCode.message}</span>}
                             </div>
-                            <button 
-                                onClick={() => handleVerifyCode(getValues("verificationCode"))} 
-                                type="button" 
+                            <button
+                                onClick={() => handleVerifyCode(getValues("verificationCode"))}
+                                type="button"
                                 className='border-2 border-primary bg-primary text-white px-5 rounded'>
                                 Verify
                             </button>
