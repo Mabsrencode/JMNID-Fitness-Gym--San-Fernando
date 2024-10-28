@@ -5,209 +5,42 @@ import { useForm } from "react-hook-form";
 import axios from 'axios';
 import { FaEye, FaEyeSlash } from 'react-icons/fa6';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
+import BodyGoals from '../MultiForms/BodyGoals';
+import BodyAssessment from '../MultiForms/BodyAssessment';
 
-// Import all images
-import ectomorph from '../../assets/images/ectomorph.jpg';
-import mesomorph from '../../assets/images/mesomorph.jpg';
-import endomorph from '../../assets/images/endormorph.jpg';
-import shredded from '../../assets/images/shredded.jpg';
-import lean from '../../assets/images/lean.jpg';
-import defined from '../../assets/images/defined.jpg';
-import bulky from '../../assets/images/bulky.jpg';
-import athletic from '../../assets/images/athletic.jpg';
-import fit from '../../assets/images/fit.jpg';
-import curvy from '../../assets/images/curvy.jpg';
-import powerlifter from '../../assets/images/powerlifter.jpg';
-import functional from '../../assets/images/functional.jpg';
-
-const BODY_GOALS = [
-  { name: 'Ectomorph', description: 'A body type characterized by a slim build and difficulty gaining weight.', image: ectomorph },
-  { name: 'Mesomorph', description: 'A naturally muscular body type that can easily gain or lose weight.', image: mesomorph },
-  { name: 'Endomorph', description: 'A body type with a rounder physique that finds it easier to gain weight.', image: endomorph },
-  { name: 'Shredded', description: 'Refers to having low body fat with well-defined muscles.', image: shredded },
-  { name: 'Lean', description: 'A body type that is low in body fat but not necessarily muscular.', image: lean },
-  { name: 'Defined', description: 'A body with noticeable muscle separation and low body fat.', image: defined },
-  { name: 'Bulky', description: 'A muscular physique with significant muscle mass.', image: bulky },
-  { name: 'Athletic', description: 'A well-proportioned body that is strong and agile.', image: athletic },
-  { name: 'Fit', description: 'A general term implying a healthy body with good muscle tone and cardiovascular fitness.', image: fit },
-  { name: 'Curvy', description: 'A body type that emphasizes natural curves.', image: curvy },
-  { name: 'Powerlifter', description: 'A focus on strength rather than aesthetics, resulting in a robust appearance.', image: powerlifter },
-  { name: 'Functional', description: 'A body optimized for everyday activities, emphasizing strength and mobility.', image: functional },
-];
-
-const BODY_TYPES = {
-  ectomorph,
-  mesomorph,
-  endomorph
-};
-
-const TabBar = ({ activeTab, setActiveTab }) => (
-  <div className="absolute top-0 left-0 mt-4 ml-4">
-    {['assessment', 'body-goals', 'signup'].map((tab, index) => (
-      <button
-        key={tab}
-        onClick={() => setActiveTab(tab)}
-        className={`px-4 py-2 
-          ${activeTab === tab ? 'bg-primary text-white' : 'bg-gray-200'}
-          ${index === 0 ? 'rounded-l-lg' : index === 2 ? 'rounded-r-lg' : ''}`}
-      >
-        {tab.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}
-      </button>
-    ))}
-  </div>
-);
-
-const BodyGoals = ({ onGoalSelect, selectedGoal, onNext }) => {
-  const handleSubmit = () => {
-    if (!selectedGoal) {
-      alert("Please select a goal first");
-      return;
-    }
-    onNext();
-  };
+const MultiStepProgressBar = ({ activeTab, setActiveTab }) => {
+  const tabs = ['assessment', 'body-goals', 'signup'];
 
   return (
-    <div className="w-full md:w-[600px] bg-white-light px-6 py-3 rounded-xl m-10">
-      <h2 className="text-2xl mb-4">Body Goals</h2>
-      <div className="grid grid-cols-2 gap-4">
-        {BODY_GOALS.map((goal) => (
-          <div
-            key={goal.name}
-            className={`flex flex-col items-center p-4 border-2 rounded-lg cursor-pointer hover:bg-gray-200 
-              ${selectedGoal === goal.name ? 'border-primary' : 'border-gray-300'}`}
-            onClick={() => onGoalSelect(goal.name)}
-          >
-            <img src={goal.image} alt={goal.name} className="w-12 h-12 rounded-full mb-2" />
-            <h3 className="text-lg font-semibold">{goal.name}</h3>
-            <p className="text-sm text-gray-600">{goal.description}</p>
-          </div>
-        ))}
-      </div>
-      {selectedGoal && (
-        <div className="mt-4">
-          <h3 className="text-lg font-semibold">Selected Goal:</h3>
-          <p>{selectedGoal}</p>
-        </div>
-      )}
-      <button 
-        className="w-full bg-primary px-4 py-2 text-white mt-4" 
-        onClick={handleSubmit}
-      >
-        NEXT
-      </button>
-    </div>
-  );
-};
-
-const BodyAssessment = ({ onAssessmentChange, assessmentData, onNext }) => {
-  const [error, setError] = useState('');
-  const { height, weight, bodyType } = assessmentData;
-
-  const validateInputs = (height, weight) => {
-    if (!height || !weight) return 'Please enter both height and weight.';
-    const heightNum = parseInt(height, 10);
-    const weightNum = parseInt(weight, 10);
-
-    if (isNaN(heightNum) || isNaN(weightNum)) return 'Height and weight must be numbers.';
-    if (heightNum <= 0 || weightNum <= 0) return 'Height and weight must be positive numbers.';
-    if (heightNum < 50 || heightNum > 250) return 'Height must be between 50 cm and 250 cm.';
-    if (weightNum < 3 || weightNum > 300) return 'Weight must be between 3 kg and 300 kg.';
-    if (!Number.isInteger(heightNum) || !Number.isInteger(weightNum)) return 'Height and weight must be whole numbers.';
-
-    return '';
-  };
-
-  const calculateBMI = () => {
-    const validationError = validateInputs(height, weight);
-    if (validationError) {
-      setError(validationError);
-      return;
-    }
-
-    const heightInMeters = height / 100;
-    const bmi = (weight / (heightInMeters ** 2)).toFixed(2);
-    onAssessmentChange({ ...assessmentData, bmi });
-    setError('');
-  };
-
-  const handleSubmit = () => {
-    if (!height || !weight || !bodyType) {
-      alert("Please complete all fields first");
-      return;
-    }
-    onNext();
-  };
-
-  return (
-    <div className="w-full md:w-[600px] bg-white-light px-6 py-3 grid gap-4 rounded-xl">
-      <h2 className="text-2xl">Body Assessment</h2>
-      <div>
-        <label className="text-black w-full text-lg" htmlFor="height">Height (cm)</label>
-        <input
-          type="number"
-          id="height"
-          value={height}
-          onChange={(e) => onAssessmentChange({ ...assessmentData, height: e.target.value })}
-          className="border-2 border-primary w-full px-4 py-2 rounded-xl"
-          placeholder="Enter your height in cm"
-          required
-        />
-      </div>
-      <div>
-        <label className="text-black w-full text-lg" htmlFor="weight">Weight (kg)</label>
-        <input
-          type="number"
-          id="weight"
-          value={weight}
-          onChange={(e) => onAssessmentChange({ ...assessmentData, weight: e.target.value })}
-          className="border-2 border-primary w-full px-4 py-2 rounded-xl"
-          placeholder="Enter your weight in kg"
-          required
-        />
-      </div>
-      {error && <span className="text-red-600">{error}</span>}
-      <button
-        onClick={calculateBMI}
-        className="w-full bg-primary text-white px-4 py-2 rounded-xl"
-      >
-        Calculate BMI
-      </button>
-      {assessmentData.bmi && (
-        <div>
-          <h3 className="text-lg">Your BMI is: {assessmentData.bmi}</h3>
-        </div>
-      )}
-      <div>
-        <label className="text-black w-full text-lg" htmlFor="bodyType">Select Body Type</label>
-        <select
-          id="bodyType"
-          value={bodyType}
-          onChange={(e) => onAssessmentChange({ ...assessmentData, bodyType: e.target.value })}
-          className="border-2 border-primary w-full px-4 py-2 rounded-xl"
-          required
-        >
-          <option value="" disabled>Select Body Type</option>
-          {Object.keys(BODY_TYPES).map(type => (
-            <option key={type} value={type}>
-              {type.charAt(0).toUpperCase() + type.slice(1)}
-            </option>
+    <div className="absolute top-0 left-0 mt-4 ml-4">
+      <div className="relative">
+        <div className="flex items-center mb-2">
+          {tabs.map((tab, index) => (
+            <React.Fragment key={tab}>
+              <button
+                onClick={() => setActiveTab(index)}
+                className={`px-4 py-2 transition-colors duration-200
+                  ${activeTab === index ? 'bg-primary text-white' : 'bg-gray-200'}
+                  ${index === 0 ? 'rounded-l-lg' : ''} 
+                  ${index === tabs.length - 1 ? 'rounded-r-lg' : ''}`}
+              >
+                {tab.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}
+              </button>
+              {index < tabs.length - 1 && (
+                <div className={`flex-1 h-1 ${activeTab > index ? 'bg-primary' : 'bg-gray-300'}`}></div>
+              )}
+            </React.Fragment>
           ))}
-        </select>
-      </div>
-      {bodyType && (
-        <div className="mt-4">
-          <h3 className="text-lg">
-            Your Body Type: {bodyType.charAt(0).toUpperCase() + bodyType.slice(1)}
-          </h3>
-          <img src={BODY_TYPES[bodyType]} alt="Body Type" width={120} height={100} />
         </div>
-      )}
-      <button 
-        className="w-full bg-primary px-4 py-2 text-white" 
-        onClick={handleSubmit}
-      >
-        NEXT
-      </button>
+
+        {/* Progress Bar */}
+        <div className="h-1 bg-gray-300">
+          <div
+            className="h-full bg-primary"
+            style={{ width: `${(activeTab + 1) / tabs.length * 100}%` }} // Calculate width based on active tab
+          />
+        </div>
+      </div>
     </div>
   );
 };
@@ -219,15 +52,27 @@ const SignUpForm = () => {
   const [showPasswords, setShowPasswords] = useState(false);
   const [isEmailVerified, setIsEmailVerified] = useState(false);
   const [isCodeSent, setIsCodeSent] = useState(false);
-  const [activeTab, setActiveTab] = useState('assessment');
-  const [selectedGoal, setSelectedGoal] = useState(null);
-  const [assessmentData, setAssessmentData] = useState({ 
-    height: '', 
-    weight: '', 
-    bmi: null, 
-    bodyType: '' 
+  const [activeStep, setActiveStep] = useState(0);
+  const [assessmentData, setAssessmentData] = useState({
+    height: '',
+    weight: '',
+    bodyType: '',
+    bmi: ''
   });
-  
+  const [selectedGoal, setSelectedGoal] = useState('');
+
+  const handleAssessmentChange = (data) => {
+    setAssessmentData(data);
+  };
+
+  const handleNext = () => {
+    setActiveStep((prevStep) => prevStep + 1);
+  };
+
+  const handleBack = () => {
+    setActiveStep((prevStep) => prevStep - 1);
+  };
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -276,7 +121,7 @@ const SignUpForm = () => {
       await sendVerificationEmail(getValues('email'));
       setIsCodeSent(true);
     }
-  };
+  };  
 
   const onSubmit = async (data) => {
     if (!isEmailVerified) {
@@ -286,6 +131,17 @@ const SignUpForm = () => {
 
     if (data.password !== data.cpassword) {
       setError("Passwords do not match.");
+      return;
+    }
+
+     // Validate fitness goals and body assessment
+    if (!selectedGoal) {
+      setError("Please select at least one fitness goal.");
+      return;
+    }
+
+    if (!assessmentData || !assessmentData.height || !assessmentData.weight || !assessmentData.bmi || !assessmentData.bodyType) {
+      setError("Please complete the body assessment.");
       return;
     }
 
@@ -558,25 +414,26 @@ const SignUpForm = () => {
 
   return (
     <div>
-      <TabBar activeTab={activeTab} setActiveTab={setActiveTab} />
-      
-      {activeTab === 'assessment' && (
+
+      <MultiStepProgressBar activeTab={activeStep} setActiveTab={setActiveStep}/>
+
+      {activeStep === 0 && (
         <BodyAssessment
           assessmentData={assessmentData}
           onAssessmentChange={setAssessmentData}
-          onNext={() => setActiveTab('body-goals')}
+          onNext={handleNext}
         />
       )}
       
-      {activeTab === 'body-goals' && (
+      {activeStep === 1 && (
         <BodyGoals
           selectedGoal={selectedGoal}
           onGoalSelect={setSelectedGoal}
-          onNext={() => setActiveTab('signup')}
+          onNext={handleNext}
         />
       )}
       
-      {activeTab === 'signup' && renderSignUpForm()}
+      {activeStep === 2 && renderSignUpForm()}
     </div>
   );
 };
