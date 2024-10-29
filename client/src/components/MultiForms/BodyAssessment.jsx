@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import ectomorph from '../../assets/images/ectomorph.jpg';
 import mesomorph from '../../assets/images/mesomorph.jpg';
 import endomorph from '../../assets/images/endormorph.jpg';
+import { toast } from 'react-toastify';
 
 const BODY_TYPES = {
   ectomorph,
@@ -49,7 +50,7 @@ const BodyAssessment = ({ onAssessmentChange, assessmentData, onNext }) => {
 
   const handleSubmit = () => {
     if (!height || !weight || !bodyType) {
-      alert("Please complete all fields first");
+      toast.error("Please complete all fields first");
       return;
     }
     onNext();

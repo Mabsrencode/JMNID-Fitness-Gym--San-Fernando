@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useCallback, useEffect, useState } from "react";
-import { toast, useToast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import WorkoutModal from "../../components/Modals/WorkoutModal";
 import WorkoutSkeleton from "../../components/Skeletons/WorkoutSkeleton";
 import { BsThreeDots } from "react-icons/bs";
@@ -83,22 +83,22 @@ const WorkoutDashboard = () => {
                                     />
                                     {activeActionButtonIndex === index && (
                                         <div className="absolute overflow-hidden font-semibold top-10 right-2 bg-white rounded shadow-md z-10">
-                                            <button 
-                                                onClick={() => handleOpenModalWorkout(data)} 
-                                                className="block w-full text-left px-2 py-1 hover:bg-gray-400" 
+                                            <button
+                                                onClick={() => handleOpenModalWorkout(data)}
+                                                className="block w-full text-left px-2 py-1 hover:bg-gray-400"
                                             >
                                                 Edit
                                             </button>
-                                            <button 
-                                                onClick={() => handleDelete(data._id)} 
-                                                className="block w-full text-left px-2 py-1 hover:bg-red-400" 
+                                            <button
+                                                onClick={() => handleDelete(data._id)}
+                                                className="block w-full text-left px-2 py-1 hover:bg-red-400"
                                             >
                                                 Delete
                                             </button>
                                         </div>
                                     )}
                                     <video
-                                            crossOrigin="anonymous"
+                                        crossOrigin="anonymous"
                                         className="object-cover w-full h-full rounded-lg"
                                         controls
                                         preload="metadata"
@@ -117,7 +117,7 @@ const WorkoutDashboard = () => {
                                 <div>
                                     <h2 className="font-poppins font-semibold">Category Type:</h2>
                                     <p className="font-poppins text-sm overflow-hidden text-ellipsis line-clamp-3">
-                                            {data.category && data.category.length > 0 ? (
+                                        {data.category && data.category.length > 0 ? (
                                             data.category.map((category, index) => (
                                                 <span key={index}>{category + ", "}</span>
                                             ))

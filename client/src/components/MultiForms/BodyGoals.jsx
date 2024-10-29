@@ -11,6 +11,7 @@ import fit from "../../assets/images/fit.jpg";
 import curvy from "../../assets/images/curvy.jpg";
 import powerlifter from "../../assets/images/powerlifter.jpg";
 import functional from "../../assets/images/functional.jpg";
+import { toast } from "react-toastify";
 
 const BODY_GOALS = [
   {
@@ -85,7 +86,7 @@ const BODY_GOALS = [
 const BodyGoals = ({ onGoalSelect, selectedGoal, onNext }) => {
   const handleSubmit = () => {
     if (!selectedGoal) {
-      alert("Please select a goal first");
+      toast.error("Please select a goal first");
       return;
     }
     onNext();
@@ -99,11 +100,10 @@ const BodyGoals = ({ onGoalSelect, selectedGoal, onNext }) => {
           <div
             key={goal.name}
             className={`flex flex-col items-center p-4 border-2 rounded-lg cursor-pointer hover:bg-gray-200 
-                ${
-                  selectedGoal === goal.name
-                    ? "border-primary"
-                    : "border-gray-300"
-                }`}
+                ${selectedGoal === goal.name
+                ? "border-primary"
+                : "border-gray-300"
+              }`}
             onClick={() => onGoalSelect(goal.name)}
           >
             <img
