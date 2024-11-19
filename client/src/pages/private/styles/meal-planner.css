@@ -14,3 +14,9 @@
 .meal-planner-aside {
   grid-column: 3 / 4;
 }
+
+@media screen and (max-width: 768px) {
+  .meal-planner-container {
+    display: unset;
+  }
+}

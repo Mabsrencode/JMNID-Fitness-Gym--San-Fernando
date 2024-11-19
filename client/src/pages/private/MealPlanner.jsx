@@ -89,19 +89,19 @@ const MealPlanner = () => {
                     return { day, meal: mealId, mealName: meal ? meal.name : "Unknown Meal" };
                 })
             );
-    
+
             console.log("Saving the following meal plan:", {
                 userId,
                 week: selectedWeek,
                 meals: mealsToSave,
             });
-    
+
             const response = await axios.post('/meal-planner/save-meal-plan', {
                 userId,
                 week: selectedWeek,
                 meals: mealsToSave,
             });
-    
+
             toast(response.data.message, { autoClose: 2000 });
             setTimeout(() => {
                 window.location.reload();
@@ -111,7 +111,7 @@ const MealPlanner = () => {
             toast.error(error?.response?.data?.message || "An error occurred. Please try again.");
         }
     };
-    
+
 
     const handleMealRemove = (day, mealId) => {
         setMealPlan((prev) => {
@@ -135,22 +135,24 @@ const MealPlanner = () => {
                 }
                 `}
             </style>
-            <header className="meal-planner-header py-3 px-6 bg-white-dark rounded-xl flex flex-row-reverse items-center gap-6">
-                <div className='w-[50%]'>
-                    <h2 className='font-teko text-4xl font-semibold'>Create a Weekly Meal Plan</h2>
-                    <input
-                        className="date-input bg-black text-white px-3 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-white"
-                        type="date"
-                        value={selectedWeek}
-                        onChange={(e) => setSelectedWeek(e.target.value)}
-                        min={new Date().toISOString().slice(0, 10)}
-                    />
+            <header className="meal-planner-header py-3 px-6 bg-white-dark rounded-xl flex flex-col md:flex-row-reverse items-center gap-2 md:gap-6">
+                <div className='w-full md:w-[50%]'>
+                    <h2 className='font-teko text-lg sm:text-2xl md:text-3xl lg:text-4xl font-semibold'>Create a Weekly Meal Plan</h2>
+                    <div>
+                        <input
+                            className="w-full md:w-auto date-input bg-black text-white px-3 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-white"
+                            type="date"
+                            value={selectedWeek}
+                            onChange={(e) => setSelectedWeek(e.target.value)}
+                            min={new Date().toISOString().slice(0, 10)}
+                        />
+                    </div>
                 </div>
-                <div className='w-[50%] relative'>
-                    <input className='py-3 px-6 bg-white shadow-2xl border-4 placeholder:font-bold border-black outline-none rounded-xl w-full' placeholder='Search...' type="text" />
+                <div className='w-full md:w-[50%] relative'>
+                    <input className='p-2 w-full md:py-3 md:px-6 bg-white shadow-2xl border-4 placeholder:font-bold border-black outline-none rounded-xl w-full' placeholder='Search...' type="text" />
                 </div>
             </header>
-            <main className="meal-planner-main">
+            <main className="meal-planner-main mt-2">
                 <div className="meals-list mb-12">
                     {loading ? <MealSkeleton /> : (
                         <ul className='list-none flex gap-4 flex-wrap justify-center'>
@@ -201,7 +203,7 @@ const MealPlanner = () => {
                     )}
                 </div>
             </main>
-            <div className="meal-planner-aside">
+            <div className="meal-planner-aside hidden md:block">
                 <div className='sticky top-20 right-0 bg-white-dark rounded-xl p-3'>
                     <h1 className='font-teko font-semibold text-2xl'>Select a day to assign.</h1>
                     <div className='flex flex-col gap-2'>
