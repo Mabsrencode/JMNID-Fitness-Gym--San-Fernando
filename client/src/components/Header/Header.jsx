@@ -39,14 +39,14 @@ const Header = () => {
                     </div>
                     <div className={`${isNavbarOpen ? "h-full" : "hidden"} transition-all duration-300 basis-full grow md:block `}>
                         <div className="flex flex-col uppercase gap-y-4 gap-x-0 mt-5 md:flex-row md:items-center md:justify-end md:gap-y-0 md:gap-x-7 md:mt-0 md:ps-7">
-                            <Link to={"/"} className="py-3 text-center md:text-xs lg:text-sm text-primary md:text-white md:font-semibold hover:opacity-75 md:focus:text-primary">Home</Link>
-                            <Link to={"/services"} className="py-3 text-center md:text-xs lg:text-sm text-primary md:text-white md:font-semibold hover:opacity-75 md:focus:text-primary">Services</Link>
-                            <Link to={"/gym"} className="py-3 text-center md:text-xs lg:text-sm text-primary md:text-white md:font-semibold hover:opacity-75 md:focus:text-primary">Gym</Link>
-                            <Link to={"/about"} className="py-3 text-center md:text-xs lg:text-sm text-primary md:text-white md:font-semibold hover:opacity-75 md:focus:text-primary" >About Us</Link>
+                            <Link onClick={() => setIsNavbarOpen(!isNavbarOpen)} to={"/"} className="py-3 text-center md:text-xs lg:text-sm text-primary md:text-white md:font-semibold hover:opacity-75 md:focus:text-primary">Home</Link>
+                            <Link onClick={() => setIsNavbarOpen(!isNavbarOpen)} to={"/services"} className="py-3 text-center md:text-xs lg:text-sm text-primary md:text-white md:font-semibold hover:opacity-75 md:focus:text-primary">Services</Link>
+                            <Link onClick={() => setIsNavbarOpen(!isNavbarOpen)} to={"/gym"} className="py-3 text-center md:text-xs lg:text-sm text-primary md:text-white md:font-semibold hover:opacity-75 md:focus:text-primary">Gym</Link>
+                            <Link onClick={() => setIsNavbarOpen(!isNavbarOpen)} to={"/about"} className="py-3 text-center md:text-xs lg:text-sm text-primary md:text-white md:font-semibold hover:opacity-75 md:focus:text-primary" >About Us</Link>
                             <div className='flex gap-2 items-center justify-center border-t md:border-none pt-4 md:pt-0'>
                                 {user && user.status ? <LogoutButton /> : <>
-                                    <Link to={"/sign-in"} className={`text-nowrap border-2 border-primary font-semibold text-white md:text-white md:font-semibold rounded-full transition-all hover:opacity-75 py-2 bg-primary-dark text-center px-[20px] md:flex md:items-center md:gap-2`} >Sign In </Link>
-                                    <Link to={"/sign-up"} className={`text-nowrap border-2 border-primary font-semibold text-white md:text-white md:font-semibold rounded-full transition-all hover:opacity-75 py-2 bg-black text-center px-[20px] md:flex md:items-center md:gap-2`} >Sign Up</Link>
+                                    <Link onClick={() => setIsNavbarOpen(!isNavbarOpen)} to={"/sign-in"} className={`text-nowrap border-2 border-primary font-semibold text-white md:text-white md:font-semibold rounded-full transition-all hover:opacity-75 py-2 bg-primary-dark text-center px-[20px] md:flex md:items-center md:gap-2`} >Sign In </Link>
+                                    <Link onClick={() => setIsNavbarOpen(!isNavbarOpen)} to={"/sign-up"} className={`text-nowrap border-2 border-primary font-semibold text-white md:text-white md:font-semibold rounded-full transition-all hover:opacity-75 py-2 bg-black text-center px-[20px] md:flex md:items-center md:gap-2`} >Sign Up</Link>
                                 </>}
                             </div>
                         </div>
