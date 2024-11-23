@@ -168,8 +168,8 @@ const MealPlanner = () => {
                                             <h2 className="font-poppins font-semibold">Ingredients:</h2>
                                             <ul className="grid grid-cols-2 gap-x-2 my-3">
                                                 {meal.ingredients.map((ingredient, index) => (
-                                                    <li className="font-poppins text-gray-dark" key={index}>
-                                                        <span className="font-bold">{index + 1}.</span> {ingredient}
+                                                    <li className="font-poppins text-gray-dark text-xs md:text-base" key={index}>
+                                                        <span className="font-bold">{index + 1}.</span> <p>{ingredient}</p>
                                                     </li>
                                                 ))}
                                             </ul>
