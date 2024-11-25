@@ -4,6 +4,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useUser } from '../../context/UserContext';
 import MealSkeleton from '../../components/Skeletons/MealSkeleton';
+import { SaveIcon } from '../../constants/icons';
 
 const daysOfWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 
@@ -16,6 +17,11 @@ const MealPlanner = () => {
     const [selectedMeals, setSelectedMeals] = useState([]);
     const [loading, setLoading] = useState(false);
     const [selectedDay, setSelectedDay] = useState('');
+    const [openSelectDay, setOpenSelectDay] = useState(false);
+
+    const handleOpenSelectDay = () => {
+        setOpenSelectDay(!openSelectDay);
+    };
 
     useEffect(() => {
         const selectDate = new Date(selectedWeek);
@@ -44,6 +50,7 @@ const MealPlanner = () => {
         const fetchMealPlan = async () => {
             try {
                 const response = await axios.get(`/meal-planner/meal-plans/${userId}`, { params: { week: selectedWeek } });
+                console.log("fetchMealPlans data: ", response)
                 if (response.data) {
                     setMealPlan({ meals: response.data.meals || {} });
                 } else {
@@ -125,7 +132,7 @@ const MealPlanner = () => {
             };
         });
     };
-
+    console.log(selectedMeals.length)
     return (
         <div className="meal-planner-container">
             <style>
@@ -203,7 +210,8 @@ const MealPlanner = () => {
                     )}
                 </div>
             </main>
-            <div className="meal-planner-aside hidden md:block">
+            {selectedMeals.length > 0 && <SaveIcon className={`fixed right-4 bottom-4 text-[3rem] z-[1000] text-white bg-primary-dark rounded-full p-2`} />}
+            <div className={`meal-planner-aside hidden md:block`}>
                 <div className='sticky top-20 right-0 bg-white-dark rounded-xl p-3'>
                     <h1 className='font-teko font-semibold text-2xl'>Select a day to assign.</h1>
                     <div className='flex flex-col gap-2'>

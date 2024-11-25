@@ -15,6 +15,7 @@ import { PiBarbellBold } from "react-icons/pi";
 import { IoBarbell } from "react-icons/io5";
 import { MdSpaceDashboard } from "react-icons/md";
 import { MdOutlineTask } from "react-icons/md";
+import { FaSave } from "react-icons/fa";
 const MessageIcon = ({ className }) => {
   return <FaMessage className={className} />;
 };
@@ -65,9 +66,13 @@ const LightBarbelIcon = ({ className }) => {
 const DashboardIcon = ({ className }) => {
   return <MdSpaceDashboard className={className} />;
 };
-const AccomplishmentTask = ({className}) => {
-  return <MdOutlineTask className={className} />
-}
+const AccomplishmentTask = ({ className }) => {
+  return <MdOutlineTask className={className} />;
+};
+const SaveIcon = ({ className }) => {
+  return <FaSave className={className} />;
+};
+
 export {
   MessageIcon,
   XMarkIcon,
@@ -83,5 +88,6 @@ export {
   BarbelIcon,
   LightBarbelIcon,
   DashboardIcon,
-  AccomplishmentTask
+  AccomplishmentTask,
+  SaveIcon,
 };
