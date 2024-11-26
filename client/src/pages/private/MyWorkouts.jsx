@@ -26,18 +26,18 @@ const MyWorkouts = () => {
             return;
         }
 
-        console.log('Data Fetch: ', { userId });
+        console.log('Data Fetch (USERID): ', userId);
 
         try {
-            const workoutResponse = await fetch(`http://localhost:4000/workout-planner/${userId}/plan`);
-            const workoutData = await workoutResponse.json();
+            const workoutResponse = await axios.get(`http://localhost:4000/workout-planner/${userId}/plan`);
+            const workoutData = workoutResponse.data;
+            console.log("Workout Data", workoutData);
 
-            const mealResponse = await fetch(`http://localhost:4000/meal-planner/${userId}/plan`);
-            const mealData = await mealResponse.json();
+            const mealResponse = await axios.get(`http://localhost:4000/meal-planner/${userId}/plan`);
+            const mealData = mealResponse.data;
+            console.log("Meal Data:", mealData);
 
-            if (!workoutData || !mealData ||
-                (Array.isArray(workoutData.workoutPlan) && workoutData.workoutPlan.length === 0) ||
-                (Array.isArray(mealData.mealPlan) && mealData.mealPlan.length === 0)) {
+            if (workoutData == null || mealData == null) {
                 throw new Error('No workout or meal plans found.');
             }
 
@@ -221,7 +221,7 @@ const MyWorkouts = () => {
     return (
         <div className="text-white min-h-screen flex flex-col items-center p-6">
             <h1 className='text-white text-3xl font-bold mb-4'>My Workouts and Meal Plans</h1>
-            <div className="bg-gray-800 rounded-lg shadow-lg p-4 mb-6 w-full max-w-3x2">
+            <div className="bg-gray-800 rounded-lg w-full max-w-3x2 text-white">
                 <Calendar
                     localizer={localizer}
                     selectable
@@ -231,7 +231,7 @@ const MyWorkouts = () => {
                     events={events}
                     startAccessor="start"
                     endAccessor="end"
-                    style={{ height: 500 }}
+                    style={{ height: 500, }}
                     className="rounded-lg"
                 />
             </div>
