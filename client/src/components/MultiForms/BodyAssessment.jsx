@@ -6,16 +6,25 @@ import mesomorph from '../../assets/images/mesomorph.jpg';
 import endomorph from '../../assets/images/endormorph.jpg';
 import { toast } from 'react-toastify';
 
-const BODY_TYPES = {
-  ectomorph,
-  mesomorph,
-  endomorph
-};
 
 const BodyAssessment = ({ onAssessmentChange, assessmentData, onNext }) => {
   const [error, setError] = useState("");
   const { height, weight, bodyType } = assessmentData;
   const [BMIClassification, setBMIClassification] = useState("");
+  const BODY_TYPES = {
+    ectomorph: {
+      image: ectomorph,
+      description: "An ectomorph is a body type characterized by a naturally lean and slender build, long limbs, low body fat, and a fast metabolism. They have difficulty gaining both muscle and fat and often require a high-calorie diet to support energy and muscle-building needs. Ectomorphs excel in endurance activities like running but face challenges in strength training due to slower muscle gain. They benefit from a focus on nutrient-dense foods and consistent, targeted exercise to maintain strength and health.",
+    },
+    mesomorph: {
+      image: mesomorph,
+      description: "A mesomorph is a body type characterized by a naturally athletic and muscular build, broad shoulders, a narrow waist, and a well-defined physique. They gain muscle and strength easily and tend to have a balanced metabolism, making it relatively easy to maintain a healthy weight. Mesomorphs are well-suited for strength and power-based activities, responding quickly to both cardio and resistance training. They benefit from a balanced diet of protein, carbohydrates, and healthy fats to support their active lifestyle. While mesomorphs often excel in fitness and sports, they should monitor calorie intake to avoid gaining excess fat."
+    },
+    endomorph: {
+      image: endomorph,
+      description: "An endomorph is a body type characterized by a naturally rounder and softer physique, with a tendency to store fat more easily. They often have a wider waist, hips, and shoulders, with shorter limbs and a stocky build. Endomorphs typically have a slower metabolism, making weight loss more challenging and requiring careful attention to diet and exercise. While they may struggle with fat gain, endomorphs can build strength and muscle more easily compared to ectomorphs. To maintain a healthy weight, they benefit from a diet rich in lean proteins, vegetables, and healthy fats, along with consistent physical activity, particularly cardio and strength training, to boost metabolism and improve body composition."
+    },
+  };
 
   const handleBMIClassification = useCallback(() => {
     const { bmi } = assessmentData;
@@ -154,17 +163,22 @@ const BodyAssessment = ({ onAssessmentChange, assessmentData, onNext }) => {
         </select>
       </div>
       {bodyType && (
-        <div className="mt-4">
-          <h3 className="text-lg">
-            Your Body Type:{" "}
-            {bodyType.charAt(0).toUpperCase() + bodyType.slice(1)}
-          </h3>
-          <img
-            src={BODY_TYPES[bodyType]}
-            alt="Body Type"
-            width={120}
-            height={100}
-          />
+        <div className='flex flex-col lg:flex-row gap-4'>
+          <div className="">
+            <h3 className="text-sm">
+              Body Type:{" "}
+              <span className='font-bold'>{bodyType.charAt(0).toUpperCase() + bodyType.slice(1)}</span>
+            </h3>
+            <img className='mt-2'
+              src={BODY_TYPES[bodyType].image}
+              alt="Body Type"
+              width={120}
+              height={100}
+            />
+          </div>
+          <div>
+            <p className='text-sm'>{BODY_TYPES[bodyType].description}</p>
+          </div>
         </div>
       )}
       <button
