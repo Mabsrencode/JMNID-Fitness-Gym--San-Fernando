@@ -6,7 +6,8 @@
 p {
   font-family: "poppins", sans-serif;
 }
-label {
+label,
+.label {
   font-family: "teko", sans-serif;
   display: block;
 }

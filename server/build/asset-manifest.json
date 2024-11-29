@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.f05e98cf.css",
-    "main.js": "/static/js/main.82eb9cd1.js",
+    "main.css": "/static/css/main.23371a7b.css",
+    "main.js": "/static/js/main.3d2b4ec6.js",
     "static/media/meal-planner.jpg": "/static/media/meal-planner.3cab3cfa30c8c2ce809c.jpg",
     "static/media/program-1.jpg": "/static/media/program-1.2b17042b03fe4ed39281.jpg",
     "static/media/logo.png": "/static/media/logo.70b5de61e9d142db9a94.png",
@@ -31,11 +31,11 @@
     "static/media/ectomorph.jpg": "/static/media/ectomorph.f6c6fa4f55ecb63cca94.jpg",
     "static/media/endormorph.jpg": "/static/media/endormorph.0a2931f22b106cef624e.jpg",
     "index.html": "/index.html",
-    "main.f05e98cf.css.map": "/static/css/main.f05e98cf.css.map",
-    "main.82eb9cd1.js.map": "/static/js/main.82eb9cd1.js.map"
+    "main.23371a7b.css.map": "/static/css/main.23371a7b.css.map",
+    "main.3d2b4ec6.js.map": "/static/js/main.3d2b4ec6.js.map"
   },
   "entrypoints": [
-    "static/css/main.f05e98cf.css",
-    "static/js/main.82eb9cd1.js"
+    "static/css/main.23371a7b.css",
+    "static/js/main.3d2b4ec6.js"
   ]
 }

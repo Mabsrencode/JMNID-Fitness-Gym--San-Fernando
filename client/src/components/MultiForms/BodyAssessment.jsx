@@ -15,7 +15,35 @@ const BODY_TYPES = {
 const BodyAssessment = ({ onAssessmentChange, assessmentData, onNext }) => {
   const [error, setError] = useState("");
   const { height, weight, bodyType } = assessmentData;
+  const [BMIClassification, setBMIClassification] = useState("");
 
+  const handleBMIClassification = useCallback(() => {
+    const { bmi } = assessmentData;
+
+    if (bmi < 16) {
+      setBMIClassification("Severe Thinness");
+    } else if (bmi >= 16 && bmi < 17) {
+      setBMIClassification("Moderate Thinness");
+    } else if (bmi >= 17 && bmi < 18.5) {
+      setBMIClassification("Mild Thinness");
+    } else if (bmi >= 18.5 && bmi < 25) {
+      setBMIClassification("Normal");
+    } else if (bmi >= 25 && bmi < 30) {
+      setBMIClassification("Overweight");
+    } else if (bmi >= 30 && bmi < 35) {
+      setBMIClassification("Obese Class I");
+    } else if (bmi >= 35 && bmi < 40) {
+      setBMIClassification("Obese Class II");
+    } else if (bmi >= 40) {
+      setBMIClassification("Obese Class III");
+    } else {
+      setError("Invalid BMI value");
+    }
+  }, [assessmentData]);
+
+  useEffect(() => {
+    handleBMIClassification();
+  }, [handleBMIClassification]);
   const validateInputs = (height, weight) => {
     if (!height || !weight) return "Please enter both height and weight.";
     const heightNum = parseInt(height, 10);
@@ -98,7 +126,8 @@ const BodyAssessment = ({ onAssessmentChange, assessmentData, onNext }) => {
       {error && <span className="text-red-600">{error}</span>}
       {assessmentData.bmi && (
         <div>
-          <h3 className="text-lg">Your BMI is: {assessmentData.bmi}</h3>
+          <h3 className="label text-lg text-black">Your BMI  <span className='bg-gray-dark text-white rounded-lg px-2 text-base'>{assessmentData.bmi}</span></h3>
+          <h3 className="label text-lg text-black">Your Classification <span className='bg-gray-dark text-white rounded-lg px-2 text-base'>{BMIClassification}</span></h3>
         </div>
       )}
       <div>
