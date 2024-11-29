@@ -1,37 +1,12 @@
-// Import all images
-import ectomorph from "../../assets/images/ectomorph.jpg";
-import mesomorph from "../../assets/images/mesomorph.jpg";
-import endomorph from "../../assets/images/endormorph.jpg";
+
 import shredded from "../../assets/images/shredded.jpg";
 import lean from "../../assets/images/lean.jpg";
 import defined from "../../assets/images/defined.jpg";
 import bulky from "../../assets/images/bulky.jpg";
-import athletic from "../../assets/images/athletic.jpg";
 import fit from "../../assets/images/fit.jpg";
-import curvy from "../../assets/images/curvy.jpg";
-import powerlifter from "../../assets/images/powerlifter.jpg";
-import functional from "../../assets/images/functional.jpg";
 import { toast } from "react-toastify";
 
 const BODY_GOALS = [
-  {
-    name: "Ectomorph",
-    description:
-      "A body type characterized by a slim build and difficulty gaining weight.",
-    image: ectomorph,
-  },
-  {
-    name: "Mesomorph",
-    description:
-      "A naturally muscular body type that can easily gain or lose weight.",
-    image: mesomorph,
-  },
-  {
-    name: "Endomorph",
-    description:
-      "A body type with a rounder physique that finds it easier to gain weight.",
-    image: endomorph,
-  },
   {
     name: "Shredded",
     description: "Refers to having low body fat with well-defined muscles.",
@@ -54,32 +29,10 @@ const BODY_GOALS = [
     image: bulky,
   },
   {
-    name: "Athletic",
-    description: "A well-proportioned body that is strong and agile.",
-    image: athletic,
-  },
-  {
     name: "Fit",
     description:
       "A general term implying a healthy body with good muscle tone and cardiovascular fitness.",
     image: fit,
-  },
-  {
-    name: "Curvy",
-    description: "A body type that emphasizes natural curves.",
-    image: curvy,
-  },
-  {
-    name: "Powerlifter",
-    description:
-      "A focus on strength rather than aesthetics, resulting in a robust appearance.",
-    image: powerlifter,
-  },
-  {
-    name: "Functional",
-    description:
-      "A body optimized for everyday activities, emphasizing strength and mobility.",
-    image: functional,
   },
 ];
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 // Import all images
 import ectomorph from '../../assets/images/ectomorph.jpg';
@@ -35,7 +35,7 @@ const BodyAssessment = ({ onAssessmentChange, assessmentData, onNext }) => {
     return "";
   };
 
-  const calculateBMI = () => {
+  const calculateBMI = useCallback(() => {
     const validationError = validateInputs(height, weight);
     if (validationError) {
       setError(validationError);
@@ -46,7 +46,11 @@ const BodyAssessment = ({ onAssessmentChange, assessmentData, onNext }) => {
     const bmi = (weight / heightInMeters ** 2).toFixed(2);
     onAssessmentChange({ ...assessmentData, bmi });
     setError("");
-  };
+  }, [assessmentData, height, onAssessmentChange, weight]);
+
+  useEffect(() => {
+    calculateBMI()
+  }, [calculateBMI]);
 
   const handleSubmit = () => {
     if (!height || !weight || !bodyType) {
@@ -92,12 +96,6 @@ const BodyAssessment = ({ onAssessmentChange, assessmentData, onNext }) => {
         />
       </div>
       {error && <span className="text-red-600">{error}</span>}
-      <button
-        onClick={calculateBMI}
-        className="w-full bg-primary text-white px-4 py-2 rounded-xl"
-      >
-        Calculate BMI
-      </button>
       {assessmentData.bmi && (
         <div>
           <h3 className="text-lg">Your BMI is: {assessmentData.bmi}</h3>

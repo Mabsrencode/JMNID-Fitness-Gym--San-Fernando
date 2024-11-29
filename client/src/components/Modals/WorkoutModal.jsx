@@ -105,27 +105,20 @@ const WorkoutModal = ({ onclick, handleRefetch, workout }) => {
   };
 
   const bodyType = [
-    "Ectomorph", 
-    "Mesomorph", 
-    "Endomorph", 
-    "Shredded", 
-    "Lean", 
-    "Defined", 
-    "Bulky", 
-    "Athletic", 
-    "Fit", 
-    "Curvy", 
-    "Powerlifter", 
-    "Functional"
+    "Shredded",
+    "Lean",
+    "Defined",
+    "Bulky",
+    "Fit",
   ]
 
   const handleCategoryChange = (event) => {
-      // Get the selected options
-      const selectedOptions = Array.from(event.target.selectedOptions).map(option => option.value);
-      
-      // Update state with the selected categories
-      console.log('Each Category:', selectedOptions);
-      setValue("categoryType", selectedOptions);
+    // Get the selected options
+    const selectedOptions = Array.from(event.target.selectedOptions).map(option => option.value);
+
+    // Update state with the selected categories
+    console.log('Each Category:', selectedOptions);
+    setValue("categoryType", selectedOptions);
   };
 
   return (
@@ -209,16 +202,16 @@ const WorkoutModal = ({ onclick, handleRefetch, workout }) => {
             Select Category Type
           </label>
           <select
-              className="border-2 border-primary w-full px-4 py-2 rounded-lg text-base md:text-lg focus:outline-none focus:ring focus:ring-primary transition"
-              name="categoryType"
-              id="categoryType"
-              onChange={handleCategoryChange}
-              defaultValue={workout ? workout.category : []}
-              multiple
+            className="border-2 border-primary w-full px-4 py-2 rounded-lg text-base md:text-lg focus:outline-none focus:ring focus:ring-primary transition"
+            name="categoryType"
+            id="categoryType"
+            onChange={handleCategoryChange}
+            defaultValue={workout ? workout.category : []}
+            multiple
           >
-              {bodyType && bodyType.map((category, index) => (
-                  <option key={index} value={category}>{category}</option>
-              ))}
+            {bodyType && bodyType.map((category, index) => (
+              <option key={index} value={category}>{category}</option>
+            ))}
           </select>
         </div>
 
