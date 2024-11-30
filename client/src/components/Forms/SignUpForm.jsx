@@ -111,7 +111,7 @@ const SignUpForm = () => {
 
     const onSubmit = async (data) => {
         if (!isEmailVerified) {
-            setError("Please verify your email");
+            setError("Please send code and verify your email.");
             return;
         }
 
