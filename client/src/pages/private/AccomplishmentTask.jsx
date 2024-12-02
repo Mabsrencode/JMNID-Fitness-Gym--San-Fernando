@@ -38,6 +38,18 @@ const AccomplishmentTask = () => {
         return date.toLocaleDateString('en-US', options);
     };
 
+    const formatDateWithTime = (timestamp) => {
+        const date = new Date(timestamp);
+        const options = {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric',
+            hour: 'numeric',
+            minute: '2-digit'
+        };
+        return date.toLocaleDateString('en-US', options);
+    };
+
     return (
         <div className="w-full">
             <h1 className="text-3xl font-bold mb-6 text-center text-white">Accomplishment History</h1>
@@ -48,6 +60,7 @@ const AccomplishmentTask = () => {
                             <th className="py-3 px-6 text-left text-gray-300 font-semibold">Date</th>
                             <th className="py-3 px-6 text-left text-gray-300 font-semibold">Workouts</th>
                             <th className="py-3 px-6 text-left text-gray-300 font-semibold">Meals</th>
+                            <th className="py-3 px-6 text-left text-gray-300 font-semibold">Time</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -62,6 +75,9 @@ const AccomplishmentTask = () => {
                                     </td>
                                     <td className="py-4 px-6 border-b border-gray-700">
                                         {accomplishment.meals?.join(', ') || 'N/A'}
+                                    </td>
+                                    <td className="py-4 px-6 border-b border-gray-700">
+                                        {formatDateWithTime(accomplishment.createdAt)}
                                     </td>
                                 </tr>
                             ))
