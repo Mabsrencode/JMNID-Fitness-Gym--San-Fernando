@@ -12,7 +12,8 @@ const MealModal = ({ onclick, handleRefetch, meal }) => {
     const { register, handleSubmit, reset, setValue, formState: { errors } } = useForm();
     const [loading, setLoading] = useState(false);
     const [imageBase64, setImageBase64] = useState("");
-
+    const dietary_preferences_data = ["Vegetarian", "Pescetarian", "Dairy-free", "Gluten-free", "Paleo", "Keto"]
+    const category_data = ["Breakfast", "Brunch", "Lunch", "Dinner", "Snack"]
     useEffect(() => {
         if (meal) {
             setValue("name", meal.name);
@@ -141,17 +142,28 @@ const MealModal = ({ onclick, handleRefetch, meal }) => {
                             {errors.calories && <span className='font-poppins font-semibold text-xs text-red'>{errors.calories.message}</span>}
                         </div>
                         <div className='flex-1'>
-                            <div className='w-full relative'>
-                                <label className='text-black w-full text-2xl' htmlFor="dietary_preferences">Dietary Preferences</label>
-                                <input className='border-2 border-primary w-full px-6 py-3 rounded-xl' id='dietary_preferences' placeholder='Dietary Preferences' {...register('dietary_preferences', {
-                                    required: {
-                                        value: true,
-                                        message: 'Dietary Preferences is required'
-                                    }, maxLength: {
-                                        value: 300,
-                                        message: 'Dietary Preferences must be at most 300 characters long'
-                                    }
-                                })} type="text" />
+                            <div className="w-full relative">
+                                <label htmlFor="dietary_preferences" className="text-black w-full text-2xl">
+                                    Dietary Preferences
+                                </label>
+                                <select
+                                    id="dietary_preferences"
+                                    value={dietary_preferences_data}
+                                    {...register('dietary_preferences', {
+                                        required: {
+                                            value: true,
+                                            message: 'Dietary Preferences is required'
+                                        }
+                                    })}
+                                    className="border-2 w-full"
+                                    required
+                                >
+                                    {dietary_preferences_data.map((data) => (
+                                        <option key={data} value={data}>
+                                            {data.charAt(0).toUpperCase() + data.slice(1)}
+                                        </option>
+                                    ))}
+                                </select>
                             </div>
                             {errors.dietary_preferences && <span className='font-poppins font-semibold text-xs text-red'>{errors.dietary_preferences.message}</span>}
                         </div>
@@ -170,15 +182,24 @@ const MealModal = ({ onclick, handleRefetch, meal }) => {
                         <div className='flex-1'>
                             <div className='w-full relative'>
                                 <label className='text-black w-full text-2xl' htmlFor="category">Category</label>
-                                <input className='border-2 border-primary w-full px-6 py-3 rounded-xl' id='category' placeholder='Category' {...register('category', {
-                                    required: {
-                                        value: true,
-                                        message: 'Category is required'
-                                    }, maxLength: {
-                                        value: 50,
-                                        message: 'Category must be at most 50 characters long'
-                                    }
-                                })} type="text" />
+                                <select
+                                    id="category"
+                                    value={category_data}
+                                    {...register('category', {
+                                        required: {
+                                            value: true,
+                                            message: 'Category is required'
+                                        }
+                                    })}
+                                    className="border-2 w-full"
+                                    required
+                                >
+                                    {category_data.map((data) => (
+                                        <option key={data} value={data}>
+                                            {data.charAt(0).toUpperCase() + data.slice(1)}
+                                        </option>
+                                    ))}
+                                </select>
                             </div>
                             {errors.category && <span className='font-poppins font-semibold text-xs text-red'>{errors.category.message}</span>}
                         </div>

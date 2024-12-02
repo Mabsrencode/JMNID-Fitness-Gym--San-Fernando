@@ -57,8 +57,8 @@ const WorkoutPlanner = () => {
 
     const handleWorkoutSelect = (workout) => {
         setSelectedWorkouts(prev => {
-            return prev.includes(workout._id) 
-                ? prev.filter(id => id !== workout._id) 
+            return prev.includes(workout._id)
+                ? prev.filter(id => id !== workout._id)
                 : [...prev, workout._id];
         });
     };
@@ -146,13 +146,13 @@ const WorkoutPlanner = () => {
                                     <h1 className="font-teko text-2xl uppercase mt-2 font-semibold">{workout.title}</h1>
                                     <hr className='border-4 border-indigo-200 border-l-indigo-500' />
                                     <h2 className="font-poppins capitalize mt-2"><span className='font-teko text-2xl uppercase mt-2 font-semibold'>Description</span>: <br></br> {workout.description}</h2>
-                                    <h2 className='font-teko text-2xl uppercase mt-2 font-semibold'>Cateory Body Type:</h2>
+                                    <h2 className='font-teko text-2xl uppercase mt-2 font-semibold'>Category Body Type:</h2>
                                     <div className="grid grid-cols-3 gap-2 mb-2">
                                         {workout.category.map((category, index) => (
-                                            <p 
-                                            className="font-poppins capitalize mt-2 font-semibold bg-slate-800 p-2 rounded-lg text-center text-white" 
-                                            key={index}>
-                                            {category}
+                                            <p
+                                                className="font-poppins capitalize mt-2 font-semibold bg-slate-800 p-2 rounded-lg text-center text-white"
+                                                key={index}>
+                                                {category}
                                             </p>
                                         ))}
                                     </div>
@@ -176,11 +176,11 @@ const WorkoutPlanner = () => {
                     <h1 className='font-teko font-semibold text-2xl'>Select a day to assign workouts.</h1>
                     <div className='flex flex-col gap-2'>
                         {daysOfWeek.map((day) => (
-                            <div className={`bg-black p-3 rounded-lg text-white-light ${day !== selectedDay ? 'opacity-50 cursor-not-allowed' : ''}`}key={day}>
+                            <div className={`bg-black p-3 rounded-lg text-white-light ${day !== selectedDay ? 'opacity-50 cursor-not-allowed' : ''}`} key={day}>
                                 <div className='flex justify-between items-center'>
                                     <h3 className='font-bold'>{day}</h3>
-                                    <button 
-                                        className={`${selectedWorkouts.length > 0 && day === selectedDay ? "bg-primary hover:bg-primary-dark" : "bg-gray"} p-2 text-black font-teko font-semibold rounded-full`} 
+                                    <button
+                                        className={`${selectedWorkouts.length > 0 && day === selectedDay ? "bg-primary hover:bg-primary-dark" : "bg-gray"} p-2 text-black font-teko font-semibold rounded-full`}
                                         onClick={() => {
                                             setSelectedDay(day);
                                             handleWorkoutAssign(day);

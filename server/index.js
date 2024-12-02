@@ -17,7 +17,7 @@ const mealPlanRoutes = require("./routes/mealPlan.route.js");
 const workoutPlanRoutes = require("./routes/workoutPlan.route.js");
 const workoutRoutes = require("./routes/workout.route.js");
 const accomplishmentTask = require("./routes/accomplishment-task.route.js");
-
+const filtersRoutes = require("./routes/filter.route.js");
 const app = express();
 
 app.use(
@@ -69,7 +69,10 @@ app.use(cookieParser());
 app.use(bodyParser.json({ limit: "30mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 
-app.use('/workoutVideos', express.static(path.join(__dirname, 'public', 'workoutVideos')));
+app.use(
+  "/workoutVideos",
+  express.static(path.join(__dirname, "public", "workoutVideos"))
+);
 
 app.use("/auth", authRoutes);
 app.use("/contact", contactRoutes);
@@ -81,6 +84,7 @@ app.use("/workouts", workoutRoutes);
 app.use("/workout-planner", workoutPlanRoutes);
 app.use("/task-history", accomplishmentTask);
 app.use("/verify-email", emailVerify);
+app.use("/search", filtersRoutes);
 
 app.use(express.static(path.join(__dirname, "build")));
 
