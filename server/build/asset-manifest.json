@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.55b89664.css",
-    "main.js": "/static/js/main.817d3a6e.js",
+    "main.js": "/static/js/main.f79d664a.js",
     "static/media/meal-planner.jpg": "/static/media/meal-planner.3cab3cfa30c8c2ce809c.jpg",
     "static/media/program-1.jpg": "/static/media/program-1.2b17042b03fe4ed39281.jpg",
     "static/media/logo.png": "/static/media/logo.70b5de61e9d142db9a94.png",
@@ -32,10 +32,10 @@
     "static/media/endormorph.jpg": "/static/media/endormorph.0a2931f22b106cef624e.jpg",
     "index.html": "/index.html",
     "main.55b89664.css.map": "/static/css/main.55b89664.css.map",
-    "main.817d3a6e.js.map": "/static/js/main.817d3a6e.js.map"
+    "main.f79d664a.js.map": "/static/js/main.f79d664a.js.map"
   },
   "entrypoints": [
     "static/css/main.55b89664.css",
-    "static/js/main.817d3a6e.js"
+    "static/js/main.f79d664a.js"
   ]
 }
