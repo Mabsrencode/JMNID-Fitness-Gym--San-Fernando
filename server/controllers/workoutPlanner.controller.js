@@ -100,30 +100,28 @@ const saveWorkoutPlan = async (req, res) => {
   }
 };
 
+
 const removeWorkoutPlan = async (req, res) => {
   try {
       const userId = req.params.userId;
       const week = new Date(req.query.week);
-      const workoutIds = req.body.workoutIds;
 
-      if (!userId || isNaN(week) || !Array.isArray(workoutIds)) {
-          return res.status(400).json({ message: "Invalid user ID, week format, or workout IDs." });
+      if (!userId || isNaN(week.getTime())) {
+          return res.status(400).json({ message: "Invalid user ID or week format." });
       }
 
       const workoutPlan = await WorkoutPlan.findOne({ user: userId, week });
+      
       if (!workoutPlan) {
           return res.status(404).json({ message: "Workout plan not found." });
       }
+      await WorkoutPlan.deleteOne({ user: userId, week });
 
-      workoutPlan.workouts = workoutPlan.workouts.filter(workout => !workoutIds.includes(workout));
-
-      await workoutPlan.save();
-
-      res.status(200).json({ message: "Workout(s) removed successfully.", workoutPlan });
+      res.status(200).json({ message: "Workout plan deleted successfully." });
   } catch (error) {
       console.error(error);
       res.status(500).json({
-          message: "An error occurred while removing the workout plan.",
+          message: "An error occurred while deleting the workout plan.",
           error: error.message,
       });
   }
