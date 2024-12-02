@@ -97,26 +97,24 @@ const removeMealPlan = async (req, res) => {
   try {
       const userId = req.params.userId;
       const week = new Date(req.query.week);
-      const mealIds = req.body.mealIds;
 
-      if (!userId || isNaN(week) || !Array.isArray(mealIds)) {
-          return res.status(400).json({ message: "Invalid user ID, week format, or meal IDs." });
+      if (!userId || isNaN(week.getTime())) {
+          return res.status(400).json({ message: "Invalid user ID or week format." });
       }
 
-      const mealPlan = await MealPlan.findOne({ user: userId, week });
+      const mealPlan = await MealPlan.findOne({user: userId, week});
+      
       if (!mealPlan) {
           return res.status(404).json({ message: "Meal plan not found." });
       }
 
-      mealPlan.meals = mealPlan.meals.filter(mealId => !mealIds.includes(mealId));
+      await MealPlan.deleteOne({ user: userId, week });
 
-      await mealPlan.save();
-
-      res.status(200).json({ message: "Meal(s) removed successfully.", mealPlan });
+      res.status(200).json({ message: "Meal plan deleted successfully." });
   } catch (error) {
       console.error(error);
       res.status(500).json({
-          message: "An error occurred while removing the meal plan.",
+          message: "An error occurred while deleting the meal plan.",
           error: error.message,
       });
   }
