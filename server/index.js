@@ -22,14 +22,14 @@ const app = express();
 
 app.use(
   helmet({
-    contentSecurityPolicy: {
-      directives: {
-        defaultSrc: ["'self'"],
-        frameSrc: ["'self'", "data:"],
-        scriptSrc: ["'self'"],
-        frameAncestors: ["'self'"],
-      },
-    },
+    // contentSecurityPolicy: {
+    //   directives: {
+    //     defaultSrc: ["'self'"],
+    //     frameSrc: ["'self'", "data:"],
+    //     scriptSrc: ["'self'"],
+    //     frameAncestors: ["'self'"],
+    //   },
+    // },
     frameguard: { action: "deny" },
     hsts: {
       maxAge: 31536000, // One year in seconds
