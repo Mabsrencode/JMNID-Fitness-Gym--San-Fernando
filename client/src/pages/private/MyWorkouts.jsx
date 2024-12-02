@@ -170,47 +170,54 @@ const MyWorkouts = () => {
 
             if (userConfirmed) {
                 try {
-                    const workoutResponse = await fetch(`/workout-planner/${userId}?week=${selectedDateISO}`);
-                    const workoutData = await workoutResponse.json();
-
-                    const mealResponse = await fetch(`/meal-planner/${userId}?week=${selectedDateISO}`);
-                    const mealData = await mealResponse.json();
-
-                    if (!workoutData || !mealData ||
-                        (Array.isArray(workoutData.workoutPlan) && workoutData.workoutPlan.length === 0) ||
-                        (Array.isArray(mealData.mealPlan) && mealData.mealPlan.length === 0)) {
+                    const results = await Promise.allSettled([
+                        axios.get(`/workout-planner/${userId}?week=${selectedDateISO}`),
+                        axios.get(`/meal-planner/${userId}?week=${selectedDateISO}`)
+                    ]);
+            
+                    const workoutResult = results[0];
+                    const mealResult = results[1];
+            
+                    let workoutTitles = [];
+                    let mealNames = [];
+            
+                    if (workoutResult.status === 'fulfilled') {
+                        const workoutPlan = workoutResult.value.data?.workoutPlan?.workouts || [];
+                        workoutTitles = workoutPlan.map(workout => workout.title);
+                        setWorkouts(workoutTitles);
+                    } else {
+                        console.error('Failed to fetch workout plan:', workoutResult.reason);
+                    }
+            
+                    if (mealResult.status === 'fulfilled') {
+                        const mealPlan = mealResult.value.data?.mealPlan?.meals || [];
+                        mealNames = mealPlan.map(meal => meal.mealName);
+                        setMeals(mealNames);
+                    } else {
+                        console.error('Failed to fetch meal plan:', mealResult.reason);
+                    }
+            
+                    if (workoutTitles.length === 0 && mealNames.length === 0) {
                         throw new Error('No workout or meal plans found for this date.');
                     }
-
-                    const workoutTitles = workoutData.workoutPlan.workouts.map(workout => workout.title);
-                    console.log('Workout:', workoutTitles);
-                    setWorkouts(workoutTitles);
-
-                    const mealNames = mealData.mealPlan.meals.map(meal => meal.mealName);
-                    console.log('Meals:', mealNames);
-                    setMeals(mealNames);
-
-                    console.log('Workout UseState', workouts);
-                    console.log('Meals UseState', meals);
-
+            
                     const response = await axios.post('/task-history', {
                         userId: userId,
                         date: selectedDateISO,
-                        workouts: workoutTitles,
-                        meals: mealNames,
+                        workouts: workoutTitles || null,
+                        meals: mealNames || null,
                     });
 
                     console.log("Data: ", response);
-                    toast.success('Successfully accomplished the task');
+                    alert('Successfully accomplished the task');
                     window.location.reload();
                     setIsModalOpen(false);
 
                 } catch (error) {
-                    toast.error('Failed to log the task');
-                    console.error(error)
+                    alert('Failed to log the task');
                     setIsModalOpen(false);
-                    console.error('Error fetching plans or posting task history:', error);
                 }
+            
             } else {
                 toast.error('Task continuation canceled.');
                 setIsModalOpen(false);

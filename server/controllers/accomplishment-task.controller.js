@@ -8,7 +8,7 @@ const getAccomplishmentTaskById = async (req, res) => {
     }
 
     try {
-        const accomplishmentTask = await Accomplishment.findOne({ userId: userId });
+        const accomplishmentTask = await Accomplishment.find({ userId: userId });
 
         if (!accomplishmentTask) {
             return res.status(404).json({ message: "Accomplishment task not found." });
