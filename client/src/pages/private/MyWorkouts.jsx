@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-globals */
 import { useUser } from '../../context/UserContext';
 import React, { useState, useEffect, useCallback } from 'react';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
@@ -43,18 +44,21 @@ const MyWorkouts = () => {
 
             setDailyPlans({
                 workoutPlan: workoutData.workoutPlan || null,
-                mealPlan: mealData.mealPlan || null,
+                mealPlan: mealData.mealPlan || null
             });
 
             const newEvents = [];
 
-            if (workoutData.workoutPlan?.workouts) {
-                workoutData.workoutPlan.workouts.forEach((workout) => {
-                    newEvents.push({
-                        start: new Date(),
-                        end: new Date(),
-                        title: `Workout: ${workout.title}`,
-                    });
+            if (workoutData.workoutPlan) {
+                workoutData.workoutPlan.forEach((workoutPlan) => {
+                    const weekDate = new Date(workoutPlan.week);
+                    workoutPlan.workouts.forEach((workout) => {
+                        newEvents.push({
+                            start: weekDate,
+                            end: weekDate,
+                            title: `Workouts: ${workout.title} (${workout.day})`,
+                        });
+                    })
                 });
             }
 
@@ -65,7 +69,7 @@ const MyWorkouts = () => {
                         newEvents.push({
                             start: weekDate,
                             end: weekDate,
-                            title: `Meal: ${meal.mealName} (${meal.day})`,
+                            title: `Meals: ${meal.mealName} (${meal.day})`,
                         });
                     });
                 });
@@ -197,6 +201,7 @@ const MyWorkouts = () => {
 
                     console.log("Data: ", response);
                     alert('Successfully accomplished the task');
+                    window.location.reload();
                     setIsModalOpen(false);
 
                 } catch (error) {
@@ -214,9 +219,50 @@ const MyWorkouts = () => {
         }
     }
 
-    const removeSchedule = () => {
-        setIsModalOpen(false);
-    }
+    const removeSchedule = async (date) => {
+        const userId = user?.user?._id;
+
+        if (!date) {
+            console.error("Error: Invalid date passed.");
+            return;
+        }
+
+        const selectedDateISO = moment(date).format('YYYY-MM-DD');
+        console.log('Data Fetch (Remove): ', {
+            userId: userId,
+            selectedDate: selectedDateISO,
+        });
+
+        if (selectedDateISO) {
+            const userConfirmed = confirm("Click OK to remove, or Cancel to not proceed.");
+
+            if (userConfirmed) {
+                try {
+                    
+                    const removeMeal = axios.delete(`/meal-planner/${userId}?week=${selectedDateISO}`);
+                    const removeWorkout = axios.delete(`/workout-planner/${userId}?week=${selectedDateISO}`);
+                    
+                    const result = await Promise.allSettled([removeMeal, removeWorkout]);
+
+                    if (result) {
+                        console.log("Data: ", removeMeal, removeWorkout);
+                        alert('Successfully removed the meal and workout');
+                        window.location.reload();
+                        setIsModalOpen(false);
+                    } else {
+                        alert('Error deleting this two');
+                        setIsModalOpen(false);
+                    }
+                } catch (error) {
+                    alert('Error deleting task: ', error);
+                    setIsModalOpen(false);
+                }
+            } else {
+                setIsModalOpen(false);
+            }
+        }
+    };
+
 
     return (
         <div className="text-white min-h-screen flex flex-col items-center p-6">
@@ -281,7 +327,7 @@ const MyWorkouts = () => {
                             )}
                         </div>
                         <div className="flex gap-2 mt-2 float-right">
-                            <button onClick={() => removeSchedule()} className='bg-red-500 px-5 py-2 rounded-lg text-white'>Remove</button>
+                            <button onClick={() => removeSchedule(selectedDate)} className='bg-red-500 px-5 py-2 rounded-lg text-white'>Remove</button>
                             <button onClick={() => addScheduleHistory(selectedDate)} className='bg-primary px-10 py-2 rounded-lg text-white'>Done</button>
                         </div>
                     </div>
