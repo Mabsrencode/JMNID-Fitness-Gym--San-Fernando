@@ -16,10 +16,6 @@ const MyWorkouts = () => {
     const [selectedDate, setSelectedDate] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
-
-    const [workouts, setWorkouts] = useState([]);
-    const [meals, setMeals] = useState([]);
-
     const fetchPlans = useCallback(async () => {
         const userId = user?.user?._id;
 
@@ -184,7 +180,6 @@ const MyWorkouts = () => {
                     if (workoutResult.status === 'fulfilled') {
                         const workoutPlan = workoutResult.value.data?.workoutPlan?.workouts || [];
                         workoutTitles = workoutPlan.map(workout => workout.title);
-                        setWorkouts(workoutTitles);
                     } else {
                         console.error('Failed to fetch workout plan:', workoutResult.reason);
                     }
@@ -192,7 +187,6 @@ const MyWorkouts = () => {
                     if (mealResult.status === 'fulfilled') {
                         const mealPlan = mealResult.value.data?.mealPlan?.meals || [];
                         mealNames = mealPlan.map(meal => meal.mealName);
-                        setMeals(mealNames);
                     } else {
                         console.error('Failed to fetch meal plan:', mealResult.reason);
                     }
