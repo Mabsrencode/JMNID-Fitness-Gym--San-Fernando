@@ -49,7 +49,7 @@ const MyWorkouts = () => {
             });
 
             const newEvents = [];
-
+            //test
             if (workoutData.workoutPlan) {
                 workoutData.workoutPlan.forEach((workoutPlan) => {
                     const weekDate = new Date(workoutPlan.week);
@@ -174,13 +174,13 @@ const MyWorkouts = () => {
                         axios.get(`/workout-planner/${userId}?week=${selectedDateISO}`),
                         axios.get(`/meal-planner/${userId}?week=${selectedDateISO}`)
                     ]);
-            
+
                     const workoutResult = results[0];
                     const mealResult = results[1];
-            
+
                     let workoutTitles = [];
                     let mealNames = [];
-            
+
                     if (workoutResult.status === 'fulfilled') {
                         const workoutPlan = workoutResult.value.data?.workoutPlan?.workouts || [];
                         workoutTitles = workoutPlan.map(workout => workout.title);
@@ -188,7 +188,7 @@ const MyWorkouts = () => {
                     } else {
                         console.error('Failed to fetch workout plan:', workoutResult.reason);
                     }
-            
+
                     if (mealResult.status === 'fulfilled') {
                         const mealPlan = mealResult.value.data?.mealPlan?.meals || [];
                         mealNames = mealPlan.map(meal => meal.mealName);
@@ -196,11 +196,11 @@ const MyWorkouts = () => {
                     } else {
                         console.error('Failed to fetch meal plan:', mealResult.reason);
                     }
-            
+
                     if (workoutTitles.length === 0 && mealNames.length === 0) {
                         throw new Error('No workout or meal plans found for this date.');
                     }
-            
+
                     const response = await axios.post('/task-history', {
                         userId: userId,
                         date: selectedDateISO,
@@ -217,7 +217,7 @@ const MyWorkouts = () => {
                     alert('Failed to log the task');
                     setIsModalOpen(false);
                 }
-            
+
             } else {
                 toast.error('Task continuation canceled.');
                 setIsModalOpen(false);
