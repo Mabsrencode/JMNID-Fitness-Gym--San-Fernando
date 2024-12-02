@@ -5,6 +5,7 @@ import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 const localizer = momentLocalizer(moment);
 
@@ -200,21 +201,22 @@ const MyWorkouts = () => {
                     });
 
                     console.log("Data: ", response);
-                    alert('Successfully accomplished the task');
+                    toast.success('Successfully accomplished the task');
                     window.location.reload();
                     setIsModalOpen(false);
 
                 } catch (error) {
-                    alert('Failed to log the task');
+                    toast.error('Failed to log the task');
+                    console.error(error)
                     setIsModalOpen(false);
                     console.error('Error fetching plans or posting task history:', error);
                 }
             } else {
-                alert('Task continuation canceled.');
+                toast.error('Task continuation canceled.');
                 setIsModalOpen(false);
             }
         } else if (selectedDate !== currentDate) {
-            alert('You cannot accomplish this task; you need to meet the day before you can complete it.');
+            toast.error('You cannot accomplish this task, you need to meet the day before you can complete it.');
             setIsModalOpen(false)
         }
     }
@@ -238,23 +240,23 @@ const MyWorkouts = () => {
 
             if (userConfirmed) {
                 try {
-                    
+
                     const removeMeal = axios.delete(`/meal-planner/${userId}?week=${selectedDateISO}`);
                     const removeWorkout = axios.delete(`/workout-planner/${userId}?week=${selectedDateISO}`);
-                    
+
                     const result = await Promise.allSettled([removeMeal, removeWorkout]);
 
                     if (result) {
                         console.log("Data: ", removeMeal, removeWorkout);
-                        alert('Successfully removed the meal and workout');
+                        toast.success('Successfully removed the meal and workout');
                         window.location.reload();
                         setIsModalOpen(false);
                     } else {
-                        alert('Error deleting this two');
+                        toast.error('Error deleting this two');
                         setIsModalOpen(false);
                     }
                 } catch (error) {
-                    alert('Error deleting task: ', error);
+                    toast.error('Error deleting task: ', error);
                     setIsModalOpen(false);
                 }
             } else {
