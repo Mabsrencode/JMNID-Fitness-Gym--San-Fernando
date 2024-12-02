@@ -20,33 +20,33 @@ const accomplishmentTask = require("./routes/accomplishment-task.route.js");
 const filtersRoutes = require("./routes/filter.route.js");
 const app = express();
 
-// app.use(
-//   helmet({
-//     // contentSecurityPolicy: {
-//     //   directives: {
-//     //     defaultSrc: ["'self'"],
-//     //     frameSrc: ["'self'", "data:"],
-//     //     scriptSrc: ["'self'"],
-//     //     frameAncestors: ["'self'"],
-//     //   },
-//     // },
-//     frameguard: { action: "deny" },
-//     hsts: {
-//       maxAge: 31536000, // One year in seconds
-//       includeSubDomains: true,
-//       preload: true,
-//     },
-//     referrerPolicy: { policy: "no-referrer" },
-//   })
-// );
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'"],
+        frameSrc: ["'self'", "data:"],
+        scriptSrc: ["'self'"],
+        frameAncestors: ["'self'"],
+      },
+    },
+    frameguard: { action: "deny" },
+    hsts: {
+      maxAge: 31536000, // One year in seconds
+      includeSubDomains: true,
+      preload: true,
+    },
+    referrerPolicy: { policy: "no-referrer" },
+  })
+);
 
-// app.set("trust proxy", 1);
-// app.disable("x-powered-by");
+app.set("trust proxy", 1);
+app.disable("x-powered-by");
 
-// app.use((req, res, next) => {
-//   res.removeHeader("Server");
-//   next();
-// });
+app.use((req, res, next) => {
+  res.removeHeader("Server");
+  next();
+});
 
 // Enable CORS
 app.use(

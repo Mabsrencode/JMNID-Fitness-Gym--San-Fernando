@@ -29,11 +29,11 @@ const MyWorkouts = () => {
         console.log('Data Fetch (USERID): ', userId);
 
         try {
-            const workoutResponse = await axios.get(`http://localhost:4000/workout-planner/${userId}/plan`);
+            const workoutResponse = await axios.get(`/workout-planner/${userId}/plan`);
             const workoutData = workoutResponse.data;
             console.log("Workout Data", workoutData);
 
-            const mealResponse = await axios.get(`http://localhost:4000/meal-planner/${userId}/plan`);
+            const mealResponse = await axios.get(`/meal-planner/${userId}/plan`);
             const mealData = mealResponse.data;
             console.log("Meal Data:", mealData);
 
@@ -96,10 +96,10 @@ const MyWorkouts = () => {
         });
 
         try {
-            const workoutResponse = await fetch(`http://localhost:4000/workout-planner/${userId}?week=${selectedDateISO}`);
+            const workoutResponse = await fetch(`/workout-planner/${userId}?week=${selectedDateISO}`);
             const workoutData = await workoutResponse.json();
 
-            const mealResponse = await fetch(`http://localhost:4000/meal-planner/${userId}?week=${selectedDateISO}`);
+            const mealResponse = await fetch(`/meal-planner/${userId}?week=${selectedDateISO}`);
             const mealData = await mealResponse.json();
 
             if (!workoutData || !mealData ||
@@ -141,12 +141,12 @@ const MyWorkouts = () => {
 
     const addScheduleHistory = async (date) => {
         const userId = user?.user?._id;
-    
+
         if (!date) {
             console.error("Error: Invalid date passed to addScheduleHistory.");
             return;
         }
-    
+
         const selectedDateISO = moment(date).format('YYYY-MM-DD');
         console.log('Data Fetch: ', {
             userId: userId,
@@ -159,46 +159,46 @@ const MyWorkouts = () => {
 
         if (selectedDateISO === currentDate) {
             alert('You can now accomplish this task');
-        
+
             // eslint-disable-next-line no-restricted-globals
             const userConfirmed = confirm("Click OK to continue, or Cancel to not proceed.");
-            
+
             if (userConfirmed) {
                 try {
-                    const workoutResponse = await fetch(`http://localhost:4000/workout-planner/${userId}?week=${selectedDateISO}`);
+                    const workoutResponse = await fetch(`/workout-planner/${userId}?week=${selectedDateISO}`);
                     const workoutData = await workoutResponse.json();
-            
-                    const mealResponse = await fetch(`http://localhost:4000/meal-planner/${userId}?week=${selectedDateISO}`);
+
+                    const mealResponse = await fetch(`/meal-planner/${userId}?week=${selectedDateISO}`);
                     const mealData = await mealResponse.json();
-            
-                    if (!workoutData || !mealData || 
-                        (Array.isArray(workoutData.workoutPlan) && workoutData.workoutPlan.length === 0) || 
+
+                    if (!workoutData || !mealData ||
+                        (Array.isArray(workoutData.workoutPlan) && workoutData.workoutPlan.length === 0) ||
                         (Array.isArray(mealData.mealPlan) && mealData.mealPlan.length === 0)) {
                         throw new Error('No workout or meal plans found for this date.');
                     }
-            
+
                     const workoutTitles = workoutData.workoutPlan.workouts.map(workout => workout.title);
                     console.log('Workout:', workoutTitles);
                     setWorkouts(workoutTitles);
-            
+
                     const mealNames = mealData.mealPlan.meals.map(meal => meal.mealName);
                     console.log('Meals:', mealNames);
                     setMeals(mealNames);
-            
+
                     console.log('Workout UseState', workouts);
                     console.log('Meals UseState', meals);
-            
+
                     const response = await axios.post('/task-history', {
                         userId: userId,
                         date: selectedDateISO,
                         workouts: workoutTitles,
                         meals: mealNames,
                     });
-            
+
                     console.log("Data: ", response);
                     alert('Successfully accomplished the task');
                     setIsModalOpen(false);
-            
+
                 } catch (error) {
                     alert('Failed to log the task');
                     setIsModalOpen(false);
