@@ -6,6 +6,7 @@ import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import Swal from 'sweetalert2';
 
 const localizer = momentLocalizer(moment);
 
@@ -159,12 +160,19 @@ const MyWorkouts = () => {
         console.log("Select Date:", selectedDateISO);
 
         if (selectedDateISO === currentDate) {
-            alert('You can now accomplish this task');
+            toast.success('You can now accomplish this task');
 
-            // eslint-disable-next-line no-restricted-globals
-            const userConfirmed = confirm("Click OK to continue, or Cancel to not proceed.");
+            const { isConfirmed } = await Swal.fire({
+                title: 'Are you sure?',
+                text: 'You want to accomplish this task',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, complete it!"
+            });
 
-            if (userConfirmed) {
+            if (isConfirmed) {
                 try {
                     const results = await Promise.allSettled([
                         axios.get(`/workout-planner/${userId}?week=${selectedDateISO}`),
@@ -203,12 +211,12 @@ const MyWorkouts = () => {
                     });
 
                     console.log("Data: ", response);
-                    alert('Successfully accomplished the task');
+                    toast.success('Successfully accomplished the task');
                     window.location.reload();
                     setIsModalOpen(false);
 
                 } catch (error) {
-                    alert('Failed to log the task');
+                    toast.success('Failed to log the task');
                     setIsModalOpen(false);
                 }
 
@@ -237,9 +245,17 @@ const MyWorkouts = () => {
         });
 
         if (selectedDateISO) {
-            const userConfirmed = confirm("Click OK to remove, or Cancel to not proceed.");
+            const { isConfirmed } = await Swal.fire({
+                title: 'Are you sure?',
+                text: 'You want to remove this task',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, remove it!"
+            });
 
-            if (userConfirmed) {
+            if (isConfirmed) {
                 try {
 
                     const removeMeal = axios.delete(`/meal-planner/${userId}?week=${selectedDateISO}`);
