@@ -25,7 +25,7 @@ const MealPlanner = () => {
 
     useEffect(() => {
         const selectDate = new Date(selectedWeek);
-        const dayOfWeek = daysOfWeek[selectDate.getDay() - 1];
+        const dayOfWeek = daysOfWeek[(selectDate.getDay() + 6) % 7];
         setSelectedDay(dayOfWeek);
     }, [selectedWeek]);
 
